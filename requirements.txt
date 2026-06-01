@@ -1,0 +1,6 @@
+torch>=2.1
+transformers>=4.45
+accelerate>=0.30
+bitsandbytes>=0.43
+sentencepiece
+statsmodels>=0.14
