@@ -1,0 +1,25 @@
+# Python cache
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# virtual environments
+.venv/
+venv/
+env/
+
+# restricted KneeCoT data
+data/cases/*
+!data/cases/.gitkeep
+data/kneecot_raw/
+*.nii
+*.nii.gz
+
+# model outputs / derived medical text outputs
+results/
+results_*/
+*.zip
+
+# local secrets
+.env
+*.token
