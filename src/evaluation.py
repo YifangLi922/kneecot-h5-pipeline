@@ -14,20 +14,25 @@ ANSWER_MARKER = "【答案】"
 
 
 def parse_yes_no(raw_output):
-    """Extract a Yes/No label from a model output, or None if not parseable."""
     text = raw_output
+    # 如果有答案标记，先截取后面的部分
     if ANSWER_MARKER in text:
         text = text.split(ANSWER_MARKER, 1)[1]
+
+    # 优先匹配英文 Yes/No (大小写不敏感)
     m = re.search(r"\b(yes|no)\b", text, flags=re.IGNORECASE)
     if m:
         return m.group(1).capitalize()
-    # fallback: Chinese 是 / 否 right after the marker
-    head = text.strip()[:8]
-    if "是" in head:
+
+    # 查找最后一个“是”或“否”，但若同时存在，以最后一个为准通常合理。
+    last_yes = text.rfind("是")
+    last_no = text.rfind("否")
+    if last_yes == -1 and last_no == -1:
+        return None
+    if last_yes > last_no:
         return "Yes"
-    if "否" in head:
+    else:
         return "No"
-    return None
 
 
 def yes_no_accuracy(results):
@@ -79,13 +84,18 @@ def mcnemar_direct_vs_cot(results):
             c += 1
 
     out = {"n_pairs": n, "direct_only_correct": b, "cot_only_correct": c}
-    try:
-        from statsmodels.stats.contingency_tables import mcnemar
-        res = mcnemar([[0, b], [c, 0]], exact=(b + c < 25))
-        out["statistic"] = round(float(res.statistic), 4)
-        out["p_value"] = round(float(res.pvalue), 4)
-    except Exception as e:  # statsmodels not installed
-        out["note"] = f"install statsmodels for the p-value ({e})"
+
+    if b == 0 and c == 0:
+        out["statistic"] = 0.0
+        out["p_value"] = 1.0
+    else:
+        try:
+            from statsmodels.stats.contingency_tables import mcnemar
+            res = mcnemar([[0, b], [c, 0]], exact=(b + c < 25))
+            out["statistic"] = round(float(res.statistic), 4)
+            out["p_value"] = round(float(res.pvalue), 4)
+        except Exception as e:
+            out["note"] = f"install statsmodels for the p-value ({e})"
     return out
 
 
