@@ -1,0 +1,5 @@
+Model,Prompt,Accuracy,F1,Precision,Recall,UNCLEAR_%,Correct,Total
+qwen2.5vl,DA,0.66,0.5854,0.75,0.48,0.0,33,50
+qwen2.5vl,CoT,0.58,0.5714,0.5833,0.56,0.0,29,50
+minicpm-v,DA,0.54,0.7143,0.5556,1.0,0.0,27,50
+minicpm-v,CoT,0.54,0.4737,0.5625,0.4091,0.0,27,50

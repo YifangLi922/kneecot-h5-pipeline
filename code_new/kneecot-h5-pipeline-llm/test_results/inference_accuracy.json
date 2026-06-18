@@ -1,0 +1,16 @@
+{
+  "direct": {
+    "accuracy": 0.0,
+    "correct": 0,
+    "scored": 1,
+    "unscored": 0,
+    "total": 1
+  },
+  "cot": {
+    "accuracy": 0.0,
+    "correct": 0,
+    "scored": 1,
+    "unscored": 0,
+    "total": 1
+  }
+}

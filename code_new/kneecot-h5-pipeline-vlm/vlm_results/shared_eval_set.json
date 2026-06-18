@@ -1,0 +1,652 @@
+[
+  {
+    "case_id": "GJB0000084",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内见少许积液征；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓侧副韧带未见异常。膝髌下脂肪垫小片高信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在大量关节积液？",
+    "ground_truth": "No",
+    "full_answer": "No。仅见少许积液征，未达到大量积液标准。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000084_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000084_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000084_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000052",
+    "findings": "右侧膝关节各骨对合正常；右股骨下段PDW见斑片状高信号；髌骨、胫腓骨关节面骨质未见明显异常；股骨滑车关节面软骨欠光整，局部信号增高；关节腔内及关节囊内少量积液；内侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；腓侧副韧带上段信号稍增高；前、后交叉韧带及胫侧副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。髌下脂肪垫斑片状高信号。左侧膝关节各骨对合正常；髌骨及股骨滑车关节面下骨质PDW见斑片状高信号；髌骨及股骨滑车关节面软骨信号局部稍增高；关节腔内及关节囊少量积液；内、外侧半月板前后角内可见条状T2WI高信号，以外侧半月板后角稍明显，高信号未达半月板关节面边缘；腓侧副韧带上段信号稍增高；前、后交叉韧带及胫侧副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。髌下脂肪垫斑片状高信号。",
+    "question": "该患者本次膝关节 MRI 检查，后交叉韧带是否未见明显异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。双侧前、后交叉韧带及胫侧副韧带未见明显异常。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000052_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000052_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000052_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000099",
+    "findings": "双侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内见少许积液征；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带未见异常。外侧副韧带上段增粗、边缘模糊，局部T2WI信号增高；内侧副韧带形态、信号未见异常；髌下脂肪垫见小片高信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，关节周围软组织是否未见明显异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000099_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000099_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000099_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000070",
+    "findings": "右膝股骨软骨损伤修复术后，右股骨滑车软骨欠光整，信号不均，软骨修复物厚度低于邻近软骨；软骨面下骨质可见少许斑片状高信号；对应髌骨关节面软骨欠光整，关节腔内及关节囊内积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；髌上脂肪垫信号增高。髌下脂肪垫术后改变。",
+    "question": "该患者本次膝关节 MRI 检查，右股骨滑车软骨是否光整？",
+    "ground_truth": "No",
+    "full_answer": "No。右股骨滑车软骨欠光整，信号不均。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000070_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000070_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000070_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000168",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内少许积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，内侧半月板后角高信号是否达关节面边缘？",
+    "ground_truth": "No",
+    "full_answer": "No。高信号未达半月板关节面边缘。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000168_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000168_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000168_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000107",
+    "findings": "，现片示：右膝关节ACL重建术后，股骨远端、胫骨近端骨质内可见内固定物及周围低信号伪影，髓腔内可见骨道，周围斑片状PD-FS高信号灶基本吸收；股骨远端及胫骨近端关节面不光滑，可见斑片状T2WI高信号，局部较前稍少；膝关节腔、关节囊内见少许积液，较前减少；内、外侧半月板内可见点线条状T2WI高信号；前交叉韧带呈术后改变；后交叉韧带及内、外侧副韧带信号未见明显异常；髌下脂肪垫见少许高信号影，较前明显吸收减少；关节周围软组织条片状T2WI高信号较前减少。",
+    "question": "该患者本次膝关节 MRI 检查，膝关节腔内是否存在积液？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。膝关节腔、关节囊内见少许积液。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000107_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000107_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000107_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000190",
+    "findings": "双侧膝关节各骨对合正常；左膝胫骨平台关节面下及右膝髌骨上份骨质见小斑片状高信号灶；部分关节面软骨欠光整，内见点线样低信号；关节腔内及关节囊内少许积液；双膝关节滑膜增厚，左膝关节髌上滑膜皱襞增厚、延长。内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；双膝髌下脂肪垫见斑片状高信号灶，余关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，髌下脂肪垫是否见斑片状高信号灶？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。双膝髌下脂肪垫见斑片状高信号灶。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000190_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000190_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000190_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000093",
+    "findings": "右侧膝关节各骨对位可；胫骨髁间隆突骨质不连续，周围见PDWI高信号，股骨外侧髁侧缘骨皮质下见条片状PDWI高信号；关节腔内及关节囊内见积液征，髌上囊为著；内、外侧半月板前后角内可见条状PDWI高信号，以外侧半月板前角稍明显，高信号达半月板关节面边缘；前交叉韧带、腓侧副韧带增粗、信号增高，走行尚正常。后交叉韧带局部信号增高，胫侧副韧带未见异常。髌下脂肪垫可见片状高信号；右侧股二头肌、股四头肌、腓肠肌内侧头、腓肠肌外侧头可见多发条片状、羽毛状高信号灶，关节周围软组织肿胀、渗出。",
+    "question": "该患者本次膝关节 MRI 检查，髌下脂肪垫是否未见异常？",
+    "ground_truth": "No",
+    "full_answer": "No。髌下脂肪垫可见片状高信号，提示损伤。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000093_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000093_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000093_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000141",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内少量积液征；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；髌韧带上段及邻近、内侧副韧带旁软组织见片状长T2信号。",
+    "question": "该患者本次膝关节 MRI 检查，内侧副韧带本身是否断裂？",
+    "ground_truth": "No",
+    "full_answer": "No。内侧副韧带未见明显异常，异常信号位于韧带旁软组织。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000141_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000141_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000141_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000046",
+    "findings": "右侧膝关节各骨对合正常；髌骨见斑片高信号，软骨信号欠均；关节腔内及关节囊内少量积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。左侧膝关节各骨对合正常；髌骨见斑片高信号，软骨信号欠均；关节腔内及关节囊内少量积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，右侧半月板高信号是否达关节面边缘？",
+    "ground_truth": "No",
+    "full_answer": "No。右侧内、外侧半月板前后角内高信号未达半月板关节面边缘。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000046_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000046_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000046_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000041",
+    "findings": "结合2025-6-1，现片示：右膝关节ACL重建术后复查：股骨远端、胫骨近端骨质内可见内固定物及周围低信号伪影，髓腔内可见多条骨道，周围骨髓及髌骨关节面下骨质见斑片状T2WI信号增高模糊影，部分高信号较前稍减低；股骨远端及胫骨近端关节面不光滑；膝关节腔、关节囊内见少许积液，较前稍减少；内、外侧半月板内可见线条、片状T2WI高信号，以外侧半月板后角稍明显；前交叉韧带移植物连续，呈术后改变，部分信号较前稍减低；后交叉韧带及内、外侧副韧带形态、信号未见明显异常；髌下脂肪垫及胫骨上段前份软组织可见小状长T2信号影，较前稍减低。",
+    "question": "该患者本次膝关节 MRI 检查，髓腔内是否可见骨道结构？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。髓腔内可见多条骨道。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000041_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000041_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000041_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000080",
+    "findings": "双侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内未见明显积液征；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，前交叉韧带是否未见明确异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。前交叉韧带形态、信号未见明确异常，连续性完整。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000080_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000080_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000080_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000060",
+    "findings": "结合病史，右膝半月板术后，右侧膝关节各骨对合正常；髌骨关节面下及股骨下段骨皮质下见小囊变影，余股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内少量积液；内、外侧半月板前后角内可见条状T2WI高信号，以外侧半月板前角明显，高信号未达半月板关节面边缘；腓侧副韧带上段信号稍增高，前、后交叉韧带及胫副韧带未见明显异常；关节周围软组织少许渗出。",
+    "question": "该患者本次膝关节 MRI 检查，诸关节面软骨是否光整？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。诸关节面软骨光整，未见明显缺损或信号异常。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000060_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000060_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000060_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000058",
+    "findings": "左侧膝关节各骨对合正常；髌股关节面软骨可见灶性低信号，诸骨髓腔内未见明显异常；关节腔内及关节囊内见少许积液，腘窝小囊肿形成；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓侧副韧带未见异常。左膝髌下脂肪垫小片高信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。右侧膝关节各骨对合正常；髌骨及股骨远端可见斑片状高信号；髌骨及股骨远端关节面软骨欠光整，内见灶性低信号；关节腔内及关节囊内见少许积液征，腘窝小囊肿形成；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓侧副韧带未见异常。右膝髌下脂肪垫小片高信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，右侧胫腓侧副韧带是否未见异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。右侧胫腓侧副韧带形态及信号未见异常。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000058_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000058_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000058_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000088",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内可见少量积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；腘窝可见结节状T2WI高信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。左踝关节对合正常，诸骨关节面尚光整，诸骨髓腔内未见异常信号；踝关节外侧距腓前、后韧带和跟腓韧带形态增厚，PdW FS信号增高；内侧三角韧带T2WI信号稍高；跟腱形态无明显异常，跟腱止点局部T2WI信号增高；踝关节周围软组织无明显异常；邻近跗骨、足底未见异常信号改变。",
+    "question": "该患者本次右膝关节 MRI 检查，内侧半月板后角高信号是否达关节面边缘？",
+    "ground_truth": "No",
+    "full_answer": "No。高信号未达半月板关节面边缘，符合 I-II 级损伤表现。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000088_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000088_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000088_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000203",
+    "findings": "右侧膝关节各骨对合正常；股骨外髁关节面下可见斑片状高信号，关节面软骨不光整，外髁关节面、股骨滑车沟关节面软骨磨损。关节腔及关节囊内见少量积液征；外侧半月板前角变薄，其内可见条状T2WI高信号；内侧半月板形态、信号未见异常；前、后交叉韧带及内外侧副韧带未见明显异常；髌下脂肪垫可见斑片状高信号，腘窝可见多个囊性灶。",
+    "question": "该患者本次膝关节 MRI 检查，内侧半月板形态及信号是否未见异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。内侧半月板形态、信号未见异常，无撕裂征象。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000203_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000203_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000203_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000170",
+    "findings": "右膝关节ACL重建术后复查：股骨远端、胫骨近端骨质内可见内固定物及周围低信号伪影，髓腔内可见骨道；膝关节腔、关节囊内见积液；内、外侧半月板内可见粗线条状T2WI高信号；前交叉韧带移植物连续，呈术后改变；后交叉韧带及内、外侧副韧带形态、信号未见明显异常；髌上囊见低信号灶；髌上、下脂肪垫及关节周围软组织见多发渗出。",
+    "question": "该患者本次膝关节 MRI 检查，外侧副韧带是否未见明确异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。外侧副韧带形态、信号未见明显异常，连续性良好。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000170_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000170_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000170_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000115",
+    "findings": "右侧膝关节各骨对合正常；胫骨平台内可见内固定物及周围低信号伪影，髓腔内可见多条骨道；股骨内外髁及滑车、腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内少许积液征；内、外侧半月板前后角内可见条状T2WI高信号，其中以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前交叉韧带增粗、边缘模糊，T2WI信号增高；后交叉韧带及胫腓副韧带未见明显异常信号；髌下脂肪垫内可见少许T2WI高信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否为左侧膝关节？",
+    "ground_truth": "No",
+    "full_answer": "No。该患者本次检查为右侧膝关节。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000115_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000115_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000115_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000065",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔及关节囊内见异常积液，滑膜增厚；内、外侧半月板形态、信号未见异常；前、后交叉韧带及内外侧副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。左侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔及关节囊内见少量积液征；内侧半月板后角内可见条状高信号，外侧半月板形态、信号未见异常；前、后交叉韧带及内外侧副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，左侧膝关节是否存在积液？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。左侧膝关节腔及关节囊内见少量积液征。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000065_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000065_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000065_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000183",
+    "findings": "双侧膝关节组成诸骨对合关系正常；髌骨位置、形态在正常范围内，未见高位、外翻、外移等异常改变；内外髁未见倾斜、滑车沟深度正常；诸骨骨髓腔内未见异常信号；关节软骨光整，未见损伤或侵蚀；关节腔内少许积液；内外侧半月板形态、信号未见异常；前、后交叉韧带及胫腓侧副韧带未见异常信号；软组织内、所见肌肉及肌间隙未见异常信号。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在内侧副韧带损伤？",
+    "ground_truth": "No",
+    "full_answer": "No。胫侧副韧带未见异常信号，连续性完整。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000183_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000183_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000183_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000091",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨欠光整，质子像其内见灶性高信号；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；后交叉韧带后方可见数个类椭圆形高信号灶，较大者大小约8×5mm，关节周围软组织、所见肌肉及肌间隙未见明显异常。左侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨欠光整，质子像其内见灶性高信号；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，右侧胫腓副韧带是否未见明显异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。该患者右侧胫腓副韧带形态、信号未见明显异常，连续性完整。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000091_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000091_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000091_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000075",
+    "findings": "右侧膝关节各骨对合正常；髌骨关节面下见斑片状高信号，邻近软骨欠规整，见低信号；股骨外髁见斑片状低信号影；关节腔内及关节囊内见少许积液；内、外侧半月板前后角内可见条状T2WI高信号，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。内侧滑膜皱襞可见，未达内髁边缘。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在关节内游离体？",
+    "ground_truth": "No",
+    "full_answer": "No。关节腔内未见明显游离体信号影。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000075_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000075_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000075_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000008",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内可见少量积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在 III 度半月板撕裂？",
+    "ground_truth": "No",
+    "full_answer": "No。半月板内高信号未达半月板关节面边缘，符合 I-II 级损伤表现。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000008_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000008_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000008_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000028",
+    "findings": "L4水平椎管内马尾神经旁结节，约2mm；余腰椎生理曲度存在，顺列整齐；椎体前后缘骨质增生；各椎间盘T2WI信号降低，其中L2/3-L5/S1椎间盘不同程度膨、突出，以L4/5明显，硬膜囊受压，双侧隐窝狭窄，神经根受压，相应椎管狭窄；黄韧带部分增厚；椎管内脊髓圆锥、马尾神经形态、信号未见异常。双侧膝关节组成诸骨对合关系正常；髌骨位置、形态在正常范围内，未见高位、外翻、外移等异常改变；内外髁未见倾斜、滑车沟深度正常；诸骨骨髓腔内未见异常信号；关节软骨光整，未见损伤或侵蚀；关节腔内未见异常积液信号；内外侧半月板形态、信号未见异常；前、后交叉韧带及胫腓侧副韧带未见异常信号；髌下脂肪垫可见少许T2WI高信号损伤；软组织内、所见肌肉及肌间隙未见异常信号。",
+    "question": "该患者本次膝关节 MRI 检查，内侧副韧带是否未见异常信号？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。胫腓侧副韧带未见异常信号，连续性完好。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000028_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000028_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000028_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000122",
+    "findings": "右侧膝关节各骨对合尚正常；胫骨近端内份见小片状高信号，诸骨端边缘不同程度骨质增生；局部关节面软骨欠光整，质子像其内见灶性低信号；关节腔、关节囊内见稍多积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号似达半月板边缘与关节腔相通；前交叉韧带T2WI信号增高，张力尚可；后交叉韧带形态、信号、走行正常；外侧副韧带上段增粗、边缘模糊，局部T2WI信号增高；内侧副韧带形态、信号未见异常；髌下脂肪垫及关节周围软组织可见斑片状长T2信号。右胭肌见斑片状高信号。",
+    "question": "该患者本次膝关节磁共振检查，外侧半月板内是否可见异常信号？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。外侧半月板内可见条状 T2WI 高信号。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000122_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000122_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000122_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000069",
+    "findings": "右膝关节术后：右侧膝关节各骨对合正常；股骨远端关节面下欠光整；胫骨近段见片状T2WI高信号，关节腔内及关节囊内积液；外侧半月板欠规整，信号高；前交叉韧带信号增高，外侧副韧带上端T2WI信号稍高，后交叉韧带及胫副韧带未见明显异常；髌下脂肪垫见高信号。",
+    "question": "该患者本次膝关节 MRI 检查，髌下脂肪垫信号是否正常？",
+    "ground_truth": "No",
+    "full_answer": "No。髌下脂肪垫内可见高信号，提示存在水肿或炎症反应。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000069_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000069_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000069_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000203",
+    "findings": "右侧膝关节各骨对合正常；股骨外髁关节面下可见斑片状高信号，关节面软骨不光整，外髁关节面、股骨滑车沟关节面软骨磨损。关节腔及关节囊内见少量积液征；外侧半月板前角变薄，其内可见条状T2WI高信号；内侧半月板形态、信号未见异常；前、后交叉韧带及内外侧副韧带未见明显异常；髌下脂肪垫可见斑片状高信号，腘窝可见多个囊性灶。",
+    "question": "该患者本次膝关节 MRI 检查，内侧副韧带是否出现损伤征象？",
+    "ground_truth": "No",
+    "full_answer": "No。内侧副韧带未见明显异常，走行区信号正常。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000203_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000203_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000203_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000010",
+    "findings": "右侧膝关节各骨对合正常；胫骨平台可见大片状T2WI高信号灶；股骨远端少许T2WI高信号；、腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内少许积液征；内、外侧半月板未见明显异常；前、后交叉韧带及腓副韧带未见明显异常信号；髌下脂肪垫损伤；胫侧副韧带损伤，渗出；腘肌损伤、大片渗出，腘肌腱未见损伤。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在半月板撕裂征象？",
+    "ground_truth": "No",
+    "full_answer": "No。内、外侧半月板形态及信号未见明显异常，无撕裂征象。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000010_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000010_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000010_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000181",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内少许积液征；内、外侧半月板未见明显异常信号；前交叉韧带增粗、边缘模糊，T2WI信号增高；后交叉韧带及胫腓副韧带未见明显异常信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。左侧膝关节组成诸骨对合关系正常；髌骨位置、形态在正常范围内，未见高位、外翻、外移等异常改变；内外髁未见倾斜、滑车沟深度正常；诸骨骨髓腔内未见异常信号；关节软骨光整，未见损伤或侵蚀；关节腔内少许积液信号；内外侧半月板形态、信号未见异常；前、后交叉韧带及胫腓侧副韧带未见异常信号；软组织内、所见肌肉及肌间隙未见异常信号。",
+    "question": "该患者本次膝关节 MRI 检查，右侧关节周围软组织是否未见明显异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。右侧关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000181_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000181_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000181_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000201",
+    "findings": "右膝关节ACL重建术后复查，现片示：股骨远端、胫骨近端骨质内可见内固定物及周围低信号伪影，髓腔内可见多条骨道；股骨远端及胫骨近端关节面不光滑；膝关节间隙无明显狭窄；膝关节腔、关节囊内见少许积液；内、外侧半月板内可见粗线条状T2WI高信号，以内侧半月板稍明显；前交叉韧带呈术后改变；后交叉韧带及内、外侧副韧带形态、信号未见明显异常；周围软组织渗出较前减少；右股骨后方软组织内见结节状长T2异常信号影，边界清楚，信号欠均匀，大小约14×9mm，较前相仿。",
+    "question": "该患者本次膝关节MRI检查，周围软组织渗出是否较前增加？",
+    "ground_truth": "No",
+    "full_answer": "No。周围软组织渗出较前减少。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000201_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000201_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000201_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000156",
+    "findings": "右侧膝关节各骨对合尚正常；胫骨平台见斑片灶PD-FS高信号，其后缘骨质欠规整；诸关节面软骨尚光整；关节腔、关节囊内见积液；内、外侧半月板内可见条状T2WI高信号，异常信号达半月板边缘与关节腔相通；前交叉显示不清；后交叉韧带及内外副韧带形态、信号、走行正常；；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙未见异常。",
+    "question": "该患者本次膝关节 MRI 检查，髌下脂肪垫是否未见明确异常？",
+    "ground_truth": "No",
+    "full_answer": "No。髌下脂肪垫可见片状长 T2 信号，符合损伤表现。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000156_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000156_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000156_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000092",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔及关节囊内见少许积液；外侧半月板增厚，矢状位呈蝴蝶状且超过3个层面；内、外侧半月板内可见线样T2WI高信号，其中以外侧半月板前角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常信号；髌韧带近端信号增高；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否为左膝关节？",
+    "ground_truth": "No",
+    "full_answer": "No。本次检查部位为右膝关节，非左膝关节。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000092_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000092_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000092_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000059",
+    "findings": "右侧膝关节各骨对合正常；股骨远端、胫骨平台、髌骨见斑片高信号；关节腔内及关节囊内未见明显积液征；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在内侧半月板后角撕裂？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。诊断结论明确指出右膝关节内侧半月板后角撕裂。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000059_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000059_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000059_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000007",
+    "findings": "双侧膝关节各骨对合尚正常；髌骨关节面下可见斑片状长T2信号及局灶性囊性灶，诸骨端边缘不同程度骨质增生；髌骨关节面软骨欠光整；关节腔、关节囊内见少许积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号达半月板边缘与关节腔相通；前交叉韧带增粗、边缘不清，T2WI信号增高，张力尚可；后交叉韧带形态、信号、行走正常；内、外侧副韧带形态、信号未见异常；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙未见异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在半月板损伤？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。内、外侧半月板内可见条状 T2WI 高信号，异常信号达半月板边缘与关节腔相通，符合损伤表现。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000007_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000007_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000007_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000173",
+    "findings": "右侧膝关节各骨对合尚正常；股骨滑车面、髌骨关节面下可见斑片状长T2信号及局灶性囊性灶，诸骨端边缘不同程度骨质增生；诸关节面软骨欠光整，质子像其内见灶性低信号；关节腔、关节囊内可见积液影，滑膜增厚，可见多个结节样低信号游离体；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号达半月板边缘与关节腔相通；前、后交叉韧带形态、信号、走行正常；内、外侧副韧带形态、信号未见异常；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙可见渗出影。",
+    "question": "该患者本次膝关节 MRI 检查，诸骨对合是否正常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。右侧膝关节各骨对合尚正常，未见脱位。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000173_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000173_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000173_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000152",
+    "findings": "右膝关节组成诸骨对合关系正常；髌骨位置、形态在正常范围内，未见高位、外翻、外移等异常改变；内外髁未见倾斜、滑车沟深度正常；诸骨骨髓腔内未见异常信号；关节软骨光整，未见损伤或侵蚀；关节腔内未见异常积液信号；内外侧半月板形态、信号未见异常；前、后交叉韧带及胫腓侧副韧带未见异常信号；髌下脂肪垫轻度损伤；软组织内、所见肌肉及肌间隙未见异常信号。",
+    "question": "该患者本次膝关节 MRI 检查，软组织内是否存在异常信号？",
+    "ground_truth": "No",
+    "full_answer": "No。该患者软组织内未见异常信号，肌间隙正常。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000152_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000152_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000152_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000050",
+    "findings": "左侧膝关节各骨对合尚正常，膝关节内侧间隙变窄；股骨滑车面、髌骨关节面、胫骨平台内侧份下可见斑片状长T2信号及局灶性囊性灶，诸骨端边缘不同程度骨质增生，部分骨赘形成；诸关节面软骨欠光整，质子像其内见灶性低信号；关节腔、关节囊内见少许积液，滑膜增厚；内、外侧半月板内可见条状T2WI高信号，以内侧半月板脱出，内侧半月板后角变细，前方可见小片状半月板信号；前、后交叉韧带及胫腓副韧带未见明显异常；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙可见散在高信号。右侧膝关节各骨对合尚正常，膝关节内侧间隙变窄；股骨滑车面、髌骨关节面、胫骨平台内侧份下可见斑片状长T2信号及局灶性囊性灶，诸骨端边缘不同程度骨质增生，部分骨赘形成；诸关节面软骨欠光整，质子像其内见灶性低信号；关节腔、关节囊内见少许积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板脱出，内侧半月板后角变细，前方可见小片状半月板信号；前、后交叉韧带及胫腓副韧带未见明显异常；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙未见异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在半月板 III 级损伤？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。双膝关节内、外侧半月板均可见 III 级损伤，内侧后角明显伴有撕裂。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000050_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000050_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000050_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000028",
+    "findings": "L4水平椎管内马尾神经旁结节，约2mm；余腰椎生理曲度存在，顺列整齐；椎体前后缘骨质增生；各椎间盘T2WI信号降低，其中L2/3-L5/S1椎间盘不同程度膨、突出，以L4/5明显，硬膜囊受压，双侧隐窝狭窄，神经根受压，相应椎管狭窄；黄韧带部分增厚；椎管内脊髓圆锥、马尾神经形态、信号未见异常。双侧膝关节组成诸骨对合关系正常；髌骨位置、形态在正常范围内，未见高位、外翻、外移等异常改变；内外髁未见倾斜、滑车沟深度正常；诸骨骨髓腔内未见异常信号；关节软骨光整，未见损伤或侵蚀；关节腔内未见异常积液信号；内外侧半月板形态、信号未见异常；前、后交叉韧带及胫腓侧副韧带未见异常信号；髌下脂肪垫可见少许T2WI高信号损伤；软组织内、所见肌肉及肌间隙未见异常信号。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在外侧半月板损伤？",
+    "ground_truth": "No",
+    "full_answer": "No。外侧半月板形态、信号未见异常，结构完整。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000028_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000028_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000028_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000177",
+    "findings": "双侧膝关节各骨对合尚正常；诸骨端边缘不同程度骨质增生；诸关节面软骨光整；关节腔、关节囊内见少许积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显；左前交叉韧带增粗、边缘不清，T2WI信号增高，张力尚可；右前交叉及双后交叉韧带形态、信号、走行正常；内、外侧副韧带形态、信号未见异常；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙未见异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在半月板Ⅲ度损伤？",
+    "ground_truth": "No",
+    "full_answer": "No。双侧半月板损伤分级为Ⅱ级，未见达关节面的撕裂信号。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000177_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000177_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000177_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000106",
+    "findings": "右侧膝关节各骨对合尚正常；股骨内侧髁、胫骨近端，髌骨关节面下可见斑片状长T2信号及局灶性囊性灶，诸骨端边缘不同程度骨质增生；诸关节面软骨欠光整；关节腔、关节囊内见少许积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号达半月板边缘与关节腔相通；前交叉韧带增粗、边缘不清，T2WI信号增高，张力尚可；后交叉韧带形态、信号、走行正常；内、外侧副韧带形态、信号未见异常；股四头肌腱信号增高，髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙信号增高。",
+    "question": "该患者本次膝关节 MRI 检查，前交叉韧带是否未见明确异常？",
+    "ground_truth": "No",
+    "full_answer": "No。前交叉韧带增粗、边缘不清，T2WI 信号增高，存在异常征象。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000106_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000106_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000106_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000046",
+    "findings": "右侧膝关节各骨对合正常；髌骨见斑片高信号，软骨信号欠均；关节腔内及关节囊内少量积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。左侧膝关节各骨对合正常；髌骨见斑片高信号，软骨信号欠均；关节腔内及关节囊内少量积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在双侧髌骨软化征象？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。双侧髌骨见斑片高信号，软骨信号欠均，符合软化表现。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000046_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000046_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000046_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000018",
+    "findings": "右侧膝关节各骨对合尚正常；股骨滑车面、髌骨关节面下可见斑片状长T2信号及局灶性囊性灶，诸关节面软骨欠光整，质子像其内见灶性低信号；关节腔、关节囊内见少许积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号未达半月板边缘与关节腔相通；前后交叉韧带T2WI信号稍高；内外侧副韧带形态、信号未见异常；髌下脂肪垫可见片状长T2信号；关节周围软组织肿胀。",
+    "question": "该患者本次膝关节 MRI 检查，前交叉韧带是否发生完全撕裂？",
+    "ground_truth": "No",
+    "full_answer": "No。前交叉韧带连续性存在，仅见 T2WI 信号稍高，未见中断。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000018_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000018_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000018_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000087",
+    "findings": "右侧膝关节各骨对合尚正常；股骨滑车面、髌骨关节面下可见斑片状高信号，诸骨端边缘不同程度骨质增生；诸关节面软骨欠光整；关节腔、关节囊内见少许积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号未达半月板边缘；前交叉韧带增粗、边缘不清，信号增高；后交叉韧带及内外侧副韧带形态、信号未见异常；髌下脂肪垫可见少许斑片状高信号；所见肌肉及肌间隙未见异常。左侧膝关节各骨对合尚正常；股骨滑车面、髌骨关节面下可见斑片状高信号及局灶囊性灶，诸骨端边缘不同程度骨质增生；诸关节面软骨欠光整；关节腔、关节囊内见少许积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号未达半月板边缘；内侧副韧带上段，信号稍高；前、后交叉韧带及外侧副韧带形态、信号未见异常；关节周围软组织、所见肌肉及肌间隙未见异常。",
+    "question": "该患者本次膝关节 MRI 检查，左侧前交叉韧带是否未见明确异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。左侧前交叉韧带形态、信号未见异常，连续性完整。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000087_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000087_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000087_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000119",
+    "findings": "双侧膝关节各骨对合尚正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内见少量积液征；双膝内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号达半月板边缘与关节腔相通；前交叉韧带、后交叉韧带形态、信号、走行正常；内侧副韧带、外侧副韧带形态、信号未见异常；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙未见异常。",
+    "question": "该患者本次膝关节 MRI 检查，后交叉韧带走行是否正常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。后交叉韧带形态、信号、走行正常，无中断或水肿。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000119_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000119_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000119_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000010",
+    "findings": "右侧膝关节各骨对合正常；胫骨平台可见大片状T2WI高信号灶；股骨远端少许T2WI高信号；、腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内少许积液征；内、外侧半月板未见明显异常；前、后交叉韧带及腓副韧带未见明显异常信号；髌下脂肪垫损伤；胫侧副韧带损伤，渗出；腘肌损伤、大片渗出，腘肌腱未见损伤。",
+    "question": "该患者本次膝关节 MRI 检查，前交叉韧带是否未见明确异常？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。前交叉韧带形态、信号未见明确异常，连续性完整。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000010_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000010_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000010_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000204",
+    "findings": "右侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸骨端边缘轻度骨质增生；诸关节面软骨光整；关节腔、关节囊内见少许积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；胫骨上段前外侧软组织可见斑片状压脂高信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在半月板高信号达关节面边缘的撕裂征象？",
+    "ground_truth": "No",
+    "full_answer": "No。内、外侧半月板前后角内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000204_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000204_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000204_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000104",
+    "findings": "双侧膝关节各骨对合尚正常；股骨滑车面、髌骨关节面下可见斑片状长T2信号及局灶性囊性灶，诸骨端边缘不同程度骨质增生；诸关节面软骨欠光整，质子像其内见灶性低信号；关节腔、关节囊内见少许积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显，异常信号达半月板边缘与关节腔相通；外侧副韧带增粗、边缘模糊，局部T2WI信号增高；前后交叉韧带及内侧副韧带形态、信号未见异常；髌下脂肪垫可见片状长T2信号；关节周围皮下软组织多发渗出影。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在半月板损伤？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。内、外侧半月板内可见条状 T2WI 高信号，内侧半月板后角明显，异常信号达半月板边缘与关节腔相通。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000104_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000104_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000104_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000070",
+    "findings": "右膝股骨软骨损伤修复术后，右股骨滑车软骨欠光整，信号不均，软骨修复物厚度低于邻近软骨；软骨面下骨质可见少许斑片状高信号；对应髌骨关节面软骨欠光整，关节腔内及关节囊内积液；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；髌上脂肪垫信号增高。髌下脂肪垫术后改变。",
+    "question": "该患者本次膝关节 MRI 检查，髌下脂肪垫是否呈正常术后改变？",
+    "ground_truth": "Yes",
+    "full_answer": "Yes。髌下脂肪垫可见术后改变。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000070_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000070_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000070_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000134",
+    "findings": "右侧膝关节各骨对合尚正常；股骨内侧髁、胫骨近端、髌骨关节面下可见斑片状长T2信号；诸关节面软骨光整，关节腔、关节囊内见积液；内、外侧半月板内可见条状T2WI高信号，以内侧半月板后角明显；前交叉韧带增粗、显示不清，T2WI信号增高；后交叉韧带形态、信号、走行正常；内、外侧副韧带形态、信号未见异常；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙未见异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在外侧副韧带损伤？",
+    "ground_truth": "No",
+    "full_answer": "No。外侧副韧带形态、信号未见异常。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000134_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000134_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000134_01_slice2.png"
+    ]
+  },
+  {
+    "case_id": "GJB0000030",
+    "findings": "双侧膝关节各骨对合正常；股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常；诸关节面软骨光整；关节腔内及关节囊内未见明显积液征；内、外侧半月板前后角内可见条状T2WI高信号，以内侧半月板后角稍明显，高信号未达半月板关节面边缘；前、后交叉韧带及胫腓副韧带未见明显异常；髌下脂肪垫可见片状长T2信号；关节周围软组织、所见肌肉及肌间隙未见明显异常。",
+    "question": "该患者本次膝关节 MRI 检查，是否存在关节腔内明显积液征？",
+    "ground_truth": "No",
+    "full_answer": "No。关节腔内及关节囊内未见明显积液征。",
+    "type": "yes_no",
+    "slice_paths": [
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000030_01_slice0.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000030_01_slice1.png",
+      "/content/drive/MyDrive/DS/KneeCoT/slices/test/GJB0000030_01_slice2.png"
+    ]
+  }
+]

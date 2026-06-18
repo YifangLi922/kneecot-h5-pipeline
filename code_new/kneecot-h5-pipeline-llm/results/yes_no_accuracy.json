@@ -1,0 +1,16 @@
+{
+  "direct": {
+    "accuracy": 0.6667,
+    "correct": 8,
+    "scored": 12,
+    "unparsed": 0,
+    "total": 12
+  },
+  "cot": {
+    "accuracy": 0.3333,
+    "correct": 4,
+    "scored": 12,
+    "unparsed": 0,
+    "total": 12
+  }
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "case_id": "toy_001",
+    "question_id": "toy_001_q1",
+    "question": "请推断最可能的异常结构。",
+    "gt_answer": "最可能为内侧半月板后角损伤，因为高信号达关节面。",
+    "qtype": "inference",
+    "gt_label": null,
+    "gt_conclusion": "最可能为内侧半月板后角损伤，因为高信号达关节面",
+    "prompt_mode": "direct",
+    "raw_output": "(mock direct output)\n【答案】这是一个用于测试管道的占位推理结论。"
+  },
+  {
+    "case_id": "toy_001",
+    "question_id": "toy_001_q1",
+    "question": "请推断最可能的异常结构。",
+    "gt_answer": "最可能为内侧半月板后角损伤，因为高信号达关节面。",
+    "qtype": "inference",
+    "gt_label": null,
+    "gt_conclusion": "最可能为内侧半月板后角损伤，因为高信号达关节面",
+    "prompt_mode": "cot",
+    "raw_output": "(mock cot output)\n【答案】这是一个用于测试管道的占位推理结论。"
+  }
+]
