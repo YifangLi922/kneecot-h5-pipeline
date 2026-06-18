@@ -1,0 +1,31 @@
+# Dataset (downloaded via data/prepare_data.py — do not commit)
+data/train/
+data/test/
+data/annotations/
+data/tmp_hf_cache/
+data/eval_set.json
+code_new/kneecot-h5-pipeline-llm/data/cases/*.json
+code_new/kneecot-h5-pipeline-vlm/data/
+
+# Secrets / tokens
+.env
+**/.env
+*.token
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Results / large outputs
+results/
+test_results/
+vlm_results/
+compare_out/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
