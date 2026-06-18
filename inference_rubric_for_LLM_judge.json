@@ -1,0 +1,1308 @@
+{
+  "rubric_name": "inference_question_accuracy_rubric_v2_question_aware",
+  "language": "zh-CN",
+  "created_at": "2026-06-14T16:49:35.884734+00:00",
+  "version_notes": [
+    "v2 根据人工反馈重构：同义词/相关词仅用于理解表达，不再作为“命中任意词即自动 correct”的条件。",
+    "v2 将 R1 半月板规则拆成多个问题意图：损伤存在性、Stoller 分级、是否达关节面/III度/完全撕裂、手术/风险推断、定位。",
+    "v2 对其它模块同步采用 question-aware 判定：先识别题目问什么，再抽取 ground-truth 核心结论，最后比较模型答案是否回答该核心结论。",
+    "v2 明确结构化标签只是辅助证据；当标签宽泛含义与 inference 题目的标准答案冲突时，以题目标准答案/诊断意见/MR表现中的核心结论为准。"
+  ],
+  "intended_use": "用于本批 MRI QA 数据中 inference questions 的 correct / incorrect / unclear 判定。适用于 judge_input.jsonl 的逐条 LLM-as-judge 初筛，并配合人工复核。",
+  "derived_from_uploaded_outputs": {
+    "source_zip": "inference_eval_out.zip",
+    "processed_case_files": 50,
+    "all_qa_count": 1871,
+    "inference_qa_count": 369,
+    "qa_type_counts": {
+      "yes_no": 703,
+      "descriptive": 403,
+      "localization": 396,
+      "inference": 369
+    },
+    "known_error": "The single read error was a macOS metadata file under __MACOSX/._GJB0000001T.json, not a real case JSON; it can be ignored."
+  },
+  "external_medical_reference_notes": [
+    {
+      "topic": "Meniscus MRI grading",
+      "note": "半月板 MR grade 1/2 通常为未达关节面的高信号，grade 3 为异常高信号延伸到至少一个关节面，通常提示明确半月板撕裂；因此“损伤/退变/实质内高信号”不能自动等同于“III度/达关节面/完全撕裂”。",
+      "source_title": "Guidelines on the Diagnosis and Treatment of Lateral Meniscal Lesions: A Consensus Statement by the Chinese Society of Sports Medicine",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9747892/"
+    },
+    {
+      "topic": "Meniscus high signal intensity",
+      "note": "文献中也强调 MR 2 级高信号可与组织学改变相关，但不应简单按文字“tear/撕裂”进行机械匹配，仍需结合是否延伸到关节面和题目问法。",
+      "source_title": "Correlation of Histological Examination of Meniscus with MR Images",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3835642/"
+    }
+  ],
+  "judge_output_schema": {
+    "question_id": "string",
+    "case_id": "string",
+    "qa_index": "integer",
+    "matched_rule_ids": [
+      "string"
+    ],
+    "question_intent": "string; e.g. meniscus_stoller_grade / ligament_rupture / effusion_amount / mechanism_main_choice",
+    "ground_truth_core": "string; 从标准答案/诊断意见/MR表现/标签中抽取的本题核心结论",
+    "extracted_model_conclusion": "string; 从待评模型答案中抽取的最终结论",
+    "required_elements": [
+      "string; 本题判 correct 必须覆盖的要素"
+    ],
+    "matched_elements": [
+      "string"
+    ],
+    "contradictions": [
+      "string"
+    ],
+    "verdict": "correct | incorrect | unclear",
+    "correct": "boolean; verdict == correct",
+    "needs_manual_review": "boolean",
+    "reason": "string; 一句话解释，必须说明是按哪类问题意图判的，而不是只说命中了某个词"
+  },
+  "global_decision_policy": {
+    "primary_goal": "判断待评模型答案是否回答了该 inference question 的核心结论，而不是判断答案里是否出现某个医学关键词。",
+    "source_priority": [
+      "1. question + 本题标准答案/目标答案中的核心结论（如果 judge_input 中的 model_answer 是标准答案示例，应视为 expected_answer；实际评测时应替换为待评模型答案，并保留 expected_answer 或 ground_truth_core）。",
+      "2. diagnosis_opinion 和 mr_findings：尤其用于结构化标签没有覆盖或标签含义过宽时。",
+      "3. ground_truth_labels：用于辅助确认类别、侧别、程度、分级、机制；但不得机械覆盖题目标准答案。"
+    ],
+    "question_aware_algorithm": [
+      "Step 1: 先读 question，判断题目意图：存在性、分级、程度、是否达关节面/完全断裂、机制选择、定位、临床推断、排除意义等。",
+      "Step 2: 只针对题目意图抽取 ground_truth_core。不要把 case 里其它无关异常混入本题。",
+      "Step 3: 从待评模型答案中抽取最终结论。若答案列很多内容，只看是否回答了本题核心结论，以及是否有相反陈述。",
+      "Step 4: related_terms / positive_terms 只用于识别同义表达；命中相关词不自动 correct。必须满足该 subrule 的 required_elements。",
+      "Step 5: 若模型答案与 ground_truth_core 方向一致且覆盖题目必需要素，判 correct；若方向相反或遗漏关键要素，判 incorrect；若信息不足或语义不清，判 unclear 并人工复核。"
+    ],
+    "what_counts_as_correct": [
+      "模型最终结论与本题 ground_truth_core 一致，且没有明确相反陈述。",
+      "模型可以使用同义词、英文缩写、影像征象替代表达，但必须覆盖题目要求的层级。",
+      "若题目只问“是否存在”，不强制程度完全一致；若题目问“几级/轻中重/少中大量/具体结构”，必须命中具体层级或结构。"
+    ],
+    "what_counts_as_incorrect": [
+      "模型给出相反结论，例如 ground-truth 是未达关节面，模型说达关节面/III度撕裂。",
+      "模型只回答上位概念，未回答题目要求的具体层级，例如题目问“是否完全撕裂”，模型只说“半月板损伤”。",
+      "模型把相关但不等价的概念混同，例如骨髓水肿=骨折、轻度韧带损伤=完全断裂、囊性病变=腘窝囊肿。",
+      "模型漏掉题目要求的核心类别，或把其它结构的异常当成本题答案。"
+    ],
+    "unclear_policy": [
+      "模型答案只有笼统描述，无法判断是否覆盖本题核心结论时，标记 unclear。",
+      "结构化标签与标准答案/诊断意见明显冲突，且无法从题目语境决定时，标记 unclear 并人工复核。",
+      "所有 unclear 后续统计 accuracy 时可先计入 incorrect，但必须进入人工复核。"
+    ],
+    "manual_review_triggers": [
+      "verdict 为 unclear 的全部样本。",
+      "verdict 为 incorrect 的全部样本。",
+      "correct 中随机抽取 15%-20%。",
+      "结构化标签和题目标准答案冲突的样本。",
+      "涉及治疗建议/手术指征/高风险/非膝关节结构的样本。",
+      "模型答案同时出现肯定和否定表达的样本。"
+    ],
+    "critical_warning_about_synonyms": "positive_terms / related_terms 是“相关表达词表”，不是自动判对清单。LLM judge 必须根据 subrule.decision_logic 逐题判断。"
+  },
+  "normalization": {
+    "roman_numerals_and_grades": {
+      "I": [
+        "I级",
+        "Ⅰ级",
+        "1级",
+        "Grade I",
+        "grade 1",
+        "Stoller I"
+      ],
+      "II": [
+        "II级",
+        "Ⅱ级",
+        "2级",
+        "Grade II",
+        "grade 2",
+        "Stoller II"
+      ],
+      "III": [
+        "III级",
+        "Ⅲ级",
+        "3级",
+        "Grade III",
+        "grade 3",
+        "Stoller III"
+      ],
+      "I-II": [
+        "I-II级",
+        "Ⅰ-Ⅱ级",
+        "I/II级",
+        "I~II级",
+        "1-2级",
+        "Grade I-II"
+      ],
+      "II-III": [
+        "II-III级",
+        "Ⅱ-Ⅲ级",
+        "II/III级",
+        "II~III级",
+        "2-3级",
+        "Grade II-III"
+      ]
+    },
+    "negation_terms": [
+      "无",
+      "未见",
+      "不支持",
+      "排除",
+      "未达",
+      "不构成",
+      "不具备",
+      "可能性较低",
+      "风险较低",
+      "not",
+      "no",
+      "without",
+      "unlikely"
+    ],
+    "severity_terms": {
+      "mild": [
+        "轻度",
+        "轻微",
+        "低度",
+        "mild",
+        "low-grade"
+      ],
+      "moderate": [
+        "中度",
+        "中等",
+        "moderate"
+      ],
+      "severe": [
+        "重度",
+        "严重",
+        "明显",
+        "severe",
+        "marked"
+      ]
+    },
+    "surface_extension_terms": {
+      "not_reaching_surface": [
+        "未达关节面",
+        "未达半月板边缘",
+        "未达关节面边缘",
+        "未延伸至关节面",
+        "not extending to articular surface",
+        "no surface communication"
+      ],
+      "reaching_surface": [
+        "达关节面",
+        "累及关节面",
+        "延伸至关节面",
+        "与关节面相通",
+        "extending to articular surface",
+        "surface communication"
+      ]
+    },
+    "anatomy_synonyms": {
+      "ACL": [
+        "前交叉韧带",
+        "ACL",
+        "anterior cruciate ligament"
+      ],
+      "PCL": [
+        "后交叉韧带",
+        "PCL",
+        "posterior cruciate ligament"
+      ],
+      "MCL": [
+        "内侧副韧带",
+        "MCL",
+        "medial collateral ligament"
+      ],
+      "LCL": [
+        "外侧副韧带",
+        "胫腓副韧带",
+        "LCL",
+        "lateral collateral ligament"
+      ],
+      "Hoffa_fat_pad": [
+        "髌下脂肪垫",
+        "Hoffa脂肪垫",
+        "Hoffa fat pad"
+      ],
+      "Baker_cyst": [
+        "腘窝囊肿",
+        "Baker囊肿",
+        "Baker's cyst",
+        "popliteal cyst"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "category_id": "R1_meniscus_question_aware",
+      "display_name": "半月板：损伤存在性、Stoller分级、达关节面/III度/完全撕裂、手术/风险、定位",
+      "priority": 1,
+      "applies_when": [
+        "question 涉及 半月板、Stoller、I/II/III级、撕裂、达关节面、完全撕裂、手术缝合指征、急性撕裂风险、内侧/外侧/前角/后角。",
+        "ground_truth_labels.半月板 或 diagnosis_opinion/MR表现 中有半月板相关描述。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "ground_truth_labels.半月板.损伤分级",
+        "ground_truth_labels.半月板.是否撕裂",
+        "ground_truth_labels.半月板.类型"
+      ],
+      "related_terms": {
+        "injury_presence_terms": [
+          "半月板损伤",
+          "半月板异常",
+          "半月板退变",
+          "半月板变性",
+          "实质内高信号",
+          "intrasubstance signal",
+          "meniscal degeneration"
+        ],
+        "grade_terms": [
+          "I级",
+          "II级",
+          "III级",
+          "I-II级",
+          "II-III级",
+          "Stoller",
+          "Grade I",
+          "Grade II",
+          "Grade III"
+        ],
+        "surface_or_true_tear_terms": [
+          "达关节面",
+          "延伸至关节面",
+          "III度撕裂",
+          "完全撕裂",
+          "definite tear",
+          "surface communication"
+        ],
+        "non_surface_terms": [
+          "未达关节面",
+          "未达半月板边缘",
+          "未见III度撕裂",
+          "不构成完全撕裂",
+          "no surface communication"
+        ],
+        "location_terms": [
+          "内侧半月板",
+          "外侧半月板",
+          "前角",
+          "后角",
+          "体部"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "meniscus_injury_presence",
+          "trigger_examples": [
+            "是否存在半月板损伤？",
+            "半月板是否异常？"
+          ],
+          "required_elements_for_correct": [
+            "承认或否认半月板损伤/异常的存在性，方向必须与本题标准答案一致。"
+          ],
+          "decision_logic": "如果题目只问“有没有半月板损伤/异常”，模型回答损伤、退变、实质内高信号、I/II级损伤可算 correct；不要求回答是否达关节面或是否完全撕裂。",
+          "incorrect_if": [
+            "ground-truth 有半月板损伤而模型说半月板正常/未见异常。",
+            "ground-truth 无半月板异常而模型说存在损伤/撕裂。"
+          ]
+        },
+        {
+          "question_intent": "meniscus_stoller_grade",
+          "trigger_examples": [
+            "根据 Stoller 分级属于几级？",
+            "半月板损伤分级是什么？"
+          ],
+          "required_elements_for_correct": [
+            "明确给出与标准答案一致的分级，或给出等价影像依据。"
+          ],
+          "decision_logic": "I、II、I-II、II-III、III 必须标准化后比较。若标准答案为 II 或 I-II，模型答“II级/Ⅰ-Ⅱ级/高信号未达关节面”可 correct；若答 III级/达关节面则 incorrect。若标准答案为 III，模型必须表达达关节面或 III级撕裂。",
+          "incorrect_if": [
+            "只说“半月板损伤”但不回答分级。",
+            "把 II/I-II 级判成 III 级。",
+            "把 III 级明确撕裂判成 I/II 级退变。"
+          ]
+        },
+        {
+          "question_intent": "meniscus_surface_reaching_or_grade3_tear",
+          "trigger_examples": [
+            "是否存在 III 度撕裂？",
+            "是否达关节面？",
+            "是否构成完全撕裂？"
+          ],
+          "required_elements_for_correct": [
+            "明确回答是否达关节面/是否III度/是否完全撕裂。"
+          ],
+          "decision_logic": "这类题以题目标准答案和 MR表现为准，不得仅凭 ground_truth_labels.是否撕裂=true 自动要求模型承认完全撕裂。若标准答案是“未达关节面/不构成完全撕裂/I-II或II级”，模型说“非III度、未达关节面、不是完全撕裂”应判 correct。若标准答案是“达关节面/III度/明确撕裂”，模型必须承认。",
+          "incorrect_if": [
+            "题目问完全撕裂，模型只说“半月板损伤”而没有回答是否完全/达关节面。",
+            "标准答案为未达关节面，模型说达关节面/完全撕裂。",
+            "标准答案为达关节面，模型说未达关节面。"
+          ],
+          "special_note": "在本数据集中，“是否撕裂=true”可能被宽泛使用，不能和“完全/达关节面/III度撕裂”直接画等号。"
+        },
+        {
+          "question_intent": "meniscus_surgery_or_acute_risk",
+          "trigger_examples": [
+            "是否具备手术缝合绝对指征？",
+            "是否急性半月板撕裂高风险？"
+          ],
+          "required_elements_for_correct": [
+            "结合分级、是否达关节面、是否完全撕裂、是否急性征象给出风险/指征方向。"
+          ],
+          "decision_logic": "如果标准答案依据为 I/II 或 II级、未达关节面、无完全撕裂，模型回答“风险较低/不具备绝对手术指征/倾向保守”可 correct。若存在 III度达关节面撕裂、移位、桶柄样撕裂等，模型应反映较高风险或手术相关性。",
+          "incorrect_if": [
+            "只因为有半月板损伤就说一定需要手术。",
+            "无视达关节面/III度证据。"
+          ]
+        },
+        {
+          "question_intent": "meniscus_localization",
+          "trigger_examples": [
+            "损伤位于内侧还是外侧？前角还是后角？"
+          ],
+          "required_elements_for_correct": [
+            "命中题目要求的侧别和部位。"
+          ],
+          "decision_logic": "若题目要求定位，泛称“半月板损伤”不充分；必须回答内侧/外侧、前角/后角/体部等。",
+          "incorrect_if": [
+            "侧别答反。",
+            "题目要求具体部位但答案只给上位概念。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "ground_truth_labels.是否撕裂 与标准答案/MR表现中“未达关节面/II级”看似冲突。",
+        "模型答案同时出现“撕裂”和“未达关节面/不构成撕裂”。",
+        "题目涉及手术指征或急性风险。"
+      ],
+      "common_pitfalls": [
+        "不要把“半月板损伤/退变/II级”自动等同于“完全撕裂/III度撕裂”。",
+        "不要把 positive 相关词表当作答案表；题目问“是否完全撕裂”时，“半月板损伤”只是相关，不足以判对。"
+      ]
+    },
+    {
+      "category_id": "R2_ligament_question_aware",
+      "display_name": "韧带：正常、轻度/部分损伤、完全断裂、术后重建、稳定性",
+      "priority": 2,
+      "applies_when": [
+        "question 涉及 ACL/PCL/MCL/LCL/前交叉/后交叉/副韧带/髌韧带/股四头肌腱/韧带损伤/断裂/重建/稳定性。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "ground_truth_labels.韧带"
+      ],
+      "related_terms": {
+        "injury_terms": [
+          "损伤",
+          "轻度损伤",
+          "扭伤",
+          "sprain",
+          "水肿",
+          "信号增高",
+          "增粗",
+          "边缘模糊",
+          "部分损伤"
+        ],
+        "rupture_terms": [
+          "断裂",
+          "完全断裂",
+          "连续性中断",
+          "rupture",
+          "complete tear"
+        ],
+        "intact_terms": [
+          "正常",
+          "连续性完整",
+          "形态信号正常",
+          "intact",
+          "未见异常"
+        ],
+        "reconstruction_terms": [
+          "术后重建",
+          "ACL重建术后",
+          "移植物",
+          "重建韧带",
+          "骨道",
+          "内固定"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "ligament_presence_or_normality",
+          "required_elements_for_correct": [
+            "针对题目指定韧带，回答是否正常/是否损伤。"
+          ],
+          "decision_logic": "先确定是哪条韧带。ground-truth 为正常时，模型需表达正常/完整/未见异常；ground-truth 为损伤时，模型需承认损伤/扭伤/信号异常。",
+          "incorrect_if": [
+            "把其它韧带状态当成本题韧带。",
+            "ground-truth 正常而模型说损伤。"
+          ]
+        },
+        {
+          "question_intent": "ligament_severity",
+          "required_elements_for_correct": [
+            "回答轻度/中度/重度或等价程度，并与连续性、断裂证据一致。"
+          ],
+          "decision_logic": "轻度损伤/信号增高/连续性存在 ≠ 完全断裂。若标准答案为轻度，答轻度/低度/部分损伤可 correct；答完全断裂通常 incorrect。若标准答案为断裂，必须说断裂/连续性中断。",
+          "incorrect_if": [
+            "把轻度 sprain 判成 complete rupture。",
+            "把完全断裂淡化成轻度水肿。"
+          ]
+        },
+        {
+          "question_intent": "ligament_stability_implication",
+          "required_elements_for_correct": [
+            "根据主要稳定韧带是否完整，判断稳定性是否严重受影响。"
+          ],
+          "decision_logic": "若 ACL/PCL/副韧带正常或仅轻度损伤且骨对合正常，模型说“稳定性未受严重影响/严重不稳定可能性低”可 correct。若存在完全断裂或多韧带损伤，应反映稳定性风险。",
+          "incorrect_if": [
+            "只提“有韧带损伤”就断言严重不稳定，忽略轻度/连续性完整。"
+          ]
+        },
+        {
+          "question_intent": "ligament_reconstruction_postoperative",
+          "required_elements_for_correct": [
+            "识别术后重建状态，并区分术后改变与新发急性断裂。"
+          ],
+          "decision_logic": "若题目问重建术后状态，模型必须提术后重建/移植物/骨道/内固定等，并根据连续性判断是否再断裂。",
+          "incorrect_if": [
+            "把重建术后误写成初次急性损伤。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "韧带“损伤/断裂/重建”多个状态同时出现。",
+        "题目问稳定性但报告证据不充分。"
+      ],
+      "common_pitfalls": [
+        "“损伤”不是“完全断裂”的同义词。",
+        "“连续性完整”在很多题里是排除完全断裂的关键依据。"
+      ]
+    },
+    {
+      "category_id": "R3_mechanism_question_aware",
+      "display_name": "病理机制：退行性、创伤性、炎症性、术后；主机制 vs 伴随机制",
+      "priority": 3,
+      "applies_when": [
+        "question 涉及 退行性/创伤性/炎症性/术后/急性/慢性/病理性质/产生机制/主要属于。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "ground_truth_labels.病理机制",
+        "ground_truth_labels.任务标签"
+      ],
+      "related_terms": {
+        "degenerative_evidence": [
+          "退行性改变",
+          "退变",
+          "慢性退变",
+          "骨质增生",
+          "骨赘",
+          "软骨磨损",
+          "半月板退变"
+        ],
+        "traumatic_evidence": [
+          "创伤性改变",
+          "急性损伤",
+          "外伤性",
+          "骨挫伤",
+          "急性水肿",
+          "韧带断裂"
+        ],
+        "inflammatory_evidence": [
+          "炎症性改变",
+          "滑膜炎",
+          "滑膜增生",
+          "关节炎",
+          "炎性反应"
+        ],
+        "postoperative_evidence": [
+          "术后改变",
+          "术后复查",
+          "内固定",
+          "重建术后",
+          "移植物"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "mechanism_main_choice",
+          "required_elements_for_correct": [
+            "明确选择题目所问的主机制。"
+          ],
+          "decision_logic": "若题目问“主要属于创伤性还是退行性”，必须明确主机制；只罗列骨赘/水肿等证据但不选结论，通常 unclear。若同时有多个机制，按题目标准答案中的主机制判。",
+          "incorrect_if": [
+            "把退行性主机制说成创伤性主机制。",
+            "把术后改变说成新发急性损伤。"
+          ]
+        },
+        {
+          "question_intent": "mechanism_causal_explanation",
+          "required_elements_for_correct": [
+            "机制方向和依据一致。"
+          ],
+          "decision_logic": "模型可以用影像依据解释机制：骨质增生/软骨磨损支持退行性；骨挫伤/急性韧带损伤支持创伤性；滑膜增生/滑膜炎支持炎症性；内固定/重建支持术后。",
+          "incorrect_if": [
+            "证据和机制方向相反。"
+          ]
+        },
+        {
+          "question_intent": "mechanism_multi_label_case",
+          "required_elements_for_correct": [
+            "区分主机制和伴随机制。"
+          ],
+          "decision_logic": "如果标签中多个机制为 true，不能看到任一 true 就判对；题目问退行性 vs 创伤性时，答案必须与该题标准答案的主结论一致。",
+          "incorrect_if": [
+            "用伴随机制替代主机制。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "标签中多个机制同时为 true。",
+        "标准答案说“主要”但模型答案给多个可能。"
+      ],
+      "common_pitfalls": [
+        "骨髓水肿可支持创伤或应力反应，但不自动等于创伤主机制。",
+        "软骨磨损/骨赘是退行性重要证据，但题目若问局部损伤机制仍需看语境。"
+      ]
+    },
+    {
+      "category_id": "R4_effusion_synovium_question_aware",
+      "display_name": "关节积液、积液量、滑膜炎/滑膜增生及机制",
+      "priority": 4,
+      "applies_when": [
+        "question 涉及 关节积液、少量/中量/大量、关节腔、关节囊、滑膜炎、滑膜增生、滑膜反应、积液机制。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "ground_truth_labels.滑膜关节腔"
+      ],
+      "related_terms": {
+        "presence_terms": [
+          "关节积液",
+          "关节腔积液",
+          "关节囊内积液",
+          "液性信号"
+        ],
+        "amount_terms": {
+          "少量": [
+            "少量",
+            "少许",
+            "轻度",
+            "small"
+          ],
+          "中量": [
+            "中量",
+            "中等量",
+            "moderate"
+          ],
+          "大量": [
+            "大量",
+            "明显",
+            "large"
+          ]
+        },
+        "synovium_terms": [
+          "滑膜炎",
+          "滑膜增生",
+          "滑膜增厚",
+          "滑膜反应"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "effusion_presence",
+          "required_elements_for_correct": [
+            "是否存在积液的方向正确。"
+          ],
+          "decision_logic": "题目只问有无积液时，承认存在即可 correct，不强制少量/中量完全一致。若标准答案无积液，模型说有积液 incorrect。",
+          "incorrect_if": [
+            "有无方向相反。"
+          ]
+        },
+        {
+          "question_intent": "effusion_amount",
+          "required_elements_for_correct": [
+            "回答少量/中量/大量且与标准答案一致。"
+          ],
+          "decision_logic": "题目问程度时，少许=少量、轻度=少量；中量/大量不能与少量混用。只说“有积液”不够，通常 unclear 或 incorrect。",
+          "incorrect_if": [
+            "标准答案少量而模型说大量。",
+            "题目问量级但模型只回答存在。"
+          ]
+        },
+        {
+          "question_intent": "effusion_mechanism",
+          "required_elements_for_correct": [
+            "说明与关节内损伤/滑膜反应/炎症刺激等相关，且不与报告矛盾。"
+          ],
+          "decision_logic": "机制类可以接受反应性积液、滑膜分泌增多、关节内损伤刺激等；但若报告无滑膜增生，不能强行说显著滑膜增生。",
+          "incorrect_if": [
+            "把少量反应性积液说成大量感染性积液且无依据。"
+          ]
+        },
+        {
+          "question_intent": "synovitis_or_synovial_proliferation",
+          "required_elements_for_correct": [
+            "明确回答滑膜炎或滑膜增生是否存在。"
+          ],
+          "decision_logic": "积液不自动等于滑膜炎/滑膜增生。题目问滑膜炎/增生时，必须命中具体结论。",
+          "incorrect_if": [
+            "只因有关节积液就判滑膜炎。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "题目问机制但报告只有积液，没有机制证据。"
+      ],
+      "common_pitfalls": [
+        "“积液”是存在性词，不自动满足“积液程度”问题。",
+        "积液不等于滑膜增生。"
+      ]
+    },
+    {
+      "category_id": "R5_osteochondral_question_aware",
+      "display_name": "软骨/骨软骨：软骨磨损/缺损、骨髓水肿、骨挫伤、骨折、骨质增生、骨囊变",
+      "priority": 5,
+      "applies_when": [
+        "question 涉及 软骨、骨软骨、骨髓水肿、骨挫伤、骨折、骨质增生/骨赘、骨囊变、硬化。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "ground_truth_labels.骨软骨单元"
+      ],
+      "related_terms": {
+        "cartilage_wear_terms": [
+          "软骨磨损",
+          "软骨欠光整",
+          "软骨信号不均",
+          "软骨退变",
+          "chondral wear"
+        ],
+        "cartilage_defect_terms": [
+          "软骨缺损",
+          "软骨剥脱",
+          "full-thickness cartilage defect"
+        ],
+        "bone_marrow_edema_terms": [
+          "骨髓水肿",
+          "骨髓水肿样改变",
+          "长T2信号"
+        ],
+        "bone_contusion_terms": [
+          "骨挫伤",
+          "骨挫伤样改变",
+          "bone bruise",
+          "bone contusion"
+        ],
+        "fracture_terms": [
+          "骨折",
+          "骨折线",
+          "骨皮质中断"
+        ],
+        "osteophyte_terms": [
+          "骨质增生",
+          "骨赘",
+          "骨刺"
+        ],
+        "cystic_bone_terms": [
+          "骨囊变",
+          "软骨下囊变",
+          "骨下囊性灶"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "cartilage_wear_or_injury",
+          "required_elements_for_correct": [
+            "按题目要求区分软骨磨损/损伤/变薄/缺损。"
+          ],
+          "decision_logic": "软骨欠光整、信号不均、磨损可作为退变/磨损同义；但题目具体问“缺损/变薄”时，必须回答对应具体类别。",
+          "incorrect_if": [
+            "把软骨磨损说成明确全层缺损而无依据。"
+          ]
+        },
+        {
+          "question_intent": "bone_marrow_edema_vs_contusion",
+          "required_elements_for_correct": [
+            "区分骨髓水肿、骨挫伤、骨折。"
+          ],
+          "decision_logic": "骨髓水肿与骨挫伤相关但不完全等价。若标准答案只说骨髓水肿，模型直接说骨挫伤需看题目是否允许“提示/考虑”；若题目问骨折，水肿或挫伤均不能等同骨折。",
+          "incorrect_if": [
+            "把骨挫伤或骨髓水肿判成骨折。",
+            "标准答案明确无骨挫伤而模型说骨挫伤。"
+          ]
+        },
+        {
+          "question_intent": "osteophyte_or_degenerative_bone_change",
+          "required_elements_for_correct": [
+            "明确骨质增生/骨赘存在或不存在。"
+          ],
+          "decision_logic": "题目问骨质增生时，必须提骨质增生/骨赘/骨刺；泛称退行性改变可能不够，除非答案说明依据。",
+          "incorrect_if": [
+            "只说软骨磨损但题目问骨质增生。"
+          ]
+        },
+        {
+          "question_intent": "subchondral_cyst_or_bone_cyst",
+          "required_elements_for_correct": [
+            "回答骨囊变/软骨下囊性灶。"
+          ],
+          "decision_logic": "骨囊变属于骨软骨单元/囊性改变交叉类别；如果题目具体问骨囊变，模型需提骨囊变或软骨下囊性改变，不能只说腘窝囊肿。",
+          "incorrect_if": [
+            "把腘窝囊肿当作骨囊变。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "骨髓水肿与骨挫伤边界不清。",
+        "软骨损伤字段与诊断意见“软骨磨损”不一致。"
+      ],
+      "common_pitfalls": [
+        "相关影像征象不能跨层级自动判对：骨髓水肿≠骨折，软骨磨损≠软骨缺损，骨囊变≠腘窝囊肿。"
+      ]
+    },
+    {
+      "category_id": "R6_patellofemoral_question_aware",
+      "display_name": "髌股关节、髌骨软化、髌骨位置/不稳",
+      "priority": 6,
+      "applies_when": [
+        "question 涉及 髌骨、髌股关节、髌骨软化、髌骨高位/低位/不稳/倾斜、髌股关节紊乱。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "ground_truth_labels.髌股关节"
+      ],
+      "related_terms": {
+        "chondromalacia_terms": [
+          "髌骨软化",
+          "髌骨软化症",
+          "髌骨软骨软化",
+          "patellar chondromalacia"
+        ],
+        "patellofemoral_chondral_terms": [
+          "髌骨关节面软骨磨损",
+          "髌骨关节面软骨欠光整",
+          "髌股关节退变"
+        ],
+        "maltracking_terms": [
+          "髌骨高位",
+          "髌骨低位",
+          "髌骨不稳",
+          "髌骨倾斜",
+          "髌股关节紊乱"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "patellar_chondromalacia",
+          "required_elements_for_correct": [
+            "明确髌骨软化或髌骨关节面软骨软化/退变。"
+          ],
+          "decision_logic": "题目问髌骨软化时，模型应指向髌骨/髌股关节软骨；泛称“软骨损伤”只有在明确部位为髌骨时才可 correct。",
+          "incorrect_if": [
+            "把胫股关节软骨磨损当作髌骨软化。"
+          ]
+        },
+        {
+          "question_intent": "patellar_position_or_instability",
+          "required_elements_for_correct": [
+            "命中高位/低位/不稳/倾斜等具体状态。"
+          ],
+          "decision_logic": "题目问对位/不稳时，不得用髌骨软化替代。",
+          "incorrect_if": [
+            "题目问髌骨不稳，模型只说软骨磨损。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "题目使用“髌股关节病变”但答案只谈软骨，需看是否足够。"
+      ],
+      "common_pitfalls": [
+        "髌骨软化是部位特异概念，不等于所有软骨损伤。"
+      ]
+    },
+    {
+      "category_id": "R7_hoffa_fat_pad_question_aware",
+      "display_name": "髌下脂肪垫 / Hoffa 区损伤、水肿、炎症、症状推断",
+      "priority": 7,
+      "applies_when": [
+        "question、diagnosis_opinion 或 mr_findings 涉及 髌下脂肪垫、Hoffa、脂肪垫长T2信号、脂肪垫损伤、膝前痛。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings"
+      ],
+      "related_terms": {
+        "abnormality_terms": [
+          "髌下脂肪垫损伤",
+          "Hoffa脂肪垫损伤",
+          "脂肪垫水肿",
+          "脂肪垫炎",
+          "Hoffa病",
+          "片状长T2信号"
+        ],
+        "symptom_terms": [
+          "膝前痛",
+          "前膝痛",
+          "疼痛"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "fat_pad_abnormality_presence",
+          "required_elements_for_correct": [
+            "承认或否认髌下脂肪垫异常。"
+          ],
+          "decision_logic": "报告明确脂肪垫损伤/长T2信号时，模型回答损伤、水肿、炎症、Hoffa病均可 correct；若否认则 incorrect。",
+          "incorrect_if": [
+            "ground-truth 有脂肪垫损伤而模型说未见异常。"
+          ]
+        },
+        {
+          "question_intent": "fat_pad_symptom_implication",
+          "required_elements_for_correct": [
+            "回答可能引起膝前痛/前膝痛，且说明与脂肪垫炎症/水肿相关。"
+          ],
+          "decision_logic": "题目问临床症状时，只说“脂肪垫损伤”不够；需要给出症状方向。",
+          "incorrect_if": [
+            "题目问症状但模型只重复影像异常。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "标准答案将脂肪垫损伤解释为创伤性或炎症性机制，模型只给泛化描述。"
+      ],
+      "common_pitfalls": [
+        "Hoffa 病/脂肪垫炎/脂肪垫水肿在本数据中可作为脂肪垫异常同义，但症状题仍需回答症状。"
+      ]
+    },
+    {
+      "category_id": "R8_cystic_lesion_question_aware",
+      "display_name": "囊性病变：泛类、腘窝/Baker囊肿、骨囊变、滑囊积液及机制",
+      "priority": 8,
+      "applies_when": [
+        "question 涉及 囊肿、囊性灶、腘窝、Baker、滑囊、骨囊变、囊性病变机制。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "ground_truth_labels.囊性病变",
+        "ground_truth_labels.骨软骨单元.骨囊变"
+      ],
+      "related_terms": {
+        "generic_cyst_terms": [
+          "囊性病变",
+          "囊肿",
+          "囊性灶",
+          "局灶性囊性灶",
+          "滑囊积液",
+          "滑膜囊肿"
+        ],
+        "baker_cyst_terms": [
+          "腘窝囊肿",
+          "Baker囊肿",
+          "Baker's cyst",
+          "popliteal cyst"
+        ],
+        "bone_cyst_terms": [
+          "骨囊变",
+          "骨下囊变",
+          "软骨下囊变",
+          "subchondral cyst"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "generic_cyst_presence",
+          "required_elements_for_correct": [
+            "判断是否有囊性病变泛类。"
+          ],
+          "decision_logic": "题目只问是否有囊性病变时，任一囊肿/囊性灶/滑囊积液可 correct。",
+          "incorrect_if": [
+            "ground-truth 有囊性病变而模型否认。"
+          ]
+        },
+        {
+          "question_intent": "specific_baker_cyst",
+          "required_elements_for_correct": [
+            "明确腘窝/Baker/poplietal cyst。"
+          ],
+          "decision_logic": "题目具体问腘窝囊肿时，必须提腘窝或 Baker；泛称囊性病变不够。",
+          "incorrect_if": [
+            "把其它囊性灶当作腘窝囊肿。"
+          ]
+        },
+        {
+          "question_intent": "specific_bone_cyst",
+          "required_elements_for_correct": [
+            "明确骨囊变/软骨下囊变。"
+          ],
+          "decision_logic": "题目具体问骨囊变时，必须命中骨/软骨下囊性改变；不能用腘窝囊肿替代。",
+          "incorrect_if": [
+            "把 Baker 囊肿当作骨囊变。"
+          ]
+        },
+        {
+          "question_intent": "baker_cyst_mechanism",
+          "required_elements_for_correct": [
+            "将腘窝囊肿与关节积液、半月板损伤、关节内压力增高或滑液增多联系起来。"
+          ],
+          "decision_logic": "机制题必须回答“相关因素/形成机制”，只说存在腘窝囊肿不够。",
+          "incorrect_if": [
+            "题目问机制而模型只回答位置或存在性。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "题目说囊性病变但数据中同时有骨囊变和腘窝囊肿。"
+      ],
+      "common_pitfalls": [
+        "囊性病变是上位概念；具体题目不能用上位词替代。"
+      ]
+    },
+    {
+      "category_id": "R9_postoperative_question_aware",
+      "display_name": "术后状态：膝关节重建、腰椎内固定、术后复查、结构归属",
+      "priority": 9,
+      "applies_when": [
+        "question、diagnosis_opinion 或 mr_findings 涉及 术后、复查、重建、内固定、移植物、螺钉、金属伪影、腰椎术后。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "ground_truth_labels.病理机制.术后改变",
+        "ground_truth_labels.任务标签.术后状态"
+      ],
+      "related_terms": {
+        "postop_terms": [
+          "术后改变",
+          "术后状态",
+          "术后复查",
+          "内固定",
+          "金属伪影",
+          "重建术后",
+          "移植物"
+        ],
+        "knee_reconstruction_terms": [
+          "前交叉韧带重建术后",
+          "ACL reconstruction",
+          "重建韧带",
+          "骨道",
+          "螺钉"
+        ],
+        "lumbar_postop_terms": [
+          "腰椎术后",
+          "L2-5内固定",
+          "椎体及附件内固定"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "postoperative_presence",
+          "required_elements_for_correct": [
+            "识别是否术后，并指明相关结构/部位。"
+          ],
+          "decision_logic": "术后类题必须回答术后状态，同时注意部位：腰椎术后不能自动说明膝关节术后。",
+          "incorrect_if": [
+            "把腰椎术后误用于膝关节问题。",
+            "把术后重建误判为新发急性断裂。"
+          ]
+        },
+        {
+          "question_intent": "postoperative_integrity_or_retear",
+          "required_elements_for_correct": [
+            "判断重建结构是否连续/稳定/是否再断裂。"
+          ],
+          "decision_logic": "题目问术后重建是否稳定时，需结合重建韧带连续性、信号、骨道/内固定判断；只说“术后”不够。",
+          "incorrect_if": [
+            "题目问再断裂风险，模型只识别术后而不回答风险方向。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "同一报告中同时有腰椎和膝关节内容。"
+      ],
+      "common_pitfalls": [
+        "结构归属很重要：哪个部位术后，题目问的就是哪个部位。"
+      ]
+    },
+    {
+      "category_id": "R10_severity_risk_treatment_question_aware",
+      "display_name": "严重程度、风险、排除意义、治疗/手术指征类推断",
+      "priority": 10,
+      "applies_when": [
+        "question 涉及 轻度/中度/重度、整体严重程度、风险、排除意义、临床意义、治疗、手术、保守、症状。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "relevant structured labels"
+      ],
+      "related_terms": {
+        "mild_terms": [
+          "轻度",
+          "轻微",
+          "轻中度",
+          "低风险",
+          "可能性较低",
+          "未受严重影响"
+        ],
+        "moderate_terms": [
+          "中度",
+          "中等程度",
+          "中等风险"
+        ],
+        "severe_terms": [
+          "重度",
+          "严重",
+          "高风险",
+          "完全断裂",
+          "大量积液",
+          "骨折",
+          "明显不稳定"
+        ],
+        "treatment_terms": [
+          "保守治疗",
+          "手术指征",
+          "缝合",
+          "不具备绝对指征",
+          "需要进一步评估"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "overall_or_structure_specific_severity",
+          "required_elements_for_correct": [
+            "针对题目指定结构或整体病例给出轻/中/重方向。"
+          ],
+          "decision_logic": "严重程度题必须看题目范围。如果题目问 ACL，不能用半月板严重程度回答；如果问整体，可综合最主要异常。轻度韧带损伤、II级半月板、少量积液、无骨折/完全断裂通常支持轻度或轻中度。",
+          "incorrect_if": [
+            "混入无关结构导致严重程度方向错误。"
+          ]
+        },
+        {
+          "question_intent": "risk_prediction_or_high_risk",
+          "required_elements_for_correct": [
+            "给出风险方向并与影像证据一致。"
+          ],
+          "decision_logic": "急性撕裂/完全断裂/高风险问题需要明确风险方向。只说“有损伤”不等于高风险。",
+          "incorrect_if": [
+            "以任何损伤自动判高风险。"
+          ]
+        },
+        {
+          "question_intent": "treatment_or_surgical_indication",
+          "required_elements_for_correct": [
+            "基于影像结论给出是否存在绝对手术指征或倾向保守/需临床结合。"
+          ],
+          "decision_logic": "评分只评影像推理方向，不评真实治疗建议。II级未达关节面的半月板损伤通常支持“不具备绝对缝合指征”；完全断裂/III度/移位性撕裂可能支持较高干预相关性。",
+          "incorrect_if": [
+            "无完全撕裂/III度证据却说必需手术。"
+          ]
+        },
+        {
+          "question_intent": "clinical_symptom_implication",
+          "required_elements_for_correct": [
+            "症状推断与对应结构一致。"
+          ],
+          "decision_logic": "例如脂肪垫损伤可回答膝前痛；腘窝囊肿可回答腘窝不适/肿胀；但不能任意扩展到未支持的症状。",
+          "incorrect_if": [
+            "症状和结构不匹配。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "题目涉及真实治疗建议、手术、临床风险。"
+      ],
+      "common_pitfalls": [
+        "风险/治疗题不是关键词题，必须根据题目和证据推理。"
+      ]
+    },
+    {
+      "category_id": "R11_non_knee_special_structures_question_aware",
+      "display_name": "非膝关节特殊结构：肩关节、腰椎等",
+      "priority": 11,
+      "applies_when": [
+        "question 涉及 肩、冈上肌、肩峰、肩锁关节、盂唇、腰椎、椎管、椎间盘、内固定、骶管囊肿。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings"
+      ],
+      "related_terms": {
+        "shoulder_terms": [
+          "肩峰III型",
+          "钩状肩峰",
+          "肩峰下撞击",
+          "冈上肌腱损伤",
+          "盂唇损伤",
+          "盂唇磨损",
+          "肩锁关节炎"
+        ],
+        "lumbar_terms": [
+          "腰椎术后",
+          "金属内固定",
+          "椎间盘膨隆",
+          "椎管内占位",
+          "黄韧带不厚",
+          "骶管囊肿"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "non_knee_core_diagnosis",
+          "required_elements_for_correct": [
+            "命中题目所问的非膝核心结构和结论。"
+          ],
+          "decision_logic": "非膝问题不要用膝关节结构化标签判断。直接以诊断意见和 MR表现为 ground-truth。",
+          "incorrect_if": [
+            "用膝关节标签回答肩/腰椎问题。"
+          ]
+        },
+        {
+          "question_intent": "non_knee_exclusion",
+          "required_elements_for_correct": [
+            "回答是否排除或存在某非膝病变。"
+          ],
+          "decision_logic": "例如“椎管内未见明确占位”题，模型需否认占位；不能只说腰椎术后。",
+          "incorrect_if": [
+            "题目问占位，模型只回答内固定。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "诊断意见和 MR表现中非膝信息较长或多部位混杂。"
+      ],
+      "common_pitfalls": [
+        "结构化膝关节标签对肩/腰椎问题可能完全不适用。"
+      ]
+    },
+    {
+      "category_id": "R12_negation_and_exclusion_question_aware",
+      "display_name": "否定/排除类 inference：方向、范围和证据",
+      "priority": 12,
+      "applies_when": [
+        "question 涉及 是否排除、是否存在、是否受到严重影响、是否具备指征、是否高风险、未见异常意义。"
+      ],
+      "ground_truth_sources": [
+        "本题标准答案/expected_answer",
+        "diagnosis_opinion",
+        "mr_findings",
+        "relevant labels"
+      ],
+      "related_terms": {
+        "negative_terms": [
+          "不存在",
+          "未见",
+          "无明显",
+          "不支持",
+          "排除",
+          "风险较低",
+          "可能性较低",
+          "不具备",
+          "not",
+          "no",
+          "without"
+        ],
+        "positive_terms": [
+          "存在",
+          "可见",
+          "提示",
+          "符合",
+          "支持",
+          "具备",
+          "高风险"
+        ]
+      },
+      "important_note": "related_terms 仅用于帮助识别同义表达，不是自动判 correct 的条件。必须按 subrules 中的 question_intent 和 required_elements 判断。",
+      "subrules": [
+        {
+          "question_intent": "negative_or_exclusion_answer",
+          "required_elements_for_correct": [
+            "否定方向与题目标准答案一致，并说明对应排除对象。"
+          ],
+          "decision_logic": "排除类题必须识别否定范围。例如“是否存在完全撕裂？”的正确否定是“不构成完全撕裂/未达关节面”，不是简单“有半月板损伤”。",
+          "incorrect_if": [
+            "否定对象错位。",
+            "把“未达关节面”误判成“无半月板损伤”。"
+          ]
+        },
+        {
+          "question_intent": "positive_answer_to_existential_question",
+          "required_elements_for_correct": [
+            "肯定方向与标准答案一致，并回答题目对象。"
+          ],
+          "decision_logic": "存在性问题可较宽，但必须是同一对象。题目问腘窝囊肿，回答“囊性病变”可能不够；题目问囊性病变，回答腘窝囊肿可以。",
+          "incorrect_if": [
+            "上位/下位概念方向不符合题目要求。"
+          ]
+        }
+      ],
+      "manual_review_if": [
+        "答案中同时出现肯定词和否定词。",
+        "否定对象不明确。"
+      ],
+      "common_pitfalls": [
+        "不要只看“未见/存在”关键词，要看否定或肯定修饰的是哪个诊断对象。"
+      ]
+    }
+  ],
+  "llm_judge_prompt_template": {
+    "system": "你是一个医学 QA 评估判官。你的任务不是重新诊断病例，而是判断待评模型答案是否正确回答了 inference question 的核心结论。必须遵守 question-aware 规则：先识别题目问什么，再抽取本题 ground_truth_core，再比较待评模型答案。related_terms/positive_terms 只是同义词辅助，不是命中任一词即自动 correct。若结构化标签和题目标准答案或 MR表现冲突，以本题标准答案/诊断意见/MR表现为准；不确定则 unclear 并人工复核。",
+    "user_template": "请根据 rubric_v2 评估下面 inference QA。\n\ncase_id: {case_id}\nqa_index: {qa_index}\nquestion: {question}\nexpected_answer_or_reference_answer: {expected_answer}\ncandidate_model_answer: {candidate_answer}\ndiagnosis_opinion: {diagnosis_opinion}\nmr_findings: {mr_findings}\nground_truth_labels: {ground_truth_labels}\n\n输出严格 JSON，字段必须包含：question_id, case_id, qa_index, matched_rule_ids, question_intent, ground_truth_core, extracted_model_conclusion, required_elements, matched_elements, contradictions, verdict, correct, needs_manual_review, reason。",
+    "verdict_mapping": {
+      "correct": "最终结论与本题 ground_truth_core 一致，且覆盖题目要求的关键层级/结构/方向。",
+      "incorrect": "最终结论与 ground_truth_core 相反，或遗漏题目必须回答的关键层级，或只给相关上位词不足以回答本题。",
+      "unclear": "答案过于笼统、方向不清、证据冲突或无法判断。unclear 需人工复核，初步统计可按 incorrect。"
+    }
+  },
+  "recommended_evaluation_workflow": [
+    "准备 judge_input 时，最好同时包含 expected/reference answer 和 candidate_model_answer。若当前 judge_input.jsonl 的 model_answer 是标准答案，请在真正评测时另加 candidate_model_answer 字段，避免混淆。",
+    "用本 rubric_v2 让本地强模型逐条输出结构化 JSON 判定。",
+    "人工复核全部 unclear 和全部 incorrect。",
+    "从 correct 中随机抽查 15%-20%，估计 judge false positive。",
+    "把人工纠错后的结果作为最终标签计算 inference accuracy。",
+    "根据人工纠错样本继续补充 subrules，而不是简单增加 positive_terms。"
+  ],
+  "coverage_checklist_for_current_dataset": [
+    "前/后交叉韧带、内/外侧副韧带、髌韧带、股四头肌腱：按 R2。",
+    "半月板损伤、分级、撕裂、达关节面、手术/风险：按 R1。",
+    "骨挫伤、骨髓水肿、骨质增生、软骨磨损/缺损、骨囊变：按 R5。",
+    "关节积液、滑膜炎、滑膜增生：按 R4。",
+    "髌下脂肪垫：按 R7。",
+    "退行性 vs 创伤性 vs 炎症性 vs 术后：按 R3/R9。",
+    "囊性病变、腘窝囊肿、骨囊变：按 R8/R5。",
+    "肩关节、腰椎等非膝内容：按 R11。",
+    "所有否定/排除类题：同时套 R12。"
+  ]
+}
