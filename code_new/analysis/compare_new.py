@@ -228,13 +228,26 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--eval_set", required=True)
     ap.add_argument("--llm_results", default=None, help="LLM raw_results.json (combined DA+CoT, auto-split by prompt_key)")
-    ap.add_argument("--vlm_results", default=None, help="VLM raw results (combined DA+CoT, auto-split by prompt_key)")
+    ap.add_argument("--vlm_results", default=None, help="VLM raw results (combined conditions, auto-split by prompt_key)")
     ap.add_argument("--llm_direct", default=None)
     ap.add_argument("--llm_cot", default=None)
     ap.add_argument("--vlm_direct", default=None)
     ap.add_argument("--vlm_cot", default=None)
+    # The VLM line has 4 prompt_key values (prompts.py): "DA"/"CoT" are
+    # image-only (the Round 3 ablation), "DA_findings"/"CoT_findings" are
+    # image+MR-findings. The main matched LLM-vs-VLM comparison (RQ1/RQ2)
+    # must use DA_findings/CoT_findings, since that is the condition where
+    # the VLM gets the *same* text evidence as the LLM plus the image. Using
+    # plain DA/CoT here would silently compare against the image-only
+    # ablation condition instead of the matched one. Override these two
+    # flags (e.g. to "DA"/"CoT") when you specifically want to run this
+    # script over the image-only ablation results for RQ3.
+    ap.add_argument("--vlm_prompt_direct", default="DA_findings",
+                     help="VLM prompt_key value to treat as the 'direct' condition when using --vlm_results.")
+    ap.add_argument("--vlm_prompt_cot", default="CoT_findings",
+                     help="VLM prompt_key value to treat as the 'cot' condition when using --vlm_results.")
     ap.add_argument("--judged_llm", default=None, help="judge_new.py output for the LLM line (covers both DA and CoT)")
-    ap.add_argument("--judged_vlm", default=None, help="judge_new.py output for the VLM line (covers both DA and CoT)")
+    ap.add_argument("--judged_vlm", default=None, help="judge_new.py output for the VLM line (covers both prompt conditions)")
     ap.add_argument("--out_dir", default="compare_out")
     ap.add_argument("--missing_policy", choices=["wrong", "drop"], default="wrong")
     args = ap.parse_args()
@@ -253,8 +266,8 @@ def main():
         runs_raw = {
             "llm_direct": load_run(args.llm_results, filter_prompt_key="DA"),
             "llm_cot":    load_run(args.llm_results, filter_prompt_key="CoT"),
-            "vlm_direct": load_run(args.vlm_results, filter_prompt_key="DA"),
-            "vlm_cot":    load_run(args.vlm_results, filter_prompt_key="CoT"),
+            "vlm_direct": load_run(args.vlm_results, filter_prompt_key=args.vlm_prompt_direct),
+            "vlm_cot":    load_run(args.vlm_results, filter_prompt_key=args.vlm_prompt_cot),
         }
     else:
         raise ValueError("Need either 4 individual files (--llm_direct/--llm_cot/--vlm_direct/--vlm_cot) "
@@ -266,9 +279,12 @@ def main():
         print("[WARN] No --judged_llm/--judged_vlm given. Inference questions will be reported as "
               "not_judged (run judge_new.py first to score them).")
 
+    # The judged file's "condition" field is whatever prompt_key value was on
+    # the raw record (see judge_new.py's CONDITION_KEYS), so it must match
+    # the same prompt_key values used to build runs_raw above.
     line_judged = {
         "llm_direct": (judged_llm, "DA"), "llm_cot": (judged_llm, "CoT"),
-        "vlm_direct": (judged_vlm, "DA"), "vlm_cot": (judged_vlm, "CoT"),
+        "vlm_direct": (judged_vlm, args.vlm_prompt_direct), "vlm_cot": (judged_vlm, args.vlm_prompt_cot),
     }
 
     # 判分
