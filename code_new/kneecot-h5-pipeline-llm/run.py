@@ -1,12 +1,20 @@
 """End-to-end runner for the H5 text-only LLM line.
 
-Pipeline:  build_eval_set -> inference -> evaluation
+Pipeline:  build_eval_set -> inference -> save raw results
 
   --eval_set   : load a prebuilt eval_set.json (shared with VLM line)
   --data_dir   : build the eval set on the fly from raw case JSONs
                  (uses ALL data unless --sample_size is also given)
   --sample_size: limit yes/no AND inference to this many items each
   --mock       : run without a model to test the pipeline end-to-end
+
+This runner used to also compute yes/no accuracy, McNemar, and an inference
+accuracy heuristic right here. That has been removed on purpose: scoring is
+now a separate, shared step (see code_new/analysis/compare.py and
+judge.py) so that the LLM and VLM lines are always judged by the same
+code instead of two independently-evolving copies. This script's only job is
+to produce results/raw_results.json with the fields case_id, question_id,
+qtype, ground_truth, prompt_key, raw_output -- nothing here is scored.
 """
 import argparse
 import hashlib
@@ -17,13 +25,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "src"))
 
 from preprocessing import build_eval_set, describe_eval_set
-from evaluation import (
-    collect_inference_outputs,
-    inference_accuracy,
-    mcnemar_direct_vs_cot,
-    save_json,
-    yes_no_accuracy,
-)
+from evaluation import save_json
 
 # Prompt keys must match VLM prompt keys (DA / CoT)
 PROMPT_MODES = ("DA", "CoT")
@@ -95,38 +97,24 @@ def main():
     if not items:
         sys.exit("No items found. Check --data_dir and that JSON files exist.")
 
-    # ── Inference ─────────────────────────────────────────────────────────────
+    # ── Inference (generation only -- no scoring) ───────────────────────────
     if args.mock:
         results = mock_run_inference(items)
-        save_json(results, os.path.join(args.out_dir, "raw_results.json"))
     else:
-        from inference import load_model, run_inference, save_results
+        from inference import load_model, run_inference
         model, tokenizer = load_model(args.model_name)
         results = run_inference(items, model, tokenizer)
-        save_results(results, os.path.join(args.out_dir, "raw_results.json"))
 
-    # ── Evaluation ────────────────────────────────────────────────────────────
-    acc = yes_no_accuracy(results)
-    mcnemar = mcnemar_direct_vs_cot(results)
-    inf_acc = inference_accuracy(results)
-    inf_outputs = collect_inference_outputs(results)
+    out_path = os.path.join(args.out_dir, "raw_results.json")
+    save_json(results, out_path)
+    print("Saved {} raw records -> {}".format(len(results), out_path))
 
-    save_json(acc,         os.path.join(args.out_dir, "yes_no_accuracy.json"))
-    save_json(mcnemar,     os.path.join(args.out_dir, "mcnemar.json"))
-    save_json(inf_acc,     os.path.join(args.out_dir, "inference_accuracy.json"))
-    save_json(inf_outputs, os.path.join(args.out_dir, "inference_outputs.json"))
-
-    print("\n=== Yes/No accuracy by prompt_key ===")
-    for mode, s in acc.items():
-        print("  {:15s}  acc={:.3f}  ({}/{}, unparsed={})".format(
-            mode, s["accuracy"], s["correct"], s["scored"], s["unparsed"]))
-    print("\n=== Inference accuracy by prompt_key ===")
-    for mode, s in inf_acc.items():
-        print("  {:15s}  acc={:.3f}  ({}/{}, unscored={})".format(
-            mode, s["accuracy"], s["correct"], s["scored"], s["unscored"]))
-    print("\n=== McNemar (DA vs CoT) ===")
-    print("  {}".format(mcnemar))
-    print("\nAll outputs saved under: {}/".format(args.out_dir))
+    print(
+        "\nGeneration done. This script does not score results anymore.\n"
+        "Run the shared scoring step next:\n"
+        "  yes/no   -> python code_new/analysis/compare.py ...\n"
+        "  inference -> python judge.py --input {} ...\n".format(out_path)
+    )
 
 
 if __name__ == "__main__":

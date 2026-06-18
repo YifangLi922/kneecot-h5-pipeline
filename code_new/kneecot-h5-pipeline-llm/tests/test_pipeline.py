@@ -5,14 +5,20 @@ Run from the repo root:  python -m pytest tests/  (or: python tests/test_pipelin
 import os
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
+_LLM_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_CODE_NEW_DIR = os.path.dirname(_LLM_DIR)
+sys.path.insert(0, os.path.join(_LLM_DIR, "src"))
+# parse_yes_no now lives in the shared scoring script (analysis/compare.py)
+# instead of this line's own evaluation.py -- see that file's module
+# docstring for why generation and scoring were split apart.
+sys.path.insert(0, os.path.join(_CODE_NEW_DIR, "analysis"))
 
 from preprocessing import (  # noqa: E402
     build_eval_items,
     extract_yes_no_gt,
     is_knee_only_case,
 )
-from evaluation import parse_yes_no  # noqa: E402
+from compare import parse_yes_no  # noqa: E402
 
 
 def test_extract_yes_no_gt():
@@ -46,7 +52,9 @@ def test_build_eval_items_keeps_only_h5_types():
     }
     items = build_eval_items(case)
     types = sorted(it["qtype"] for it in items)
-    assert types == ["inference", "yes_no"]
+    # build_eval_items() normalizes the raw "yes_no" type to "yesno" to match
+    # the shared eval_set schema used by both the LLM and VLM lines.
+    assert types == ["inference", "yesno"]
     assert items[0]["findings"] == "findings text"
 
 

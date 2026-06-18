@@ -20,7 +20,7 @@ Recommended HPC use
     ollama pull qwen2.5:32b
     python judge.py \
       --input results/inference_outputs.json vlm_results/inference_outputs.json \
-      --rubric inference_rubric_v2_question_aware.json \
+      --rubric inference_rubric_for_LLM_judge.json \
       --model qwen2.5:32b \
       --output judged_inference.jsonl \
       --json-output judged_inference.json \
@@ -54,6 +54,12 @@ from typing import Any, Dict, Iterable, Iterator, List, Optional, Sequence, Tupl
 # -----------------------------
 # Field-name normalization
 # -----------------------------
+#
+# These lists were originally written for a generic/assumed schema and did not
+# match this project's actual eval_set / raw_results field names. The project's
+# own field names (qtype, ground_truth, prompt_key) are listed first in each
+# group below so they take priority, while the generic aliases are kept for
+# compatibility with other input shapes.
 
 CASE_ID_KEYS = [
     "case_id", "case", "case_uid", "study_id", "exam_id", "patient_id", "file_id",
@@ -68,12 +74,19 @@ QA_INDEX_KEYS = [
 QUESTION_KEYS = [
     "question", "query", "prompt_question", "问题", "题目",
 ]
+# "qtype" is the actual field name produced by build_eval_set.py / preprocessing.py
+# for both the LLM and VLM lines. It was missing before, which made
+# looks_like_inference() unable to find the question type at all.
 QUESTION_TYPE_KEYS = [
-    "question_type", "qa_type", "type", "category", "问题类型", "task_type",
+    "qtype", "question_type", "qa_type", "type", "category", "问题类型", "task_type",
 ]
+# "ground_truth" and "full_answer" are the actual ground-truth fields written by
+# build_eval_set.py for both lines. Neither was in this list before, which meant
+# expected_answer was always empty for every real record from this pipeline.
 EXPECTED_KEYS = [
-    "expected_answer", "reference_answer", "reference", "gt_answer", "ground_truth_answer",
-    "gold_answer", "target_answer", "standard_answer", "answer", "expected", "标准答案", "参考答案",
+    "ground_truth", "full_answer", "expected_answer", "reference_answer", "reference",
+    "gt_answer", "ground_truth_answer", "gold_answer", "target_answer", "standard_answer",
+    "answer", "expected", "标准答案", "参考答案",
 ]
 CANDIDATE_KEYS_STRICT = [
     "candidate_model_answer", "candidate_answer", "prediction", "predicted_answer",
@@ -96,8 +109,13 @@ FINDINGS_KEYS = [
 LABEL_KEYS = [
     "ground_truth_labels", "labels", "structured_labels", "label", "标签", "结构化标签",
 ]
+# "prompt_key" is the actual field name written by inference.py / evaluate.py for both
+# lines (DA / CoT). It was missing before, which made condition always resolve to
+# "unknown" -- losing the DA-vs-CoT breakdown and, worse, collapsing the dedup key
+# used by stable_record_key() so that --resume could silently skip one condition.
 CONDITION_KEYS = [
-    "condition", "prompt_type", "model_condition", "setting", "pipeline", "run_name", "实验条件",
+    "prompt_key", "condition", "prompt_type", "prompt_mode", "model_condition",
+    "setting", "pipeline", "run_name", "实验条件",
 ]
 
 ANSWER_MARKERS = [
@@ -379,10 +397,13 @@ def looks_like_inference(record: Dict[str, Any]) -> bool:
     qtype = truncate_text(first_present(record, QUESTION_TYPE_KEYS), 200).lower()
     if any(tok in qtype for tok in ["inference", "推理", "diagnostic inference"]):
         return True
+    if qtype:
+        # A recognized, non-inference qtype (e.g. "yesno") must NOT be treated as
+        # inference. Only fall through to the "keep if unknown" rule when the
+        # qtype field genuinely could not be found at all.
+        return False
     # If no type is available, keep the record. Some exported inference files omit qtype.
-    if not qtype:
-        return True
-    return False
+    return True
 
 
 def normalize_record(raw: Dict[str, Any], idx: int, max_field_chars: int) -> Dict[str, Any]:
@@ -424,7 +445,14 @@ def normalize_record(raw: Dict[str, Any], idx: int, max_field_chars: int) -> Dic
     question = first_present(raw, QUESTION_KEYS)
     qid = first_present(raw, QUESTION_ID_KEYS)
     if not qid:
-        qid = f"{case_id}_{qa_index}"
+        # Avoid keying on the raw list position: VLM eval_set items have no
+        # question_id field, and a position-based id would silently change
+        # across re-exports / partial reruns, breaking dedup and cross-condition
+        # matching. Hash case_id+question instead so the id is stable regardless
+        # of file ordering.
+        import hashlib
+        digest = hashlib.md5(f"{case_id}||{question or ''}".encode("utf-8")).hexdigest()[:10]
+        qid = f"{case_id}_{digest}"
 
     labels = first_present(raw, LABEL_KEYS)
 
@@ -454,10 +482,13 @@ def normalize_record(raw: Dict[str, Any], idx: int, max_field_chars: int) -> Dic
 
 def default_rubric_path() -> Path:
     here = Path(__file__).resolve().parent
-    p = here / "inference_rubric_v2_question_aware.json"
-    if p.exists():
-        return p
-    return Path("inference_rubric_v2_question_aware.json")
+    # Try this project's actual rubric filename first, then fall back to the
+    # generic name the script originally assumed.
+    for name in ("inference_rubric_for_LLM_judge.json", "inference_rubric_v2_question_aware.json"):
+        p = here / name
+        if p.exists():
+            return p
+    return here / "inference_rubric_for_LLM_judge.json"
 
 
 def load_rubric(path: Path) -> Dict[str, Any]:
@@ -845,7 +876,7 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--input", "-i", nargs="+", required=True, help="Input JSON/JSONL/CSV files, globs, or directories.")
-    parser.add_argument("--rubric", default=str(default_rubric_path()), help="Path to inference_rubric_v2_question_aware.json.")
+    parser.add_argument("--rubric", default=str(default_rubric_path()), help="Path to inference_rubric_for_LLM_judge.json.")
     parser.add_argument("--model", default="qwen2.5:32b", help="Local Ollama judge model. Must not be the evaluated 7B model.")
     parser.add_argument("--ollama-host", default=os.environ.get("OLLAMA_HOST", "http://localhost:11434"), help="Local Ollama host URL.")
     parser.add_argument("--output", default="judged_inference.jsonl", help="Streaming JSONL output path.")
