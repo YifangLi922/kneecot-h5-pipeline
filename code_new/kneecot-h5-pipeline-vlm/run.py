@@ -4,15 +4,18 @@ run.py  –  Master runner: executes the full VLM pipeline in order.
 Steps:
     1. preprocessing.py   – extract PNG slices from .nii files
     2. build_eval_set.py  – build the balanced evaluation JSON
-    3. evaluate.py        – run VLM inference with Ollama
-    4. metrics.py         – aggregate results and print RQ2/RQ3 tables
+    3. evaluate.py        – run VLM inference with Ollama (raw outputs only)
+
+Scoring is not part of this runner — run these next:
+    code_new/analysis/compare.py   – yes/no accuracy + McNemar
+    judge.py                       – inference verdicts (LLM-as-judge)
 
 Usage:
     python run.py                         # all data, all steps
     python run.py --n-eval 50             # sample 50 yes/no + 50 inference
     python run.py --skip-preprocess       # skip slice extraction
     python run.py --skip-build            # skip eval set building
-    python run.py --eval-only             # run only steps 3 and 4
+    python run.py --eval-only             # run only step 3
     python run.py --skip-preprocess --n-eval 100
 """
 import argparse
@@ -75,7 +78,9 @@ def main():
             build_args += ["--eval-set", args.eval_set]
         steps.append(("build", SCRIPTS["build"], build_args))
     steps.append(("evaluate", SCRIPTS["evaluate"], []))
-    steps.append(("metrics",  SCRIPTS["metrics"],  []))
+    # metrics.py is stale: it imports calculate_metrics from evaluate.py, which
+    # was removed when scoring moved to code_new/analysis/compare.py + judge.py
+    # (see evaluate.py's module docstring). Run those two scripts instead.
 
     if args.n_eval:
         print(f"\nMode: SAMPLED — {args.n_eval} yes/no + {args.n_eval} inference cases")
