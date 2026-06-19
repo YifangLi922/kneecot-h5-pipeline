@@ -220,9 +220,12 @@ if __name__ == "__main__":
 
     if args.eval_set and os.path.exists(args.eval_set):
         print(f"Loading existing shared eval set from: {args.eval_set}")
-        import shutil
-        shutil.copy(args.eval_set, str(EVAL_PATH))
-        print(f"Copied to {EVAL_PATH}")
+        if os.path.abspath(args.eval_set) == os.path.abspath(str(EVAL_PATH)):
+            print(f"Already in place at {EVAL_PATH}, skipping copy")
+        else:
+            import shutil
+            shutil.copy(args.eval_set, str(EVAL_PATH))
+            print(f"Copied to {EVAL_PATH}")
     elif args.n_eval:
         print(f"N_EVAL={args.n_eval} (sampling {args.n_eval} inference)")
         build_eval_set(ANN_DIRS, NII_DIRS, str(EVAL_PATH), n_eval=args.n_eval, seed=args.seed)
