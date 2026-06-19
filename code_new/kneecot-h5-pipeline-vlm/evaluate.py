@@ -100,8 +100,18 @@ def run_yn_eval(model_name: str, prompt_key: str, cases: list,
     print(f"  Model: {model_name}  Prompt: {prompt_key}")
     print(f"{'='*55}")
 
-    results = []
-    for i, case in enumerate(yn_cases, 1):
+    done_keys = set()
+    results   = []
+    partial_path = out_path + ".partial"
+    if os.path.exists(partial_path):
+        with open(partial_path, "r", encoding="utf-8") as f:
+            results = json.load(f)
+        done_keys = {(r["case_id"], r["question"]) for r in results}
+        print(f"  [RESUME] Found {len(results)} already processed yn cases")
+
+    remaining = [c for c in yn_cases if (c["case_id"], c["question"]) not in done_keys]
+
+    for i, case in enumerate(remaining, len(results) + 1):
         prompt_text = VLM_PROMPTS[prompt_key].format(
             question=case["question"],
             findings=case.get("findings", ""),
@@ -119,6 +129,10 @@ def run_yn_eval(model_name: str, prompt_key: str, cases: list,
             print(f"  {i:4}/{len(yn_cases)} ERROR: {e}")
             results.append({**case, "model": model_name, "prompt_key": prompt_key,
                             "raw_output": None, "error": str(e)})
+
+        if i % 10 == 0:
+            with open(partial_path, "w", encoding="utf-8") as f:
+                json.dump(results, f, ensure_ascii=False, indent=2)
 
     n_errors = sum(1 for r in results if r.get("error"))
     print(f"  Generated {len(results) - n_errors}/{len(yn_cases)}  Errors={n_errors}")
