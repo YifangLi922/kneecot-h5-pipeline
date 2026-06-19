@@ -98,15 +98,18 @@ def main():
         sys.exit("No items found. Check --data_dir and that JSON files exist.")
 
     # ── Inference (generation only -- no scoring) ───────────────────────────
+    out_path = os.path.join(args.out_dir, "raw_results.json")
+
     if args.mock:
         results = mock_run_inference(items)
+        save_json(results, out_path)
     else:
-        from inference import load_model, run_inference
+        from inference import load_model, run_inference, save_results, checkpoint_path
         model, tokenizer = load_model(args.model_name)
-        results = run_inference(items, model, tokenizer)
+        results = run_inference(items, model, tokenizer,
+                                 checkpoint_file=checkpoint_path(out_path))
+        save_results(results, out_path)
 
-    out_path = os.path.join(args.out_dir, "raw_results.json")
-    save_json(results, out_path)
     print("Saved {} raw records -> {}".format(len(results), out_path))
 
     print(
