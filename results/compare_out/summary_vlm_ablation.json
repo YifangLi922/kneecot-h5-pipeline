@@ -1,0 +1,54 @@
+{
+  "direct_style_yes_no": {
+    "n": 200,
+    "acc": {
+      "DA_image_only": 0.65,
+      "DA_findings_image_plus_text": 0.955
+    },
+    "mcnemar_DA_findings_image_plus_text_vs_DA_image_only": {
+      "b_a_wrong_b_right": 64,
+      "c_a_right_b_wrong": 3,
+      "p_value": 2.298666914770217e-13,
+      "method": "chi2_continuity"
+    }
+  },
+  "cot_style_yes_no": {
+    "n": 200,
+    "acc": {
+      "CoT_image_only": 0.55,
+      "CoT_findings_image_plus_text": 0.88
+    },
+    "mcnemar_CoT_findings_image_plus_text_vs_CoT_image_only": {
+      "b_a_wrong_b_right": 75,
+      "c_a_right_b_wrong": 9,
+      "p_value": 1.3210973184522994e-12,
+      "method": "chi2_continuity"
+    }
+  },
+  "direct_style_inference": {
+    "n": 200,
+    "acc": {
+      "DA_image_only": 0.13,
+      "DA_findings_image_plus_text": 0.275
+    },
+    "mcnemar_DA_findings_image_plus_text_vs_DA_image_only": {
+      "b_a_wrong_b_right": 42,
+      "c_a_right_b_wrong": 13,
+      "p_value": 0.00015967470494025735,
+      "method": "chi2_continuity"
+    }
+  },
+  "cot_style_inference": {
+    "n": 200,
+    "acc": {
+      "CoT_image_only": 0.13,
+      "CoT_findings_image_plus_text": 0.6
+    },
+    "mcnemar_CoT_findings_image_plus_text_vs_CoT_image_only": {
+      "b_a_wrong_b_right": 104,
+      "c_a_right_b_wrong": 10,
+      "p_value": 3.0321055449377984e-18,
+      "method": "chi2_continuity"
+    }
+  }
+}
