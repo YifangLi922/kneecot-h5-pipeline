@@ -6,7 +6,7 @@ This document is the step-by-step runbook for executing the full H5 pipeline
 
 In practice, this pipeline was run on a single GPU pod rented on
 [RunPod](https://www.runpod.io/) (an **NVIDIA RTX PRO 6000**), not a
-university HPC/SLURM cluster — `setup_runpod.sh` automates exactly this
+university HPC/SLURM cluster due to the limitation of computing power— `setup_runpod.sh` automates exactly this
 setup end-to-end. The manual steps below still apply to any single-GPU
 Linux box with enough VRAM (≥24GB) to serve both the VLM and the 32B judge
 model through Ollama; substitute your own GPU provider's setup steps for "0.2
