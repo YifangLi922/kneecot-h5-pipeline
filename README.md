@@ -26,6 +26,62 @@ This repository contains two parallel pipelines for the H5 experiment — a text
 
 Both generation pipelines only produce **raw, unscored** per-question records (`case_id`, `question_id`, `qtype`, `prompt_key`, `raw_output`, ...). Scoring happens afterward in one shared place: `code/analysis/compare.py` (yes/no accuracy + McNemar) and `code/analysis/judge.py` (LLM-as-judge for inference questions). This split exists because the two lines used to each implement their own scoring with different field names and different yes/no parsers, which made the "comparison" not actually apples-to-apples — see `notes/coding problems and solutions.md` for the background on that decision.
 
+## Pipeline Diagram
+
+```mermaid
+flowchart LR
+    classDef blue fill:#dbeafe,stroke:#3b82f6,color:#1e3a8a,font-size:12px
+    classDef green fill:#dcfce7,stroke:#22c55e,color:#14532d,font-size:12px
+    classDef gray fill:#f9fafb,stroke:#6b7280,color:#111827,font-size:12px
+    classDef red fill:#fee2e2,stroke:#ef4444,color:#7f1d1d,font-size:11px
+    classDef plain fill:#ffffff,stroke:#d1d5db,color:#111827,font-size:12px
+
+    DS["**KneeCoT Dataset**\n───────────────\nChinese knee MRI\nJSON annotations\n+ .nii MRI volumes"]:::plain
+
+    subgraph LEAK["Case Loading & Leakage Prevention"]
+        direction TB
+        IN["✅ **Used as input**\n病历编号 · Case ID\nMR表现 · MR Findings\n问答数据 · QA Pairs"]:::green
+        EX["❌ **Excluded — answer leakage**\n诊断意见 · Diagnostic Impression\n标签 · Structured Labels\n→ contain the answer"]:::red
+    end
+
+    subgraph SAMP["Task Filtering & Balanced Sampling (seed = 42)"]
+        direction TB
+        SF["Keep yes/no + inference 推理 questions\nRequire clean Yes/No ground truth\nRemove non-knee joints\nBalance Yes/No · fixed seed for reproducibility"]:::plain
+    end
+
+    subgraph LLMP["Text-only LLM Pipeline"]
+        direction TB
+        LI["**Input:** MR findings MR表现 + question\nno image · no impression · no labels"]:::blue
+        LP["**Prompt:** Direct / 4-step CoT\nChinese templates · 【答案】marker"]:::blue
+        LM["**Qwen2.5-7B-Instruct**\ngreedy decoding · Deterministic"]:::blue
+        LI --> LP --> LM
+    end
+
+    subgraph VLMP["Multimodal VLM Pipeline"]
+        direction TB
+        VI["**Input:** MR findings + question\n+ 2 central sagittal slices → CLAHE → PNG"]:::green
+        VP["**Prompt:** Direct / 4-step CoT\nsame text evidence as LLM"]:::green
+        VM["**Qwen2.5-VL** + MiniCPM-V\ngreedy decoding · Deterministic"]:::green
+        VI --> VP --> VM
+    end
+
+    subgraph PARSE["Answer Parsing"]
+        direction LR
+        YN["**Yes/No questions**\nparse_yes_no cascade\n→ EN yes/no\n→ CN 是/否; else UNCLEAR"]:::plain
+        INF["**Inference 推理 questions**\nextract final conclusion\nmatch GT / LLM-as-judge\n→ correct/incorrect"]:::plain
+    end
+
+    EC["**Evaluation & Comparison**\nYes/No accuracy and inference accuracy\nreported per task type"]:::plain
+
+    DS --> LEAK
+    LEAK --> SAMP
+    SAMP --> LLMP
+    SAMP --> VLMP
+    LM --> PARSE
+    VM --> PARSE
+    PARSE --> EC
+```
+
 ## Repository Structure
 
 ```text
