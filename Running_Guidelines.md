@@ -275,14 +275,113 @@ process. Outputs in `compare_out/`:
   `text_better` / `both_correct_text_sufficient` / `both_wrong` — this is
   the RQ3 (visual necessity) breakdown
 
-For the RQ3 **image-only ablation** (VLM with no MR findings text), rerun
-`compare.py` with `--vlm_prompt_direct DA --vlm_prompt_cot CoT` (no
-`_findings` suffix) pointed at a combined file built from the plain
-`DA`/`CoT` result files instead of the `_findings` ones.
+---
+
+## 6. Phase 3b — RQ3 image-only ablation (VLM with no MR findings text)
+
+This asks: does the VLM still answer well, and does CoT still help, if it
+only sees the image and never sees `MR表现` at all? **No new generation run
+is needed for this** — `config.py`'s `CONDITIONS` list always includes the
+plain `DA`/`CoT` (image-only) keys alongside `DA_findings`/`CoT_findings`,
+so step 3.1 already produced these files:
+
+```
+data/vlm_results/qwen2.5vl_DA_yn.json
+data/vlm_results/qwen2.5vl_DA_inference.json
+data/vlm_results/qwen2.5vl_CoT_yn.json
+data/vlm_results/qwen2.5vl_CoT_inference.json
+```
+
+The prompt-format fixes from step 3 (literal Yes/No only, ≥20-character
+inference answers) apply to these plain `DA`/`CoT` templates too — they were
+edited together with the `_findings` templates in `prompts.py` — so nothing
+needs to be re-prompted before scoring this.
+
+### 6.1 Combine the 4 image-only result files
+
+```bash
+python -c "
+import json
+files = ['data/vlm_results/qwen2.5vl_DA_yn.json', 'data/vlm_results/qwen2.5vl_DA_inference.json',
+         'data/vlm_results/qwen2.5vl_CoT_yn.json', 'data/vlm_results/qwen2.5vl_CoT_inference.json']
+combined = []
+for fp in files:
+    combined.extend(json.load(open(fp, encoding='utf-8')))
+json.dump(combined, open('data/vlm_results/combined_ablation_results.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+print('combined:', len(combined), 'records')
+"
+```
+
+### 6.2 Judge the image-only inference outputs
+
+Use a **separate** output file so this does not overwrite
+`judged_inference_vlm.json` from the main `_findings` run:
+
+```bash
+python code/analysis/judge.py \
+  --input data/vlm_results/qwen2.5vl_DA_inference.json data/vlm_results/qwen2.5vl_CoT_inference.json \
+  --rubric code/analysis/inference_rubric_for_LLM_judge.json \
+  --model qwen2.5:32b \
+  --output judged_inference_vlm_ablation.jsonl \
+  --json-output judged_inference_vlm_ablation.json \
+  --review-output manual_review_vlm_ablation.jsonl
+```
+
+Same manual-review checklist as step 4.3 applies to `manual_review_vlm_ablation.jsonl`
+before trusting these inference numbers.
+
+### 6.3 Compare — two ways, both already used
+
+**6.3a — rerun `compare.py` itself**, pointed at the image-only files via
+`--vlm_prompt_direct`/`--vlm_prompt_cot`. This reuses the script exactly as
+written for the main comparison, so the output JSON still uses
+`compare.py`'s generic column names (`A_llm_direct` / `B_llm_cot` /
+`C_vlm_direct` / `D_vlm_cot`) — except `C`/`D` now mean "VLM image-only",
+not "VLM image+findings". Write it to its own `--out_dir` so it does not
+collide with the main run's `compare_out/`:
+
+```bash
+python code/analysis/compare.py \
+  --eval_set data/eval_set.json \
+  --llm_results code/kneecot-h5-pipeline-llm/results/raw_results.json \
+  --vlm_results data/vlm_results/combined_ablation_results.json \
+  --vlm_prompt_direct DA --vlm_prompt_cot CoT \
+  --judged_llm judged_inference_llm.json \
+  --judged_vlm judged_inference_vlm_ablation.json \
+  --out_dir compare_out_vlm_ablation \
+  --missing_policy wrong
+```
+
+**6.3b — `vlm_findings_ablation.py`**, which is what actually produced
+`results/compare_out/summary_vlm_ablation.json`. It imports `compare.py`'s
+scoring functions (`load_eval_set`, `load_run`, `load_judged`, `score_run`,
+`accuracy`, `mcnemar`) directly — so the yes/no parsing and inference
+judging are identical to 6.3a — but replaces the generic `A`/`B`/`C`/`D`
+field names with properly labelled ones (`DA_image_only` vs.
+`DA_findings_image_plus_text`, etc.), and pairs `DA` vs. `DA_findings` and
+`CoT` vs. `CoT_findings` **within the VLM line only** (no LLM columns at
+all), which is the more direct way to answer "does adding the MR findings
+text help, within each prompt style?":
+
+```bash
+python code/analysis/vlm_findings_ablation.py \
+  --eval_set data/eval_set.json \
+  --findings_results data/vlm_results/combined_findings_results.json \
+  --ablation_results data/vlm_results/combined_ablation_results.json \
+  --judged_findings judged_inference_vlm.json \
+  --judged_ablation judged_inference_vlm_ablation.json \
+  --out_dir compare_out \
+  --missing_policy wrong
+```
+
+This writes `compare_out/summary.json` (renamed to `summary_vlm_ablation.json`
+to sit next to `summary_2x2_comparison.json` without colliding — both are
+plain `summary.json` by default from their respective scripts). Neither 6.3a
+nor 6.3b touches the main `_findings` comparison's output files.
 
 ---
 
-## 6. Quick recap of the full command order
+## 7. Quick recap of the full command order
 
 ```bash
 # 0. setup: install deps, start Ollama, pull qwen2.5vl + qwen2.5:32b
@@ -300,11 +399,15 @@ python code/analysis/judge.py --input .../*_findings_inference.json ... --json-o
 # (manual review step — see 4.3)
 # 5. compare
 python code/analysis/compare.py --eval_set data/eval_set.json --llm_results ... --vlm_results ... --judged_llm ... --judged_vlm ... --out_dir compare_out
+# 6. RQ3 image-only ablation (optional, no new generation needed) -- see section 6 above
+python -c "..."   # see 6.1, combine the 4 image-only files
+python code/analysis/judge.py --input .../qwen2.5vl_DA_inference.json .../qwen2.5vl_CoT_inference.json ... --json-output judged_inference_vlm_ablation.json
+python code/analysis/vlm_findings_ablation.py --eval_set data/eval_set.json --findings_results ... --ablation_results ... --judged_findings ... --judged_ablation ... --out_dir compare_out
 ```
 
 ---
 
-## 7. Troubleshooting
+## 8. Troubleshooting
 
 - **`0 QA pairs loaded` / `0 cases` from `build_eval_set.py`** — check that
   step 1 actually populated `data/annotations/train`/`test` and
