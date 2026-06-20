@@ -32,7 +32,7 @@ This repository contains two parallel pipelines for the H5 experiment: a text-on
 
 ```text
 run_pipeline.py/                    # use it to run the whole project
-code_new/
+code/
 ├── analysis/
 │   ├── compare.py/
 ├── kneecot-h5-pipeline-llm/
@@ -216,6 +216,12 @@ Example local or HPC run:
 ```bash
 python run.py --data_dir /path/to/cases --sample_size 0
 ```
+
+The final full-scale run for this experiment did not use Colab. Both the
+LLM and VLM lines were run together on a single GPU pod rented on
+[RunPod](https://www.runpod.io/) (an **NVIDIA RTX PRO 6000**), driven by
+`setup_runpod.sh`. See `Running_Guidelines.md` for the full step-by-step
+runbook on that setup.
 
 To test the pipeline without a GPU or model call:
 
@@ -451,6 +457,13 @@ pip install ollama nibabel pillow pandas matplotlib opencv-python-headless numpy
 Then set `ROOT` in the first notebook cell to the KneeCoT data folder on Google Drive and run all cells in order.
 
 VLM outputs are written to `vlm_results/`. Results for each model and prompt type are saved immediately after each run so that completed evaluations are not lost if a Colab session disconnects.
+
+`VLM.ipynb` was the original prototyping environment. For the final
+full-scale run, the VLM line was instead run as a script (`run.py` in
+`code/kneecot-h5-pipeline-vlm/`) on the same rented RunPod GPU pod (NVIDIA
+RTX PRO 6000) as the LLM line, so both lines, plus the local judge model,
+shared one machine and one Ollama server. See `Running_Guidelines.md` and
+`setup_runpod.sh`.
 
 ---
 

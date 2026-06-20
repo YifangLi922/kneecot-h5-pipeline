@@ -1,12 +1,19 @@
-# Running Guidelines — KneeCoT H5 Pipeline on HPC
+# Running Guidelines — KneeCoT H5 Pipeline on a Rented GPU Pod
 
 This document is the step-by-step runbook for executing the full H5 pipeline
-(data download → generation → scoring → comparison) on the HPC cluster. It
-assumes the code in `code_new/` is already in the state described in the main
-`README.md`.
+(data download → generation → scoring → comparison). It assumes the code in
+`code/` is already in the state described in the main `README.md`.
 
-The pipeline has four phases, matching the plan in `coding problems and
-solutions.md`:
+In practice, this pipeline was run on a single GPU pod rented on
+[RunPod](https://www.runpod.io/) (an **NVIDIA RTX PRO 6000**), not a
+university HPC/SLURM cluster — `setup_runpod.sh` automates exactly this
+setup end-to-end. The manual steps below still apply to any single-GPU
+Linux box with enough VRAM (≥24GB) to serve both the VLM and the 32B judge
+model through Ollama; substitute your own GPU provider's setup steps for "0.2
+Install dependencies" if you are not using RunPod.
+
+The pipeline has four phases, matching the plan in `notes/coding problems
+and solutions.md`:
 
 0. Setup
 1. Generate raw outputs (LLM line + VLM line) — the GPU-heavy phase
@@ -33,13 +40,15 @@ Do **not** commit this token anywhere.
 
 ```bash
 pip install huggingface_hub          # for data/prepare_data.py
-pip install -r code_new/kneecot-h5-pipeline-llm/requirements.txt
-pip install -r code_new/kneecot-h5-pipeline-vlm/requirements.txt
+pip install -r code/kneecot-h5-pipeline-llm/requirements.txt
+pip install -r code/kneecot-h5-pipeline-vlm/requirements.txt
 ```
 
-The LLM line needs a GPU (Qwen2.5-7B-Instruct, 4-bit). The VLM line talks to
-a local **Ollama** server instead of loading weights directly in Python, so
-make sure Ollama is installed and reachable on the node you run on:
+The LLM line needs a GPU (Qwen2.5-7B-Instruct, 4-bit) — the actual run used
+a single rented RunPod GPU pod with an NVIDIA RTX PRO 6000. The VLM line
+talks to a local **Ollama** server instead of loading weights directly in
+Python, so make sure Ollama is installed and reachable on the node you run
+on:
 
 ```bash
 ollama serve &                 # start the local Ollama server (background)
@@ -77,7 +86,7 @@ data/
     └── test/                # .json files
 ```
 
-This is exactly the layout `code_new/kneecot-h5-pipeline-vlm/config.py`
+This is exactly the layout `code/kneecot-h5-pipeline-vlm/config.py`
 expects (`TRAIN_NII`, `TEST_NII`, `TRAIN_ANN`, `TEST_ANN`), so no path
 changes are needed for the next step.
 
@@ -96,7 +105,7 @@ questions**. That shared question list is built once, by the VLM side's
 case's matching `.nii` path):
 
 ```bash
-cd code_new/kneecot-h5-pipeline-vlm
+cd code/kneecot-h5-pipeline-vlm
 python build_eval_set.py                 # use ALL available data
 # or, for a smaller pilot run:
 python build_eval_set.py --n-eval 50      # 50 yes/no + 50 inference items
@@ -119,7 +128,7 @@ This is the GPU/compute-heavy phase. Both lines only produce raw,
 ### 3.1 VLM line
 
 ```bash
-cd code_new/kneecot-h5-pipeline-vlm
+cd code/kneecot-h5-pipeline-vlm
 python run.py --eval-set ../../data/eval_set.json
 cd ../..
 ```
@@ -151,12 +160,12 @@ sees the same text evidence as the text-only LLM, plus the image.
 ### 3.2 LLM line
 
 ```bash
-cd code_new/kneecot-h5-pipeline-llm
+cd code/kneecot-h5-pipeline-llm
 python run.py --eval_set ../../data/eval_set.json --model_name Qwen/Qwen2.5-7B-Instruct --out_dir results
 cd ../..
 ```
 
-This writes `code_new/kneecot-h5-pipeline-llm/results/raw_results.json`,
+This writes `code/kneecot-h5-pipeline-llm/results/raw_results.json`,
 containing both the `DA` and `CoT` conditions in one file (split later by
 the `prompt_key` field). To smoke-test the pipeline without a GPU first,
 add `--mock`.
@@ -200,18 +209,18 @@ over each line's inference records:
 
 ```bash
 # LLM line
-python judge.py \
-  --input code_new/kneecot-h5-pipeline-llm/results/raw_results.json \
-  --rubric inference_rubric_for_LLM_judge.json \
+python code/analysis/judge.py \
+  --input code/kneecot-h5-pipeline-llm/results/raw_results.json \
+  --rubric code/analysis/inference_rubric_for_LLM_judge.json \
   --model qwen2.5:32b \
   --output judged_inference_llm.jsonl \
   --json-output judged_inference_llm.json \
   --review-output manual_review_llm.jsonl
 
 # VLM line (matched DA_findings / CoT_findings conditions only)
-python judge.py \
+python code/analysis/judge.py \
   --input data/vlm_results/qwen2.5vl_DA_findings_inference.json data/vlm_results/qwen2.5vl_CoT_findings_inference.json \
-  --rubric inference_rubric_for_LLM_judge.json \
+  --rubric code/analysis/inference_rubric_for_LLM_judge.json \
   --model qwen2.5:32b \
   --output judged_inference_vlm.jsonl \
   --json-output judged_inference_vlm.json \
@@ -219,8 +228,10 @@ python judge.py \
 ```
 
 `judge.py` only calls the local Ollama API — no data leaves the machine.
-Submit each of these as its own SLURM/batch job with GPU access for Ollama
-to serve the 32B judge model.
+On a SLURM-managed HPC cluster, submit each of these as its own batch job
+with GPU access; on a rented single-GPU pod (e.g. the RunPod RTX PRO 6000
+setup actually used here), just run them sequentially on the same pod —
+Ollama serves the 32B judge model the same way either setup.
 
 **Manual review (required, do not skip):**
 1. Open `manual_review_llm.jsonl` and `manual_review_vlm.jsonl`. These
@@ -240,9 +251,9 @@ to serve the 32B judge model.
 ## 5. Phase 3 — Compare and produce result tables
 
 ```bash
-python code_new/analysis/compare.py \
+python code/analysis/compare.py \
   --eval_set data/eval_set.json \
-  --llm_results code_new/kneecot-h5-pipeline-llm/results/raw_results.json \
+  --llm_results code/kneecot-h5-pipeline-llm/results/raw_results.json \
   --vlm_results data/vlm_results/combined_findings_results.json \
   --judged_llm judged_inference_llm.json \
   --judged_vlm judged_inference_vlm.json \
@@ -278,17 +289,17 @@ For the RQ3 **image-only ablation** (VLM with no MR findings text), rerun
 # 1. download data
 cd data && python prepare_data.py --token hf_xxx && cd ..
 # 2. build shared eval set
-cd code_new/kneecot-h5-pipeline-vlm && python build_eval_set.py && cd ../..
+cd code/kneecot-h5-pipeline-vlm && python build_eval_set.py && cd ../..
 # 3. generate raw outputs
-cd code_new/kneecot-h5-pipeline-vlm && python run.py --eval-set ../../data/eval_set.json --eval-only && cd ../..
-cd code_new/kneecot-h5-pipeline-llm && python run.py --eval_set ../../data/eval_set.json --out_dir results && cd ../..
+cd code/kneecot-h5-pipeline-vlm && python run.py --eval-set ../../data/eval_set.json --eval-only && cd ../..
+cd code/kneecot-h5-pipeline-llm && python run.py --eval_set ../../data/eval_set.json --out_dir results && cd ../..
 # 4. score: combine VLM files, then run the judge for both lines
 python -c "..."   # see 4.1
-python judge.py --input .../raw_results.json ... --json-output judged_inference_llm.json
-python judge.py --input .../*_findings_inference.json ... --json-output judged_inference_vlm.json
+python code/analysis/judge.py --input .../raw_results.json ... --json-output judged_inference_llm.json
+python code/analysis/judge.py --input .../*_findings_inference.json ... --json-output judged_inference_vlm.json
 # (manual review step — see 4.3)
 # 5. compare
-python code_new/analysis/compare.py --eval_set data/eval_set.json --llm_results ... --vlm_results ... --judged_llm ... --judged_vlm ... --out_dir compare_out
+python code/analysis/compare.py --eval_set data/eval_set.json --llm_results ... --vlm_results ... --judged_llm ... --judged_vlm ... --out_dir compare_out
 ```
 
 ---

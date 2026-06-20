@@ -37,8 +37,8 @@ cd "$REPO_ROOT"
 
 echo "=== [0/6] Python dependencies ==="
 pip install -q huggingface_hub
-pip install -q -r code_new/kneecot-h5-pipeline-llm/requirements.txt
-pip install -q -r code_new/kneecot-h5-pipeline-vlm/requirements.txt
+pip install -q -r code/kneecot-h5-pipeline-llm/requirements.txt
+pip install -q -r code/kneecot-h5-pipeline-vlm/requirements.txt
 
 echo "=== [1/6] Ollama: install, serve, pull models ==="
 if ! command -v ollama >/dev/null 2>&1; then
@@ -60,7 +60,7 @@ python prepare_data.py --token "$HF_TOKEN" --max-gb "$MAX_GB"
 cd "$REPO_ROOT"
 
 echo "=== [3/6] Build shared eval set ==="
-cd code_new/kneecot-h5-pipeline-vlm
+cd code/kneecot-h5-pipeline-vlm
 if [ -n "$N_EVAL" ]; then
   python build_eval_set.py --n-eval "$N_EVAL"
 else
@@ -69,11 +69,11 @@ fi
 cd "$REPO_ROOT"
 
 echo "=== [4/6] Generate raw outputs: VLM line, then LLM line ==="
-cd code_new/kneecot-h5-pipeline-vlm
+cd code/kneecot-h5-pipeline-vlm
 python run.py --eval-set ../../data/eval_set.json
 cd "$REPO_ROOT"
 
-cd code_new/kneecot-h5-pipeline-llm
+cd code/kneecot-h5-pipeline-llm
 python run.py --eval_set ../../data/eval_set.json \
   --model_name Qwen/Qwen2.5-7B-Instruct --out_dir results
 cd "$REPO_ROOT"
@@ -89,17 +89,17 @@ json.dump(combined, open('data/vlm_results/combined_findings_results.json', 'w',
 print(f'Combined {len(files)} files -> {len(combined)} records')
 "
 
-python judge.py \
-  --input code_new/kneecot-h5-pipeline-llm/results/raw_results.json \
-  --rubric inference_rubric_for_LLM_judge.json \
+python code/analysis/judge.py \
+  --input code/kneecot-h5-pipeline-llm/results/raw_results.json \
+  --rubric code/analysis/inference_rubric_for_LLM_judge.json \
   --model qwen2.5:32b \
   --output judged_inference_llm.jsonl \
   --json-output judged_inference_llm.json \
   --review-output manual_review_llm.jsonl
 
-python judge.py \
+python code/analysis/judge.py \
   --input data/vlm_results/qwen2.5vl_DA_findings_inference.json data/vlm_results/qwen2.5vl_CoT_findings_inference.json \
-  --rubric inference_rubric_for_LLM_judge.json \
+  --rubric code/analysis/inference_rubric_for_LLM_judge.json \
   --model qwen2.5:32b \
   --output judged_inference_vlm.jsonl \
   --json-output judged_inference_vlm.json \
@@ -115,9 +115,9 @@ cat <<'EOF'
    judged_inference_vlm.json (compare.py reads these, not the .jsonl files).
 3. Then run the final comparison:
 
-   python code_new/analysis/compare.py \
+   python code/analysis/compare.py \
      --eval_set data/eval_set.json \
-     --llm_results code_new/kneecot-h5-pipeline-llm/results/raw_results.json \
+     --llm_results code/kneecot-h5-pipeline-llm/results/raw_results.json \
      --vlm_results data/vlm_results/combined_findings_results.json \
      --judged_llm judged_inference_llm.json \
      --judged_vlm judged_inference_vlm.json \

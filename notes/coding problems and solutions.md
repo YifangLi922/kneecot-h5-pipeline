@@ -114,7 +114,7 @@ raw_output
 
 这样 `LLM` 和 `VLM` 必然会被同一套代码、同一套标准评判，`matched comparison` 才真正成立。
 
-DS 那份代码的“生成”部分基本能用，需要改的主要是字段名对齐和评分逻辑抽出去。对应 README 里提到的 `code_new/analysis/compare.py`，就应该是这个共享评分层。
+DS 那份代码的“生成”部分基本能用，需要改的主要是字段名对齐和评分逻辑抽出去。对应 README 里提到的 `code/analysis/compare.py`，就应该是这个共享评分层。
 
 ---
 
