@@ -1,0 +1,401 @@
+﻿question_id,case_id,qtype,ground_truth,A_llm_direct,B_llm_cot,C_vlm_direct,D_vlm_cot,needs_review,inference_judged
+GJB0000001T_34c6973fbe,GJB0000001T,inference,属于轻度损伤。推理依据：韧带增粗、边缘模糊、信号增高，但未见连续性中断或完全撕裂征象。,False,False,False,False,True,False
+GJB0000001T_f755d7b463,GJB0000001T,yesno,Yes,True,True,True,True,False,True
+GJB0000001_a7f4941193,GJB0000001,inference,主要属于急性创伤性改变。推理依据：存在前交叉韧带损伤、外侧副韧带损伤及骨挫伤（骨质高信号），符合急性外伤机制。,False,False,False,True,True,True
+GJB0000002_41d4bcfa93,GJB0000002,yesno,No,True,True,True,True,False,True
+GJB0000002_964a183e36,GJB0000002,inference,主要属于退行性改变伴部分损伤。依据：诸骨端边缘骨质增生，关节面软骨欠光整，符合退行性改变；同时存在半月板撕裂及韧带损伤。,True,True,False,True,False,True
+GJB0000004T_34cecb7e29,GJB0000004T,yesno,Yes,True,True,True,True,False,True
+GJB0000004_db1531876f,GJB0000004,inference,不存在。依据：前、后交叉韧带及胫腓副韧带未见明显异常，无连续性中断征象。,True,True,False,True,False,True
+GJB0000004_ecd106ba0a,GJB0000004,yesno,Yes,False,False,True,True,False,True
+GJB0000006T_52f1733f94,GJB0000006T,yesno,No,True,True,True,True,False,True
+GJB0000006_5acaaf2c33,GJB0000006,yesno,No,True,True,True,True,False,True
+GJB0000007T_f35d781f32,GJB0000007T,inference,主要鉴别点在于高信号是否达关节面。推理依据：1. 该患者高信号未达半月板关节面边缘；2. Ⅲ度撕裂定义为高信号达关节面，伴或不伴形态异常；3. 该患者不符合Ⅲ度标准。,False,False,False,True,True,True
+GJB0000008T_07a91ab667,GJB0000008T,yesno,No,True,True,True,True,False,True
+GJB0000009_4d1ffa1834,GJB0000009,inference,该患者半月板未见损伤，属于 0 级。依据：内外侧半月板形态、信号未见异常，未见内部高信号或达关节面的信号线。,True,True,False,True,False,True
+GJB0000010T_2c520945aa,GJB0000010T,inference,该患者膝关节稳定性可能严重受损。推理依据：1. 前、后交叉韧带大部分撕裂可能，影响前后稳定性；2. 胫侧副韧带大部分撕裂可能，影响内侧稳定性；3. 多韧带联合损伤通常导致膝关节多维不稳定。,False,False,False,False,True,True
+GJB0000010T_860aa47190,GJB0000010T,inference,该患者的半月板损伤属于 Stoller Ⅱ级。推理依据：1. 内侧半月板信号增高，外侧半月板前后角内见条状高信号；2. 高信号均未达半月板关节面边缘，符合Ⅱ级损伤影像学诊断标准。,False,False,False,False,True,True
+GJB0000010T_94b6471653,GJB0000010T,inference,该患者的病变主要属于急性创伤性改变。推理依据：1. 多条韧带（前、后交叉韧带及胫侧副韧带）信号增高且部分不连续，符合急性撕裂表现；2. 股骨远端、胫骨近端斑片状高信号符合急性骨挫伤表现；3. 关节腔明显积液及周围软组织渗出支持急性损伤过程。,True,False,False,True,True,True
+GJB0000011_c8a43cc734,GJB0000011,inference,不存在。推理依据：股骨内外髁及胫腓骨关节面骨质未见明显异常信号，无骨髓水肿征象。,True,True,True,True,False,True
+GJB0000012_6ee134df56,GJB0000012,inference,可能为变性或慢性损伤。推理依据：半月板内可见粗线条状 T2WI 高信号，未明确描述达关节面的撕裂线，且关节面不光滑提示退变背景。,False,True,False,False,True,True
+GJB0000013_59953ebb08,GJB0000013,yesno,Yes,True,True,True,True,False,True
+GJB0000014_20b9676ea7,GJB0000014,yesno,Yes,True,True,True,True,False,True
+GJB0000016_b951fdc8f1,GJB0000016,yesno,Yes,False,True,True,True,False,True
+GJB0000017_3c98d5122e,GJB0000017,yesno,No,True,True,True,True,False,True
+GJB0000017_fa5691beef,GJB0000017,yesno,Yes,False,True,True,True,False,True
+GJB0000018T_45357863c1,GJB0000018T,yesno,No,True,True,True,False,False,True
+GJB0000018T_693ab0cb73,GJB0000018T,inference,整体处于退行性骨关节病状态伴多发软组织损伤。依据：骨质增生、软骨磨损、半月板变性、韧带轻度损伤及积液并存。,True,True,True,True,False,True
+GJB0000018_916f7409c7,GJB0000018,inference,提示脂肪垫损伤及水肿。依据：髌下脂肪垫可见片状长 T2 信号，且诊断结论明确为髌下脂肪垫损伤。,True,False,False,False,True,True
+GJB0000022T_d553e3c880,GJB0000022T,inference,不存在明显退行性骨关节病。推理依据：诸骨端边缘无骨质增生，诸关节面软骨光整，缺乏骨关节炎典型征象。,True,True,True,False,True,True
+GJB0000023T_db4fb9a4bf,GJB0000023T,yesno,No,True,True,True,True,False,True
+GJB0000023_9512a770f6,GJB0000023,inference,提示既往可能接受过前交叉韧带重建术。依据：前交叉韧带呈术后改变，且髓腔内可见多条骨道，符合重建手术路径。,True,True,False,False,True,True
+GJB0000023_e649a0ed3a,GJB0000023,yesno,Yes,True,True,True,True,False,True
+GJB0000024_916a76a0db,GJB0000024,yesno,Yes,False,True,True,False,False,True
+GJB0000025_3c8fdf138a,GJB0000025,yesno,No,True,True,True,True,False,True
+GJB0000027T_854b6a7a91,GJB0000027T,yesno,Yes,True,True,True,False,True,True
+GJB0000029T_35d2b031e4,GJB0000029T,yesno,Yes,True,True,True,True,False,True
+GJB0000029_4159de0933,GJB0000029,yesno,No,True,True,False,True,False,True
+GJB0000029_ddaae50a0c,GJB0000029,inference,主要考虑骨髓水肿。依据：表现为斑片状 T2WI 高信号影，边缘模糊，符合水肿信号特征，未见明确骨折线。,True,False,True,False,True,True
+GJB0000030T_258f42effb,GJB0000030T,inference,属于 Stoller I 级或 II 级。推理依据：半月板内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘，不符合 III 级撕裂标准。,True,True,False,False,True,True
+GJB0000030_1f466eb515,GJB0000030,inference,属于 I-Ⅱ级。推理依据：影像显示半月板内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘，符合 I-Ⅱ级变性或损伤标准，未达 III 级撕裂标准。,True,False,False,True,True,True
+GJB0000031T_527a69db29,GJB0000031T,yesno,No,True,True,True,False,False,True
+GJB0000031T_91407a431c,GJB0000031T,yesno,Yes,True,False,True,True,False,True
+GJB0000032T_dfde262c94,GJB0000032T,inference,存在滑膜炎性反应。推理依据：关节腔少量积液且滑膜稍增厚，提示存在炎性渗出过程。,True,True,False,False,True,True
+GJB0000032_e96dade116,GJB0000032,inference,属于 II-III 度损伤。依据：外侧半月板前角异常高信号影呈斜形线样，达半月板关节面边缘，符合 III 度撕裂表现；同时存在条状、球形高信号。,False,False,False,False,True,True
+GJB0000033_4002839e41,GJB0000033,yesno,No,True,False,True,True,False,True
+GJB0000034_19ee6f5707,GJB0000034,inference,提示髌下脂肪垫损伤。推理依据：双侧髌下脂肪垫信号增高，结合诊断结论，符合脂肪垫损伤表现。,True,False,False,False,True,True
+GJB0000034_4a04b26aed,GJB0000034,yesno,No,True,True,True,True,False,True
+GJB0000034_f980fa5fd9,GJB0000034,inference,提示骨质损伤或骨水肿。推理依据：股骨远端及胫骨近端见片状 T2WI 高信号，符合骨挫伤或损伤的影像学表现。,True,True,False,False,True,True
+GJB0000035_4e5f98902f,GJB0000035,inference,建议结合 CT 以进一步明确骨质结构。依据：MRI 显示髌骨局部骨质不连续，CT 对骨皮质连续性显示更佳，有助于鉴别骨折与二分髌骨。,True,False,True,True,True,True
+GJB0000035_61a526c793,GJB0000035,inference,主要考虑骨折并骨髓水肿或二分髌骨损伤。依据：髌骨外侧缘可见片状异常信号，局部骨质不连续。,False,False,False,True,True,True
+GJB0000035_75edb3923a,GJB0000035,inference,不存在半月板损伤导致的关节交锁风险。依据：内外侧半月板形态、信号未见异常，未见撕裂征象。,True,True,False,False,True,True
+GJB0000035_8b079ef7ec,GJB0000035,inference,膝关节稳定性未受主要韧带损伤影响。依据：前、后交叉韧带及胫腓侧副韧带未见异常信号，连续性完整。,True,False,False,False,True,True
+GJB0000036T_42198eb64e,GJB0000036T,yesno,Yes,False,True,True,True,False,True
+GJB0000036_14cbd872fc,GJB0000036,yesno,Yes,False,True,True,True,False,True
+GJB0000036_a1c7d6364c,GJB0000036,inference,更倾向于退行性改变。推理依据：损伤为Ⅰ级，高信号未达关节面，且双侧对称存在，伴髌骨软化，无急性外伤性撕裂征象。,True,False,False,True,True,True
+GJB0000037_79c325f032,GJB0000037,yesno,Yes,True,True,True,True,False,True
+GJB0000037_88ba190b62,GJB0000037,inference,主要属于退行性改变。依据：诸骨端边缘骨质增生，软骨欠光整，股骨滑车面关节面下囊变，符合退行性骨关节病表现。,True,True,False,True,False,True
+GJB0000038T_c186287bc2,GJB0000038T,inference,属于轻度损伤（通常对应 Stoller I 级或 II 级）。推理依据：半月板内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘，不符合 III 级撕裂达关节面的标准。,True,True,False,True,False,True
+GJB0000038T_e86da03c24,GJB0000038T,yesno,Yes,False,True,True,True,False,True
+GJB0000039_8548576cf4,GJB0000039,inference,未完全断裂。推理依据：前交叉韧带仅表现为增粗，连续性存在，未见信号中断或形态缺失，不符合完全撕裂征象。,True,True,True,True,False,True
+GJB0000041T_a9af45c465,GJB0000041T,yesno,Yes,True,False,True,True,False,True
+GJB0000041_6937a3677f,GJB0000041,inference,提示膝关节后方及侧方稳定性结构完整。依据：后交叉韧带及内、外侧副韧带形态、信号未见明显异常。,True,True,False,True,False,True
+GJB0000041_ff29a41e8d,GJB0000041,yesno,Yes,True,True,True,True,False,True
+GJB0000042T_7dfd45ef5d,GJB0000042T,inference,未侵犯关节腔。依据：病变位于皮质下，边界清楚，关节面软骨光整，未见病变突破软骨进入关节腔。,True,False,False,True,True,True
+GJB0000042T_8d2cfab61d,GJB0000042T,yesno,Yes,False,True,True,True,False,True
+GJB0000042T_ab5ca87e04,GJB0000042T,inference,最可能为纤维性骨皮质缺损。依据：病变位于股骨远端皮质下，边界清楚，呈混杂信号，符合该病典型影像学特征。,False,False,False,False,True,True
+GJB0000042_212410bf62,GJB0000042,inference,主要属于创伤性改变。推理依据：前交叉韧带撕裂及半月板撕裂通常为急性外伤所致，且骨质未见明显退行性增生改变。,False,False,True,True,True,True
+GJB0000042_d5c4f83008,GJB0000042,inference,代表半月板内部损伤或撕裂伴水肿/积液。推理依据：T2WI 高信号通常提示含水量增加，见于损伤或撕裂处。,True,False,False,False,True,True
+GJB0000042_d6545f7b8e,GJB0000042,inference,属于Ⅲ级。推理依据：异常信号达半月板边缘与关节腔相通，符合Ⅲ级撕裂的影像学诊断标准。,True,True,True,True,False,True
+GJB0000043T_07d95dd274,GJB0000043T,inference,考虑为少许损伤可能。推理依据：前交叉韧带连续性完整，仅下段信号稍增高，未见连续性中断或明显形态扭曲，不符合完全撕裂表现。,True,True,False,True,False,True
+GJB0000043T_5f1b86f562,GJB0000043T,yesno,No,True,True,True,True,False,True
+GJB0000043_8deb083ae5,GJB0000043,inference,不存在明显的滑膜炎或关节积液。推理依据：1. 关节腔内及关节囊内未见明显积液征；2. 滑膜未见明显增厚描述。,True,False,False,True,True,True
+GJB0000044T_801a98b591,GJB0000044T,inference,不存在急性半月板撕裂。推理依据：高信号未达半月板关节面边缘，不符合撕裂的影像学诊断标准。,True,True,False,False,True,True
+GJB0000045T_c0a7d80f71,GJB0000045T,yesno,Yes,True,True,True,True,False,True
+GJB0000045_1639043916,GJB0000045,yesno,Yes,True,True,True,True,False,True
+GJB0000045_8b1f18f53e,GJB0000045,inference,可能原因为创伤性滑膜炎。推理依据：伴有关节积液及多条韧带损伤，滑膜增厚多为创伤后的反应性增生。,False,False,False,False,True,True
+GJB0000047T_df95cff7f8,GJB0000047T,inference,膝关节整体稳定性正常。推理依据：1. 各骨对合正常；2. 主要稳定结构（交叉韧带、侧副韧带）未见异常；3. 无关节不稳的间接征象。,True,False,True,True,True,True
+GJB0000047_e59109ba51,GJB0000047,yesno,No,True,True,True,True,False,True
+GJB0000048_08311aa604,GJB0000048,yesno,Yes,True,True,False,True,False,True
+GJB0000048_b157cf01a0,GJB0000048,inference,属于少许损伤可能。推理依据：韧带行走未见异常，连续性完整，仅边缘信号稍增高，未见断裂或明显松弛征象。,True,True,False,False,True,True
+GJB0000049T_252d0fff54,GJB0000049T,yesno,No,True,True,True,True,False,True
+GJB0000049T_2916983403,GJB0000049T,yesno,Yes,True,True,True,True,False,True
+GJB0000049_2adc562377,GJB0000049,inference,属于损伤性改变。依据：左膝外侧副韧带上段信号增高，符合韧带损伤的影像学特征，诊断结论明确为损伤。,False,False,False,False,True,True
+GJB0000050T_0b236bc642,GJB0000050T,yesno,Yes,True,True,True,True,False,True
+GJB0000050_3b5153af6f,GJB0000050,yesno,Yes,False,True,True,False,False,True
+GJB0000050_9ee1da604f,GJB0000050,inference,主要病因为退行性骨关节病。依据：双侧对称性内侧间隙变窄、骨质增生、软骨磨损及半月板退变性撕裂，无急性外伤性韧带断裂征象。,True,True,True,True,False,True
+GJB0000051T_07e20aa226,GJB0000051T,inference,不存在。推理依据：股骨内外髁及胫腓骨关节面骨质未见明显异常，无水肿高信号或骨折线。,True,True,False,True,False,True
+GJB0000052T_a2e296d266,GJB0000052T,yesno,No,True,True,True,True,False,True
+GJB0000052_3a054ff4f7,GJB0000052,yesno,Yes,False,True,True,True,False,True
+GJB0000052_5eeedc4f4a,GJB0000052,inference,属于少许损伤可能。推理依据：韧带上段信号稍增高，但未提及连续性中断或形态完全消失，符合轻度损伤表现。,True,True,False,True,False,True
+GJB0000053T_6fbf1efcd1,GJB0000053T,yesno,No,True,True,True,False,False,True
+GJB0000053_8a71b4c372,GJB0000053,yesno,Yes,True,True,True,True,False,True
+GJB0000055T_6ee69dac79,GJB0000055T,yesno,No,True,True,True,False,False,True
+GJB0000055T_ce88bbb77b,GJB0000055T,inference,未见明确退行性磨损。推理依据：诸关节面软骨光整，未见软骨缺损、变薄或信号异常，且骨质未见明显增生硬化。,False,True,False,True,False,True
+GJB0000055_d3cd845ef4,GJB0000055,yesno,No,True,True,True,False,False,True
+GJB0000056T_233e21882d,GJB0000056T,inference,不存在半月板撕裂。推理依据：1. 内、外侧半月板形态及信号未见异常；2. 未见高信号达关节面的撕裂征象。,True,True,True,True,False,True
+GJB0000057_60f438e35e,GJB0000057,inference,影像未提示需要紧急手术干预的征象。推理依据：主要韧带移植物连续，无急性骨折或完全撕裂，主要为术后改变及少量积液。,True,True,True,True,False,True
+GJB0000058_75faa4d910,GJB0000058,inference,提示髌下脂肪垫少许损伤或炎症反应。推理依据：脂肪垫内出现小片高信号，通常代表水肿或损伤性改变。,True,True,False,True,False,True
+GJB0000058_b7cd6619ee,GJB0000058,yesno,No,True,True,True,True,False,True
+GJB0000059_1ca0403f00,GJB0000059,yesno,No,True,True,True,True,False,True
+GJB0000059_661aeec5e9,GJB0000059,yesno,Yes,True,True,False,True,False,True
+GJB0000060T_6c3b84ccfd,GJB0000060T,yesno,No,True,True,True,True,False,True
+GJB0000060_0294eb6997,GJB0000060,yesno,No,True,True,True,False,False,True
+GJB0000060_d4013f8888,GJB0000060,inference,属于 Stoller I 级或 II 级。推理依据：影像显示半月板内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘，不符合 III 级损伤达关节面的标准。,True,True,False,True,False,True
+GJB0000061_0d6061a91d,GJB0000061,inference,提示脂肪垫损伤或水肿。推理依据：髌下脂肪垫内可见斑片状稍高信号，符合损伤性水肿表现。,True,True,False,True,False,True
+GJB0000061_58681c780d,GJB0000061,inference,膝关节韧带稳定性良好。推理依据：前、后交叉韧带及胫腓副韧带未见明显异常，连续性完整。,True,True,False,True,False,True
+GJB0000062T_2cf1fa6f1d,GJB0000062T,yesno,No,True,True,False,False,False,True
+GJB0000063T_f982a1048b,GJB0000063T,yesno,No,True,True,True,True,False,True
+GJB0000064T_38081f7f35,GJB0000064T,inference,膝关节稳定性良好。推理依据：前、后交叉韧带及内、外侧副韧带形态、信号、走行均正常，无断裂征象。,False,False,False,False,True,True
+GJB0000065_329d2cd77f,GJB0000065,yesno,Yes,True,True,True,True,False,True
+GJB0000068_09dd4660ac,GJB0000068,inference,属于 Stoller I-II 级。推理依据：1. 半月板内可见条状 T2WI 高信号；2. 高信号未达半月板关节面边缘；3. 半月板形态未见明显撕裂中断，符合 I-II 级损伤影像学诊断标准。,False,False,False,False,True,True
+GJB0000069T_ae732f4fd4,GJB0000069T,inference,不一致。右膝髌骨损伤明显，左膝表现为髌骨软化，右侧损伤征象更为显著。,False,False,True,False,True,True
+GJB0000069_0a1b1b01b2,GJB0000069,inference,存在炎症反应。依据：关节积液和髌下脂肪垫高信号均为膝关节滑膜炎或创伤后炎症的非特异性征象。,True,True,False,True,False,True
+GJB0000070T_e6d5c808b7,GJB0000070T,yesno,Yes,True,True,True,True,False,True
+GJB0000072T_2969a4c753,GJB0000072T,yesno,Yes,True,True,True,True,False,True
+GJB0000073_726f25a3a9,GJB0000073,yesno,Yes,True,True,True,True,False,True
+GJB0000074T_29151f5c32,GJB0000074T,yesno,No,True,True,True,True,False,True
+GJB0000074_73864f4c58,GJB0000074,inference,属于Ⅰ-Ⅱ级损伤。推理依据：半月板内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘，符合Ⅰ-Ⅱ级损伤影像学标准，未达 III 级撕裂标准。,True,False,False,False,True,True
+GJB0000074_9520a2b6be,GJB0000074,yesno,No,True,True,True,False,False,True
+GJB0000074_b29e7936ce,GJB0000074,inference,右侧膝关节炎症反应可能较左侧活跃。推理依据：关节腔内及关节囊内见积液征，右侧显示显著，提示右侧积液量多于左侧。,True,True,False,False,True,True
+GJB0000075_67c40f6c5e,GJB0000075,yesno,No,True,True,True,True,False,True
+GJB0000076T_9c6e874fa9,GJB0000076T,inference,不存在。推理依据：双侧股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常，各骨对合正常。,True,True,True,True,False,True
+GJB0000077T_eadbd1e5ac,GJB0000077T,yesno,No,True,True,True,True,False,True
+GJB0000077_cda51df98d,GJB0000077,inference,股骨远端关节面软骨欠光整，质子像其内见灶性低信号，提示软骨磨损及变性。,True,True,False,True,False,True
+GJB0000077_d2a8b86f35,GJB0000077,yesno,No,True,True,True,True,False,True
+GJB0000078_a7acb97d1c,GJB0000078,inference,中等程度退行性改变伴多发结构损伤。依据：存在骨质增生、软骨磨损、半月板损伤、韧带损伤及积液，但骨对合正常，未见骨折。,True,False,False,False,True,True
+GJB0000079T_69a402ccc8,GJB0000079T,inference,目前影像学未见骨折风险。推理依据：各骨对合正常，骨质未见明显异常信号或断裂线，仅股骨内侧髁有囊变可能，非急性骨折征象。,True,True,True,False,True,True
+GJB0000080T_e430749e5d,GJB0000080T,yesno,No,True,True,True,True,False,True
+GJB0000080_6781c139e4,GJB0000080,inference,不存在。推理依据：关节腔内及关节囊内未见明显积液征，缺乏急性炎症渗出影像学证据。,True,True,False,True,False,True
+GJB0000081_920d337048,GJB0000081,inference,主要依赖后交叉韧带及内、外侧副韧带。依据：上述韧带信号未见明显异常，形态完整，而前交叉韧带为术后重建状态。,True,False,True,True,True,True
+GJB0000081_a2ead6b5eb,GJB0000081,yesno,Yes,True,True,True,True,False,True
+GJB0000082_293c4eb890,GJB0000082,yesno,No,True,True,True,True,False,True
+GJB0000083_ffa38159c1,GJB0000083,yesno,Yes,True,True,True,True,False,True
+GJB0000084_919b27e7f8,GJB0000084,yesno,No,True,True,True,True,False,True
+GJB0000085T_2126fce2fb,GJB0000085T,yesno,Yes,True,True,True,True,False,True
+GJB0000085_3f34ee771c,GJB0000085,yesno,Yes,False,True,True,True,False,True
+GJB0000085_b819761ba4,GJB0000085,yesno,No,True,True,True,True,False,True
+GJB0000086_2792514b22,GJB0000086,inference,膝关节韧带稳定性良好。推理依据：前、后交叉韧带及胫腓副韧带未见明显异常，形态连续，信号均匀，无断裂或松弛征象。,True,True,True,False,True,True
+GJB0000086_d01ae495fa,GJB0000086,yesno,No,True,True,True,True,False,True
+GJB0000087T_87a92bc855,GJB0000087T,inference,需要。依据：影像显示术后改变伴退行性变及半月板信号异常，需结合患者临床症状（如疼痛、活动度）以确定是否需要干预，影像诊断意见亦建议结合临床。,True,False,False,True,True,True
+GJB0000088T_a8c9bb0540,GJB0000088T,yesno,Yes,False,False,False,False,False,True
+GJB0000089_500d044b7e,GJB0000089,yesno,Yes,True,True,True,True,False,True
+GJB0000090T_8ea10630d1,GJB0000090T,yesno,No,True,True,True,True,False,True
+GJB0000091T_b98e32e140,GJB0000091T,inference,不提示急性完全撕裂。依据：高信号未达半月板关节面边缘，不符合 III 级撕裂标准。,True,True,True,False,True,True
+GJB0000091T_cc90544300,GJB0000091T,yesno,Yes,True,True,True,True,False,True
+GJB0000092T_00a4936731,GJB0000092T,yesno,No,True,True,True,False,False,True
+GJB0000093T_39b3c8ebc6,GJB0000093T,inference,倾向于创伤性或局部囊性变。推理依据：前交叉韧带局部高信号提示损伤，骨髓无退行性水肿，半月板无退行性撕裂，但需临床确认外伤史。,True,True,False,True,False,True
+GJB0000094_47481184de,GJB0000094,inference,属于Ⅰ-Ⅱ级。推理依据：半月板内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘，符合Ⅰ-Ⅱ级损伤影像学标准。,True,False,False,True,True,True
+GJB0000095T_4bc7f8f4a7,GJB0000095T,inference,完整。依据：诸骨对合关系正常，骨髓腔内未见异常信号，未见骨折线或骨挫伤。,False,True,False,True,False,True
+GJB0000095T_fcd7e17d96,GJB0000095T,yesno,No,True,True,True,True,False,True
+GJB0000095_cf8d25a14b,GJB0000095,yesno,No,True,True,True,True,False,True
+GJB0000095_ee5aee2167,GJB0000095,inference,未见明确骨折线。推理依据：影像描述为股骨内外髁斑片状长 T2 信号（骨损伤/挫伤），未提及骨皮质连续性中断或骨折线。,True,True,True,True,False,True
+GJB0000096T_5cbb0f04d3,GJB0000096T,inference,结构完整性未完全破坏。推理依据：半月板内高信号未达关节面边缘，形态未见明显撕裂中断，符合Ⅱ级损伤。,True,False,True,True,True,True
+GJB0000096T_c0f2904407,GJB0000096T,inference,多灶性。推理依据：病变涉及股骨外侧髁、滑车面、髌骨、胫骨平台、半月板、脂肪垫及关节腔等多个结构。,True,False,False,False,True,True
+GJB0000098T_56c2db51ae,GJB0000098T,yesno,No,True,True,True,True,False,True
+GJB0000098T_a76e439b90,GJB0000098T,inference,不存在。推理依据：股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常，未见骨髓水肿或骨折线信号。,True,True,True,False,True,True
+GJB0000098T_da38594ae0,GJB0000098T,inference,建议结合临床。推理依据：影像显示髌韧带远端可见结节状异常信号影，但需结合临床症状体征确定具体病理性质。,True,True,True,True,False,True
+GJB0000100_5517c1b416,GJB0000100,yesno,Yes,False,True,True,True,False,True
+GJB0000100_750aa56922,GJB0000100,inference,未发生完全断裂。推理依据：影像学显示双前交叉韧带虽稍增粗、信号稍增高，但张力尚可，未见连续性中断征象，符合肿胀而非断裂表现。,True,False,True,True,True,True
+GJB0000100_d58e482475,GJB0000100,inference,推测发生了骨水肿或骨挫伤。推理依据：T2WI 高信号在骨髓腔内通常代表水分含量增加，常见于外伤后的骨挫伤或应力性反应。,True,True,False,True,False,True
+GJB0000100_ec372246bc,GJB0000100,inference,属于少量积液。推理依据：影像学表现中关节腔内及关节囊内未见明显积液征，诊断意见确认为少量积液，提示液体积聚量较少，未达到中大量标准。,False,False,False,True,True,True
+GJB0000101T_6b3e7c7aad,GJB0000101T,inference,可能为滑膜炎症反应所致。依据：诊断意见提示伴髌上滑囊炎，且关节腔内见积液信号。,False,True,False,False,True,True
+GJB0000103_300413db80,GJB0000103,yesno,Yes,True,True,True,True,False,True
+GJB0000105_7257fec130,GJB0000105,yesno,No,True,False,True,False,False,True
+GJB0000106T_e0c69fb09e,GJB0000106T,inference,倾向于良性病变。推理依据：影像表现为结节状压脂高信号，诊断意见考虑良性病变可能，未见骨质破坏或软组织肿块等恶性征象。,True,True,False,True,False,True
+GJB0000107T_7c0b731383,GJB0000107T,inference,未达到撕裂标准。依据：高信号未达半月板关节面边缘，不符合 III 度撕裂征象。,True,True,False,False,True,True
+GJB0000108T_55eb2307e0,GJB0000108T,inference,主要属于急性创伤性改变。推理依据：前交叉韧带增粗、边缘模糊且 T2WI 信号增高，符合急性损伤水肿表现，未见明显骨质增生等退行性征象。,False,True,False,True,False,True
+GJB0000108T_b91a126d24,GJB0000108T,inference,形态完整性未受明显破坏，但内部信号异常。推理依据：影像显示三角纤维软骨板形态正常，但其内出现条状高信号，提示内部损伤而非完全撕裂中断。,False,False,False,True,True,True
+GJB0000108T_db514c16ad,GJB0000108T,inference,左侧膝关节稳定性可能受影响。推理依据：左侧前交叉韧带损伤，增粗且信号增高，前交叉韧带是维持膝关节前向稳定的关键结构，其损伤可能导致稳定性下降。,True,True,False,True,False,True
+GJB0000109_3d29767afc,GJB0000109,yesno,Yes,False,True,True,True,False,True
+GJB0000111T_ae4aaf043c,GJB0000111T,yesno,No,True,True,True,True,False,True
+GJB0000111_04f6f29af9,GJB0000111,inference,主要属于退行性改变。推理依据：诊断意见明确指出双膝关节退行性改变，伴关节软骨磨损、半月板损伤及骨质增生相关信号改变。,False,False,False,True,True,True
+GJB0000112_42cd268f21,GJB0000112,yesno,No,True,True,True,True,False,True
+GJB0000112_792181c5de,GJB0000112,inference,符合盘状半月板诊断。推理依据：外侧半月板增厚，矢状位呈蝴蝶状且超过 3 个层面，这是盘状半月板的典型影像特征。,False,False,False,False,True,True
+GJB0000112_84c2e32755,GJB0000112,yesno,Yes,False,True,True,True,False,True
+GJB0000113T_8ef1acb943,GJB0000113T,inference,处于好转趋势。推理依据：1. 骨髓高信号影较前减少；2. 关节积液较前稍减少；3. 软组织高信号影范围稍微减小。,True,True,True,True,False,True
+GJB0000113_d134218524,GJB0000113,yesno,Yes,True,True,True,True,False,True
+GJB0000114T_1e76ee9b93,GJB0000114T,yesno,No,True,True,True,True,False,True
+GJB0000114_9757ae6cda,GJB0000114,inference,诊断依据为髌骨高度指数（Insall 指数）约 1.4，超过正常范围，提示高位髌骨。,True,False,False,False,True,True
+GJB0000114_c85c40006d,GJB0000114,inference,更倾向于慢性退变或早期损伤。推理依据：高信号未达关节面边缘，无明确形态中断或移位，符合Ⅰ-Ⅱ级损伤特征，非急性完全撕裂表现。,True,False,True,True,True,True
+GJB0000114_cde61819b6,GJB0000114,yesno,Yes,False,True,True,True,False,True
+GJB0000115T_03ee65c0f3,GJB0000115T,yesno,Yes,False,True,True,True,False,True
+GJB0000115T_980766efd4,GJB0000115T,yesno,No,True,True,True,True,False,True
+GJB0000115_cda25dd8e0,GJB0000115,inference,胫骨平台存在术后改变，但各骨对合正常。推理依据：可见内固定物及骨道，但各骨对合正常，未见明显骨折错位征象。,False,True,False,False,True,True
+GJB0000116_cfadd890f4,GJB0000116,yesno,Yes,False,False,True,True,False,True
+GJB0000116_faffe61d66,GJB0000116,yesno,No,True,True,True,True,False,True
+GJB0000117T_ecc3a77d85,GJB0000117T,inference,完整性良好。推理依据：前、后交叉韧带及胫腓副韧带未见明显异常信号，连续性未中断，提示主要稳定结构未见撕裂。,False,False,False,False,True,True
+GJB0000118T_9e74c2f865,GJB0000118T,yesno,No,True,True,True,True,False,True
+GJB0000118_95e29227e3,GJB0000118,yesno,Yes,True,True,True,True,False,True
+GJB0000119T_0ffa237c97,GJB0000119T,yesno,No,True,True,True,True,False,True
+GJB0000120T_d87cd543b6,GJB0000120T,inference,可能与退行性改变及半月板、韧带损伤有关。推理依据：存在骨质增生、软骨磨损、半月板损伤及韧带损伤，这些炎症或机械性刺激可导致滑膜分泌增多形成积液。,True,False,False,True,True,True
+GJB0000120_6291e77458,GJB0000120,inference,两者均为膝关节退行性变的典型表现，互为因果。推理依据：影像显示诸骨端边缘骨质增生同时伴有关节面软骨欠光整及低信号，符合骨关节炎的病理演变过程。,True,True,False,True,False,True
+GJB0000121_452feceee1,GJB0000121,yesno,No,True,True,True,True,False,True
+GJB0000121_c0c85a7155,GJB0000121,yesno,Yes,True,True,True,True,False,True
+GJB0000122_48553d2705,GJB0000122,inference,提示右腘肌损伤。依据：右腘肌见斑片状高信号。,False,False,False,False,True,True
+GJB0000123T_af681aabd6,GJB0000123T,inference,主要受累区域为髌下脂肪垫。推理依据：膝髌下脂肪垫见小片高信号，而关节周围其他软组织、肌肉及肌间隙未见明显异常。,False,False,False,False,True,True
+GJB0000125T_dfaec3afdc,GJB0000125T,inference,关节软骨健康状况良好。推理依据：诸关节面软骨光整，未见缺损或信号异常，无骨关节炎典型的软骨磨损表现。,False,True,True,True,False,True
+GJB0000126T_3e3fe749e5,GJB0000126T,inference,风险较低。依据：髌骨位置、形态在正常范围内，未见高位、外翻、外移，滑车沟深度正常，解剖结构利于髌骨稳定轨迹。,True,False,False,True,True,True
+GJB0000126_291ce67e38,GJB0000126,inference,可能性较小。推理依据：影像描述为少许积液，未见大量积液张力性改变，通常少许积液可自行吸收。,True,False,False,True,True,True
+GJB0000127_09f5998327,GJB0000127,yesno,Yes,True,True,True,True,False,True
+GJB0000128_6c50667061,GJB0000128,inference,损伤程度为部分撕裂可能。推理依据：1. 后交叉韧带增粗；2. 边缘模糊；3. T2WI 信号增高，但未提及连续性完全中断。,False,False,False,False,True,True
+GJB0000128_abebc80d0a,GJB0000128,inference,需要结合临床进一步评估。推理依据：诊断意见明确注明“请结合临床”，因影像学提示部分撕裂可能，需查体确认稳定性。,True,False,False,True,True,True
+GJB0000129T_70d68a72cc,GJB0000129T,yesno,No,True,True,True,True,False,True
+GJB0000130T_16e9bb9811,GJB0000130T,yesno,Yes,True,True,True,True,False,True
+GJB0000130T_e43bcfe39e,GJB0000130T,inference,可能来源包括髌下脂肪垫损伤、髌腱股骨外髁摩擦综合征及关节积液。推理依据：影像显示上述结构存在明确的水肿、渗出及损伤信号。,True,True,False,False,True,True
+GJB0000130_11f1c26bfd,GJB0000130,yesno,No,True,True,True,True,False,True
+GJB0000130_e80dbd3d87,GJB0000130,inference,性质可能为小囊变。推理依据：胫骨近端可见少许斑点状高信号，诊断意见提示右胫骨近端少许小囊变可能。,False,False,False,False,True,True
+GJB0000131T_ef96aa1de0,GJB0000131T,yesno,Yes,False,True,True,True,False,True
+GJB0000131_4cd7c598bc,GJB0000131,inference,目前影像未见半月板根部撕裂征象。推理依据：半月板高信号局限于前后角内部，未达关节面边缘，且未描述根部附着点信号中断或形态异常，不符合根部撕裂的典型表现。,False,True,False,False,True,True
+GJB0000132_b78e6e713d,GJB0000132,yesno,No,True,True,True,False,False,True
+GJB0000133T_70ba6a0a06,GJB0000133T,inference,存在术后改变及可能的退变。推理依据：关节面不光滑，且可见明确的术后内固定物及骨道征象。,True,False,False,True,True,True
+GJB0000133T_ace573fd1a,GJB0000133T,yesno,No,True,True,True,True,False,True
+GJB0000133_0b14e05fad,GJB0000133,inference,关节稳定性基本维持。依据：主要韧带未见明显异常，半月板未达 III 度。,True,True,False,False,True,True
+GJB0000134T_5fd49245a0,GJB0000134T,yesno,No,True,True,True,True,False,True
+GJB0000136T_44773f3384,GJB0000136T,yesno,Yes,False,True,True,True,False,True
+GJB0000136T_95d356a0af,GJB0000136T,inference,不需要紧急手术干预。推理依据：半月板损伤为Ⅰ-Ⅱ级未达关节面，韧带完整，无骨折脱位，通常首选保守治疗。,True,True,False,True,False,True
+GJB0000137T_4a04092faa,GJB0000137T,inference,主要诊断为右膝关节少量积液。推理依据：1. 关节腔内可见少量长 T2 信号积液；2. 半月板、韧带、骨软骨及骨髓均未见明确异常信号，排除其他结构性损伤。,True,True,False,True,False,True
+GJB0000137_86aa32767c,GJB0000137,inference,未发生断裂。依据：前交叉韧带移植物连续，虽内见条状高信号但整体连续性存在。,True,False,True,False,True,True
+GJB0000137_e3f3d48962,GJB0000137,inference,属于少许。依据：膝关节腔、关节囊内见少许积液。,True,True,False,True,False,True
+GJB0000137_e8c4f97672,GJB0000137,yesno,Yes,True,True,True,True,False,True
+GJB0000138T_5a1c46a726,GJB0000138T,inference,提示韧带肿胀或部分损伤，而非完全断裂。推理依据：韧带稍增粗、边缘不清，T2WI 信号增高，但张力尚可，未见连续性中断。,True,True,False,True,False,True
+GJB0000138_7a9ddd6199,GJB0000138,yesno,No,True,True,True,True,False,True
+GJB0000138_9a62e77e3b,GJB0000138,yesno,Yes,False,False,False,True,False,True
+GJB0000139T_0b449b97af,GJB0000139T,inference,膝关节稳定性未受严重影响。推理依据：前、后交叉韧带及胫腓副韧带未见明显异常，骨对合正常，无脱位征象。,False,False,False,False,True,True
+GJB0000139T_e978e9e525,GJB0000139T,yesno,Yes,True,True,True,True,False,True
+GJB0000139_f0ceca1ced,GJB0000139,yesno,No,True,True,True,True,False,True
+GJB0000140_008e87bc66,GJB0000140,yesno,No,True,True,True,True,False,True
+GJB0000141T_6c7804f1ee,GJB0000141T,inference,提示髌下脂肪垫损伤或水肿，常与膝关节前部撞击或退变有关。,True,True,False,True,False,True
+GJB0000141_6c81f5bebb,GJB0000141,yesno,No,True,True,True,True,False,True
+GJB0000141_a3fa62d7d2,GJB0000141,inference,提示损伤及渗出。推理依据：长 T2 信号通常代表水肿或液体，结合部位位于肌腱及邻近软组织，符合损伤后炎性渗出表现。,True,True,False,True,False,True
+GJB0000142T_c26e677a71,GJB0000142T,yesno,No,True,True,True,True,False,True
+GJB0000142_13cf3e723b,GJB0000142,inference,完整性良好。推理依据：后交叉韧带及内、外侧副韧带形态、信号未见明显异常，无撕裂或中断征象。,True,True,False,True,False,True
+GJB0000142_418391091f,GJB0000142,yesno,No,True,True,True,True,False,True
+GJB0000142_666a80aa92,GJB0000142,yesno,Yes,True,True,True,True,False,True
+GJB0000143T_77f5b4aae8,GJB0000143T,inference,说明暂无骨挫伤或骨软骨损伤，排除了伴随的骨性创伤病变。,False,True,False,True,False,True
+GJB0000143_7126cfec8e,GJB0000143,inference,不存在典型征象。推理依据：1. 诸关节面软骨光整；2. 骨质未见明显异常，无骨赘形成或关节间隙狭窄描述。,True,True,False,False,True,True
+GJB0000144T_6f04ede2ca,GJB0000144T,yesno,Yes,True,True,True,True,False,True
+GJB0000144T_7a00686ef6,GJB0000144T,inference,考虑髌股关节紊乱症可能性大。依据：WibergⅡ型，高位，髌骨外翻，髌股关节外侧关节间距变窄。,True,False,False,True,True,True
+GJB0000144T_edcfe47ee3,GJB0000144T,inference,考虑滑膜炎。依据：关节腔及关节囊内见积液征，滑膜增厚。,True,True,False,True,False,True
+GJB0000144T_fc98ba4828,GJB0000144T,inference,骨质损伤。依据：髌骨及股骨滑车关节面下可见斑片状长 T2 信号及局灶性囊性灶。,False,False,False,False,True,True
+GJB0000144_0cc74be7ac,GJB0000144,inference,主要集中在髌下脂肪垫和关节腔。推理依据：诊断意见明确列出髌下脂肪垫损伤和关节少许积液，其他结构未见明显异常。,False,False,False,False,True,True
+GJB0000144_ae1af0ccb7,GJB0000144,yesno,Yes,False,True,True,True,False,True
+GJB0000144_f3e32738d1,GJB0000144,inference,膝关节韧带稳定性良好。推理依据：前、后交叉韧带及胫腓副韧带未见明显异常，连续性完整，无撕裂或松弛征象。,True,False,True,False,True,True
+GJB0000145T_286ce17e56,GJB0000145T,inference,提示髌股关节软骨退行性变。推理依据：髌软骨欠光整是软骨软化症的典型影像表现，常伴随关节磨损。,True,False,False,False,True,True
+GJB0000145T_b4c333af25,GJB0000145T,yesno,No,True,True,True,False,False,True
+GJB0000145_38731baad4,GJB0000145,inference,膝关节稳定性良好。推理依据：前、后交叉韧带及胫腓副韧带未见明显异常，连续性完整，无韧带断裂征象。,True,False,False,True,True,True
+GJB0000146_5c3ffcbce8,GJB0000146,inference,不存在急性骨折风险。推理依据：诸骨对合关系正常，骨髓腔内未见异常信号，无骨折线或骨挫伤征象。,True,True,True,True,False,True
+GJB0000147T_68b8f640ed,GJB0000147T,yesno,No,True,True,False,False,False,True
+GJB0000148_958d388a5a,GJB0000148,inference,考虑 Stoller I 度或 II 度损伤。推理依据：Stoller 分级中，III 度损伤定义为高信号达关节面；该患者内侧及外侧半月板高信号均未达半月板关节面边缘，故排除 III 度撕裂。,True,False,False,True,True,True
+GJB0000149_02b5195545,GJB0000149,inference,可能由髌股关节撞击或过度伸展引起。推理依据：脂肪垫位于髌骨下方，髌骨外移及关节积液提示局部力学环境改变导致脂肪垫受压损伤。,True,False,False,False,True,True
+GJB0000149_5c158c2731,GJB0000149,inference,韧带稳定性未受明显影响。推理依据：前、后交叉韧带及胫腓副韧带连续性完整，信号未见异常，无撕裂征象。,True,False,False,False,True,True
+GJB0000150T_8aa538cc5d,GJB0000150T,yesno,No,True,True,True,True,False,True
+GJB0000152T_18e9477e07,GJB0000152T,yesno,Yes,True,True,True,True,False,True
+GJB0000154T_3612bb8cf1,GJB0000154T,inference,属于少许损伤。推理依据：髌下脂肪垫仅见少许斑片状 PDWFS 高信号，未见大面积水肿或结构破坏。,True,True,False,True,False,True
+GJB0000156T_522f1429c1,GJB0000156T,inference,膝关节对合关系正常。推理依据：双侧膝关节各骨对合正常，未见脱位或半脱位征象。,True,True,False,True,False,True
+GJB0000158T_8479bab8c4,GJB0000158T,yesno,Yes,True,True,True,True,False,True
+GJB0000158T_c798f5f10b,GJB0000158T,yesno,No,True,True,True,True,False,True
+GJB0000159T_2028cf4621,GJB0000159T,yesno,No,True,True,True,True,False,True
+GJB0000159T_4ba4d773d0,GJB0000159T,inference,可能性低。推理依据：仅见积液信号，未见滑膜明显增生结节、周围软组织脓肿或骨髓炎征象，更符合创伤性或反应性积液。,True,True,False,True,False,True
+GJB0000159T_91fb88428a,GJB0000159T,yesno,Yes,True,True,True,True,False,True
+GJB0000160T_ea660e6cc4,GJB0000160T,inference,需要。推理依据：影像诊断提示撕裂可能，最终确诊需结合 McMurray 试验等临床查体及症状综合评估。,True,False,False,True,True,True
+GJB0000164T_e3993441a6,GJB0000164T,inference,属于囊性变，通常提示退行性或良性骨内改变。,False,False,False,True,True,True
+GJB0000165T_3f1c5b77d7,GJB0000165T,yesno,No,True,True,True,True,False,True
+GJB0000165T_a1884b17a7,GJB0000165T,yesno,Yes,False,True,False,True,False,True
+GJB0000166T_a1e9486414,GJB0000166T,yesno,Yes,True,True,True,True,False,True
+GJB0000166T_dc0262efd6,GJB0000166T,inference,结论：可能为创伤性滑膜炎或关节内损伤反应。依据：存在多处韧带、半月板及软组织损伤，伴随关节腔积液及囊肿形成。,True,True,True,True,False,True
+GJB0000168T_0d88ace9d4,GJB0000168T,inference,存在滑膜炎。推理依据：关节腔、关节囊内见少许积液，且内侧副韧带周围渗出较明显，符合滑膜炎性改变。,True,True,False,False,True,True
+GJB0000168T_449b433c39,GJB0000168T,yesno,Yes,True,True,True,True,False,True
+GJB0000168T_e79c61902d,GJB0000168T,inference,属于 Stoller III 级。推理依据：影像显示内侧半月板后角异常信号达半月板边缘与关节腔相通，符合 III 级撕裂标准。,True,False,True,True,True,True
+GJB0000169T_78f6d9c588,GJB0000169T,inference,左侧。依据：影像仅显示左髌骨骨质高信号，右侧髌骨及股骨内外髁、胫腓骨关节面骨质未见明显异常。,False,True,False,True,False,True
+GJB0000171T_7101d415a4,GJB0000171T,yesno,No,True,True,True,True,False,True
+GJB0000171T_fbf6d8d383,GJB0000171T,inference,提示可能存在轻度损伤或水肿。推理依据：正常韧带应为低信号，信号稍高表明组织内水分增加或微观结构改变。,True,True,False,False,True,True
+GJB0000173T_4cc9c339e7,GJB0000173T,inference,可能提示软骨磨损或退行性改变。依据：股骨远端及胫骨近端关节面不光滑，常见于术后或退变。,True,True,True,True,False,True
+GJB0000173T_69a82f1dd5,GJB0000173T,inference,不存在。依据：主要韧带（ACL 移植物、PCL、MCL、LCL）连续性均完好，无急性断裂征象。,True,True,True,True,False,True
+GJB0000173T_dc72b0d3c8,GJB0000173T,yesno,Yes,True,True,True,True,False,True
+GJB0000174T_817c74f614,GJB0000174T,inference,不存在。依据：内外侧半月板形态、信号未见异常，无撕裂信号达关节面。,True,True,False,True,False,True
+GJB0000175T_dca45a818a,GJB0000175T,inference,倾向于部分损伤。依据：韧带增粗、边缘模糊、信号增高，但未描述连续性中断。,True,True,False,True,False,True
+GJB0000178T_eb63eb13bb,GJB0000178T,yesno,Yes,True,True,True,True,False,True
+GJB0000179T_015ea95674,GJB0000179T,inference,正常。推理依据：对比术前片及前片，右侧膝关节各骨对合正常，未见恶化。,True,False,False,True,True,True
+GJB0000179T_bb07a3b862,GJB0000179T,inference,健康。推理依据：诸关节面软骨光整，未见磨损、缺损或信号异常。,False,False,True,False,True,True
+GJB0000180T_2c08496d07,GJB0000180T,yesno,No,True,True,True,True,False,True
+GJB0000181T_2cfcec7ffc,GJB0000181T,yesno,No,True,True,True,False,False,True
+GJB0000181T_e870eb039a,GJB0000181T,inference,属于部分撕裂。推理依据：影像显示前交叉韧带连续性欠佳但未见完全中断，局部信号增高，符合部分撕裂征象。,True,False,False,True,True,True
+GJB0000182T_53ea5879e6,GJB0000182T,yesno,Yes,True,True,True,True,False,True
+GJB0000182T_c1f2006977,GJB0000182T,inference,可能属于 I 级或 II 级，内侧后角可能接近 III 级。推理依据：半月板内可见线条状、斑片状 T2WI 高信号，以内侧半月板后角稍明显，若信号达关节面则为 III 级，未达则为 I 或 II 级，影像描述未明确提及达关节面但信号明显。,False,True,False,True,False,True
+GJB0000184T_9f701f0fc1,GJB0000184T,yesno,Yes,True,True,True,True,False,True
+GJB0000187T_41e4a6c68f,GJB0000187T,yesno,No,True,True,True,True,False,True
+GJB0000187T_c29eacefc3,GJB0000187T,inference,风险较低。内外侧半月板形态、信号未见异常，无撕裂块移位征象。,True,False,False,False,True,True
+GJB0000188T_23cd9f460c,GJB0000188T,yesno,Yes,True,True,True,True,False,True
+GJB0000188T_2c801b4989,GJB0000188T,yesno,No,True,True,True,True,False,True
+GJB0000188T_934eb2f273,GJB0000188T,inference,该患者的积液严重程度为少量。依据：膝关节腔、关节囊内见少许积液。,True,True,False,False,True,True
+GJB0000189T_1c94e5c323,GJB0000189T,inference,可能为骨髓水肿或术后反应。依据：片状信号增高影，边界模糊，常见于术后骨创伤反应或应力改变。,True,False,True,False,True,True
+GJB0000189T_44f4082e77,GJB0000189T,yesno,Yes,True,True,True,True,False,True
+GJB0000189T_6d4eabf74e,GJB0000189T,inference,可能影响。依据：金属内固定物通常会产生磁敏感伪影，可能干扰邻近骨髓及软组织信号的精确评估。,False,True,False,True,False,True
+GJB0000189T_91c122f602,GJB0000189T,yesno,No,True,True,True,False,False,True
+GJB0000191T_96dce8b849,GJB0000191T,inference,提示早期退行性改变或磨损。推理依据：1. 诸关节面软骨欠光整；2. 未见明显软骨缺损但形态不规则；3. 结合积液及半月板损伤，符合软骨早期磨损表现。,True,False,False,True,True,True
+GJB0000193T_788bd0d41f,GJB0000193T,inference,韧带结构稳定。推理依据：前、后交叉韧带及胫腓侧副韧带未见异常，连续性完整，无撕裂征象。,False,True,False,False,True,True
+GJB0000193T_b40c80d31e,GJB0000193T,inference,存在关联，符合滑膜炎表现。推理依据：关节腔内见少许积液征，同时伴滑膜增厚，二者常同时出现于滑膜炎病理过程。,True,True,False,False,True,True
+GJB0000195T_9e98af0952,GJB0000195T,yesno,Yes,True,True,True,True,False,True
+GJB0000195T_a486c84367,GJB0000195T,yesno,No,True,True,True,True,False,True
+GJB0000196T_3b792c0b15,GJB0000196T,inference,因为高信号未达关节面。推理依据：Ⅲ级撕裂定义为异常信号延伸至关节面，影像学明确描述高信号未达半月板关节面边缘。,True,False,True,True,True,True
+GJB0000196T_724c46c1b1,GJB0000196T,inference,具有高度对称性。推理依据：双侧半月板均可见Ⅰ-Ⅱ级损伤，双侧前交叉韧带均信号增高，双侧髌下脂肪垫均损伤，双侧均有关节积液。,True,True,False,True,False,True
+GJB0000198T_21f4c5e51f,GJB0000198T,inference,可能与关节内病变引起的反应性改变有关。依据：伴随关节积液、半月板及韧带损伤，软组织见少许渗出。,True,False,True,True,True,True
+GJB0000199T_2d7acc9864,GJB0000199T,inference,属于Ⅱ级。依据：诊断意见明确为右膝关节内、外侧半月板Ⅱ级损伤，且 MR 表现显示半月板内可见条状 T2WI 高信号，未提及达关节面（符合Ⅱ级特征）。,True,False,False,True,True,True
+GJB0000200T_cef6a0ed5a,GJB0000200T,yesno,Yes,True,True,True,True,False,True
+GJB0000203T_587ca13858,GJB0000203T,inference,倾向于急性或亚急性期。推理依据：前交叉韧带及髌下脂肪垫可见水肿高信号，胫骨近端可见骨挫伤样高信号，符合急性损伤后水肿表现。,False,False,False,False,True,True
+GJB0000203T_c5f4049865,GJB0000203T,inference,因为高信号未达关节面。推理依据：半月板撕裂的影像学标准通常为异常信号延伸至关节面，本例高信号局限于半月板内部。,True,True,False,True,False,True
+GJB0000204T_79c8c69701,GJB0000204T,yesno,Yes,False,True,True,True,False,True
+GJB0000205T_ebcca3cf76,GJB0000205T,inference,潜在来源包括：半月板损伤、软骨磨损、骨质增生、髌下脂肪垫损伤及关节积液引起的滑膜炎症。,False,False,False,True,True,True
+GJB0000207T_8d89ad5ddb,GJB0000207T,yesno,Yes,False,True,True,True,False,True
+GJB0000209T_23e1887a7c,GJB0000209T,yesno,No,True,True,True,True,False,True
+GJB0000209T_53f9aa56e7,GJB0000209T,inference,未失效。推理依据：影像显示移植物连续，虽周围信号欠均见混杂信号，但主体结构连续性存在，符合术后移植物在位表现。,False,False,False,False,True,True
+GJB0000210T_c57331946e,GJB0000210T,yesno,No,True,True,True,True,False,True
+GJB0000211T_06bb0e63fb,GJB0000211T,yesno,No,True,True,True,True,False,True
+GJB0000213T_711b0740f5,GJB0000213T,yesno,No,True,True,True,True,False,True
+GJB0000215T_2ca61393b3,GJB0000215T,inference,可能继发于半月板损伤引起的滑膜反应。推理依据：存在半月板Ⅰ-Ⅱ级损伤，同时伴有关节腔及关节囊内少量积液，无其他严重创伤或感染征象。,False,False,False,True,True,True
+GJB0000215T_388943f110,GJB0000215T,yesno,Yes,True,True,True,True,False,True
+GJB0000217T_dfd19adbbb,GJB0000217T,yesno,Yes,False,True,True,True,False,True
+GJB0000219T_c7d5992638,GJB0000219T,yesno,Yes,True,True,True,True,False,True
+GJB0000223T_3cd263f174,GJB0000223T,inference,主要考虑骨质损伤。推理依据：髌骨上份骨质信号增高，相邻股四头肌腱附着处损伤，符合骨挫伤或应力性损伤表现。,False,False,False,False,True,True
+GJB0000225T_76a3ae144e,GJB0000225T,yesno,Yes,True,True,True,True,False,True
+GJB0000229T_3edc303e53,GJB0000229T,yesno,No,True,True,True,True,False,True
+GJB0000230T_75309aad66,GJB0000230T,yesno,No,True,True,True,False,False,True
+GJB0000231T_3805fd1822,GJB0000231T,yesno,No,True,True,True,True,False,True
+GJB0000232T_173597c0dd,GJB0000232T,yesno,Yes,False,True,True,True,False,True
+GJB0000232T_2788fc8ee0,GJB0000232T,inference,主要属于退行性改变或发育异常。推理依据：高信号未达关节面边缘，无明确外伤性撕裂征象，外侧伴有盘状半月板发育异常。,True,True,False,True,False,True
+GJB0000232T_b4faf04c2f,GJB0000232T,inference,属于 I 度损伤。推理依据：髌软骨信号欠均，但未见明显软骨缺损或全层损伤征象，符合 I 度损伤诊断。,False,False,False,False,True,True
+GJB0000234T_bae7301a52,GJB0000234T,yesno,No,True,True,True,True,False,True
+GJB0000234T_de59b03365,GJB0000234T,inference,属于少量积液。推理依据：诊断意见明确提示右膝关节腔及髌上囊少量积液，未见大量积液压迫征象。,False,True,True,False,True,True
+GJB0000235T_ddf4515a10,GJB0000235T,inference,属于少许损伤。依据：双膝髌下脂肪垫见小片高信号，诊断意见明确为少许损伤。,True,True,True,True,False,True
+GJB0000236T_b6f4d41dbf,GJB0000236T,inference,可能导致髌股关节轨迹异常及软骨磨损加重。推理依据：髌骨高位（ISI>1.2）及内移改变了髌骨在滑车沟内的正常运动轨迹，影像已见双侧髌骨软骨轻度磨损。,True,True,False,True,False,True
+GJB0000236T_c62913b15d,GJB0000236T,yesno,Yes,True,True,True,True,False,True
+GJB0000238T_de25213a3f,GJB0000238T,yesno,Yes,True,True,True,True,False,True
+GJB0000239T_cc5d2d3cfe,GJB0000239T,yesno,Yes,False,True,True,True,False,True
+GJB0000239T_cd92fa593c,GJB0000239T,inference,属于 Stoller I-II 级。推理依据：影像显示半月板内有点线状 T2WI 高信号，但高信号未达半月板关节面边缘，符合 I-II 级损伤定义，未达到 III 级撕裂标准。,False,False,True,False,True,True
+GJB0000240T_7139dffea6,GJB0000240T,inference,属于 III 级。推理依据：异常信号达半月板边缘与关节腔相通，符合 III 级撕裂定义。,True,False,True,True,True,True
+GJB0000240T_df3d7f82dc,GJB0000240T,inference,可能继发于半月板损伤。推理依据：存在明确的半月板撕裂及损伤信号，滑膜受刺激产生反应性积液，且无其他感染或肿瘤征象。,True,False,False,True,True,True
+GJB0000241T_09a12f0d49,GJB0000241T,yesno,Yes,True,True,True,True,False,True
+GJB0000242T_feff6f3df0,GJB0000242T,inference,该患者软骨移植物整合情况欠佳。推理依据：移植物表面欠光整，厚度变薄，且对应软骨下骨存在骨质水肿，提示移植物与宿主骨界面可能存在应力异常或愈合反应。,True,False,True,True,True,True
+GJB0000243T_7bb99bc8f9,GJB0000243T,yesno,No,True,True,True,False,False,True
+GJB0000244T_3388d70432,GJB0000244T,yesno,No,True,True,True,True,False,True
+GJB0000246T_19bba4b743,GJB0000246T,yesno,No,True,True,True,True,False,True
+GJB0000246T_768b570b36,GJB0000246T,inference,倾向于创伤性或轻度退行性改变。推理依据：半月板信号未达关节面，韧带连续性存在，无明显骨赘增生或关节间隙狭窄，但存在积液和软组织损伤信号。,False,False,False,False,True,True
+GJB0000246T_f0960f129d,GJB0000246T,inference,属于 Stoller I 级或 II 级。推理依据：半月板内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘，不符合 III 级撕裂达关节面的标准。,True,True,False,True,False,True
+GJB0000247T_9e1ab58892,GJB0000247T,inference,倾向于退行性改变或慢性损伤。依据：高信号未达关节面边缘，为Ⅰ-Ⅱ级损伤，且无明确急性撕裂形态及骨髓水肿征象。,False,False,False,False,True,True
+GJB0000247T_d50b9c506a,GJB0000247T,yesno,Yes,False,True,True,True,False,True
+GJB0000248T_3703a78d60,GJB0000248T,yesno,No,True,True,True,True,False,True
+GJB0000248T_431e351bf9,GJB0000248T,inference,损伤程度为少许损伤（小片高信号）。通常不影响关节主要稳定性，因韧带结构完整。,False,True,True,True,False,True
+GJB0000249T_e7d348855b,GJB0000249T,yesno,Yes,True,True,True,True,False,True
+GJB0000250T_0bba5ec3d6,GJB0000250T,inference,倾向于退行性改变混合慢性损伤。推理依据：存在骨质增生、软骨磨损、髌骨软化及半月板Ⅱ级损伤，多为退变表现；虽有关节积液，但无明确骨折或韧带完全断裂征象。,True,False,False,False,True,True
+GJB0000253T_75757c4c4a,GJB0000253T,yesno,No,True,True,True,True,False,True
+GJB0000255T_9584afcbb3,GJB0000255T,yesno,No,True,True,True,False,False,True
+GJB0000258T_b7a7ddf554,GJB0000258T,inference,提示半月板表面完整。依据：高信号未达半月板关节面边缘，不符合 III 级撕裂标准。,True,False,False,True,True,True
+GJB0000260T_52be6e8753,GJB0000260T,yesno,No,True,True,True,True,False,True
+GJB0000262T_1ff81cb7e8,GJB0000262T,yesno,Yes,True,True,True,True,False,True
+GJB0000263T_4535ee18dd,GJB0000263T,inference,膝关节韧带稳定性良好。推理依据：前、后交叉韧带及胫腓侧副韧带未见异常，连续性完整，无撕裂征象支撑不稳定诊断。,True,True,True,False,True,True
+GJB0000265T_c0754e813b,GJB0000265T,yesno,No,True,True,True,True,False,True
+GJB0000267T_5237e7bbb3,GJB0000267T,yesno,No,True,True,True,True,False,True
+GJB0000268T_287bb78f97,GJB0000268T,yesno,No,True,True,True,True,False,True
+GJB0000270T_1f24686af2,GJB0000270T,inference,属于Ⅰ-Ⅱ级。推理依据：半月板内可见条状 T2WI 高信号，但高信号未达半月板关节面边缘，符合Ⅰ-Ⅱ级损伤定义，未达Ⅲ级撕裂标准。,False,False,False,False,True,True
+GJB0000271T_3e912fda31,GJB0000271T,yesno,No,True,True,True,True,False,True
+GJB0000273T_53acf1f8a2,GJB0000273T,inference,说明膝关节稳定性结构完整。依据：前、后交叉韧带及胫腓副韧带连续性完整，无高信号水肿，排除急性韧带撕裂。,True,True,True,True,False,True
+GJB0000273T_b4c8a92878,GJB0000273T,yesno,Yes,False,True,True,False,False,True
+GJB0000275T_f335bfb6b4,GJB0000275T,inference,主要结论为双膝关节内、外侧半月板Ⅰ-Ⅱ级损伤可能，双膝关节少许积液，及双侧交叉韧带损伤可能。,False,False,False,False,True,True
+GJB0000275T_f76327a6fe,GJB0000275T,yesno,Yes,True,True,False,True,False,True
+GJB0000276T_7c6cc3c83b,GJB0000276T,yesno,No,True,True,True,True,False,True
+GJB0000277T_0d3b5b8b76,GJB0000277T,inference,处于 ACL 重建术后复查状态。依据：1. 股骨远端、胫骨近端骨质内可见内固定物及骨道；2. 前交叉韧带移植物连续，呈术后改变；3. 对比前片提示为术后复查。,True,False,False,True,True,True
+GJB0000281T_842d6d8a94,GJB0000281T,inference,稳定性良好。推理依据：前、后交叉韧带及胫腓侧副韧带未见异常，连续性完整，无撕裂征象。,False,False,True,True,True,True
+GJB0000282T_60a8d43da6,GJB0000282T,yesno,Yes,True,True,True,True,False,True
+GJB0000284T_36699162af,GJB0000284T,inference,属于少量积液。推理依据：影像描述为膝关节腔、关节囊内见少许积液，未见大量积液填充关节腔。,True,True,True,True,False,True
+GJB0000284T_bf4d80f5e7,GJB0000284T,yesno,No,True,True,True,True,False,True
+GJB0000284T_d1d32a1f11,GJB0000284T,inference,成因为金属内固定物产生的磁敏感伪影。推理依据：骨质内可见内固定物，周围伴低信号伪影，符合金属植入物在 MRI 上的典型表现。,True,False,True,True,True,True
+GJB0000285T_29a16d9709,GJB0000285T,inference,主要属于退行性改变。推理依据：1. 诸骨端边缘轻度骨质增生；2. 股骨滑车面、髌骨关节面下可见斑片状长 T2 信号及局灶性囊性灶；3. 诸关节面软骨欠光整，符合退行性骨关节病表现。,True,True,False,True,False,True
+GJB0000286T_098cc9fb7f,GJB0000286T,inference,提示尚未发生严重的软骨磨损或骨关节炎晚期改变。推理依据：1. 诸关节面软骨光整，未见缺损；2. 虽有骨质增生但软骨层保留，说明退变处于早期或中期阶段。,True,False,False,False,True,True
+GJB0000286T_af05eb5dda,GJB0000286T,inference,该患者的病变主要属于退行性改变。推理依据：1. 诸骨端边缘可见轻度骨质增生，为典型退行性骨关节病征象；2. 半月板损伤伴有信号达边缘，结合骨质增生考虑退变基础上的损伤；3. 关节腔少量积液为伴随征象。,True,False,False,True,True,True
+GJB0000287T_5f12230fea,GJB0000287T,yesno,No,True,True,True,True,False,True
+GJB0000288T_1f18371aea,GJB0000288T,inference,局部炎症反应减轻。推理依据：关节周围软组织 PD 压脂高信号影较前减少，提示软组织水肿消退。,True,False,True,False,True,True
+GJB0000290T_982f90c8b7,GJB0000290T,yesno,Yes,False,True,True,True,False,True
+GJB0000291T_e8c280e8be,GJB0000291T,yesno,Yes,True,True,True,True,False,True
+GJB0000295T_d8156bb505,GJB0000295T,yesno,No,True,True,True,True,False,True
+GJB0000296T_11d13e49fc,GJB0000296T,inference,属于 Stoller III 级。推理依据：内侧半月板后角异常信号达半月板边缘与关节腔相通，符合 III 级撕裂的影像学诊断标准。,True,False,True,True,True,True
+GJB0000297T_f626af829b,GJB0000297T,yesno,Yes,True,True,True,True,False,True
+GJB0000299T_6941b5a8f0,GJB0000299T,inference,右膝关节 ACL 术后改变。推理依据：可见内固定物、骨道、移植物连续及术后相关软组织改变，符合 ACL 重建术后影像特征。,True,False,True,False,True,True
+GJB0000300T_5820a2f5cb,GJB0000300T,inference,不影响。推理依据：1. 内、外侧副韧带形态、信号未见明显异常；2. 连续性完整；3. 无撕裂或松弛征象。,True,True,True,False,True,True
+GJB0000303T_4d2db35f18,GJB0000303T,inference,不存在。推理依据：股骨内外髁及滑车、胫腓骨关节面骨质未见明显异常。,True,True,True,True,False,True
+GJB0000304T_9b0b77be27,GJB0000304T,yesno,No,True,True,True,True,False,True
+GJB0000305T_59e9ff0a96,GJB0000305T,yesno,Yes,True,True,True,True,False,True
+GJB0000306T_badc2bcc9e,GJB0000306T,inference,少量积液。推理依据：关节腔内及关节囊内见少许积液征，未见大量积液或滑膜显著增生表现。,True,True,True,True,False,True
+GJB0000307T_321b25a2fa,GJB0000307T,yesno,Yes,True,True,True,True,False,True
+GJB0000308T_59ea76082d,GJB0000308T,yesno,No,True,True,True,True,False,True
+GJB0000310T_a1e5f877f1,GJB0000310T,yesno,Yes,True,True,True,True,False,True
+GJB0000313T_51d9f3a5af,GJB0000313T,yesno,Yes,False,True,True,False,False,True
+GJB0000313T_da55f53e1d,GJB0000313T,inference,未受到严重影响。依据：前、后交叉韧带及胫腓副韧带未见明显异常，半月板损伤未达关节面，无撕裂。,True,True,False,True,False,True
+GJB0000315T_afafd92bd8,GJB0000315T,inference,对合关系正常。推理依据：右侧膝关节各骨对合正常，未见脱位或半脱位征象。,True,True,False,True,False,True
+GJB0000315T_d9a38966a6,GJB0000315T,inference,可能为轻度损伤或炎症反应。推理依据：髌下脂肪垫信号欠均匀，诊断为轻度损伤，常见于膝关节过伸或撞击损伤。,False,True,True,True,False,True
+GJB0000316T_6bf682835b,GJB0000316T,inference,提示髌下脂肪垫损伤或水肿。依据：脂肪垫内出现片状长 T2 信号是损伤或炎症水肿的典型影像表现。,True,True,False,False,True,True
+GJB0000316T_7b6956be0f,GJB0000316T,inference,属于Ⅰ-Ⅱ级。依据：半月板内可见条状 T2WI 高信号，但信号未达半月板边缘，未与关节腔相通，符合Ⅰ-Ⅱ级损伤标准。,True,False,False,False,True,True
+GJB0000316T_eff35b8e36,GJB0000316T,yesno,Yes,True,True,True,True,False,True
+GJB0000319T_36a1332453,GJB0000319T,yesno,No,True,True,True,True,False,True
+GJB0000320T_9f017e03ed,GJB0000320T,yesno,Yes,True,True,True,True,False,True
+GJB0000322T_32aa2ab1a1,GJB0000322T,yesno,Yes,False,True,True,True,False,True
+GJB0000322T_8c2ad04a9b,GJB0000322T,yesno,No,True,True,True,True,False,True
