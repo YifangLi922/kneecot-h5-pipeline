@@ -26,6 +26,9 @@ import os, json, base64, glob
 from config import RESULTS_DIR, MODELS, SLICE_DIRS
 from prompts import VLM_PROMPTS
 
+# Greedy, deterministic decoding -- matches the LLM line's do_sample=False.
+OLLAMA_OPTIONS = {"temperature": 0.0, "num_ctx": 4096, "num_predict": 2400}
+
 
 def load_eval_set(eval_path):
     with open(eval_path, "r", encoding="utf-8") as f:
@@ -121,6 +124,7 @@ def run_yn_eval(model_name: str, prompt_key: str, cases: list,
             resp = ollama.chat(
                 model=model_name,
                 messages=[{"role": "user", "content": prompt_text, "images": images}],
+                options=OLLAMA_OPTIONS,
             )
             raw = resp["message"]["content"]
             print(f"  {i:4}/{len(yn_cases)}  {case['case_id']:<16} generated ({len(raw)} chars)")
@@ -187,6 +191,7 @@ def run_inference_eval(model_name: str, prompt_key: str, cases: list,
             resp = ollama.chat(
                 model=model_name,
                 messages=[{"role": "user", "content": prompt_text, "images": images}],
+                options=OLLAMA_OPTIONS,
             )
             raw = resp["message"]["content"]
             print(f"  {i:4}/{len(inf_cases)} ✓  {case['case_id']} processed.")
