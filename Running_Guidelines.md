@@ -265,9 +265,9 @@ This is the **only** scoring/comparison script for the whole project — both
 lines are judged by the same yes/no parser and the same judge-then-review
 process. Outputs in `compare_out/`:
 
-- `summary.json` — accuracy per condition (LLM direct/CoT, VLM direct/CoT)
-  for yes/no and inference, plus McNemar's test for RQ1 (LLM CoT vs direct)
-  and RQ2 (VLM CoT vs direct)
+- `summary_2x2_comparison.json` — accuracy per condition (LLM direct/CoT, VLM
+  direct/CoT) for yes/no and inference, plus McNemar's test for RQ1 (LLM CoT
+  vs direct) and RQ2 (VLM CoT vs direct)
 - `per_item.csv` — every question's correct/incorrect outcome under all
   four conditions
 - `rq3_yesno.csv` / `rq3_inference.csv` — per-item LLM-vs-VLM comparison
@@ -317,6 +317,6 @@ python code/analysis/compare.py --eval_set data/eval_set.json --llm_results ... 
 - **Ollama connection errors in `evaluate.py`/`judge.py`** — confirm
   `ollama serve` is running and the right model has been `ollama pull`-ed
   on the same node/job.
-- **Inference questions show as `not_judged` in `summary.json`** — means
+- **Inference questions show as `not_judged` in `summary_2x2_comparison.json`** — means
   `judge.py` hasn't been run yet (or wasn't passed via `--judged_llm`/
   `--judged_vlm`); yes/no scoring works independently of this.
