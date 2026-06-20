@@ -317,7 +317,7 @@ The VLM is evaluated under **four** prompt conditions, defined in `code/kneecot-
 3. **DA_findings** — Direct Answer, image + MR findings text.
 4. **CoT_findings** — Structured 4-Step CoT, image + MR findings text.
 
-All four conditions are actually run and scored (not a future/planned ablation) — `evaluate.py` runs every condition in `CONDITIONS` over the full eval set, producing one result file per `(model, prompt_key, qtype)`. The `_findings` conditions are the ones used for the main matched LLM-vs-VLM comparison (RQ1/RQ2: both models see the same MR findings text, the VLM additionally sees the image). The plain `DA`/`CoT` (image-only) conditions are instead the RQ3 ablation — do images alone, without any MR findings text, support the same conclusions? `code/analysis/vlm_findings_ablation.py` compares `DA` vs `DA_findings` and `CoT` vs `CoT_findings` directly.
+All four conditions are actually run and scored (not a future/planned ablation) — `evaluate.py` runs every condition in `CONDITIONS` over the full eval set, producing one result file per `(model, prompt_key, qtype)`. The `_findings` conditions are the ones used for the main matched LLM-vs-VLM comparison (RQ1/RQ2: both models see the same MR findings text, the VLM additionally sees the image). The plain `DA`/`CoT` (image-only) conditions are instead the RQ3 ablation — do images alone, without any MR findings text, support the same conclusions? See §3.3 for how this ablation is scored from the same raw outputs.
 
 The prompts are written in Chinese and use the same final `【答案】` marker and `YESNO_INSTRUCTION`/`INFERENCE_INSTRUCTION` format rules as the LLM pipeline (see §1.2), so the shared parser in `code/analysis/compare.py` can read both lines' outputs the same way.
 
@@ -484,7 +484,67 @@ Inference questions are evaluated separately from yes/no questions because they 
 
 See `Running_Guidelines.md` §4.3 for the exact commands and the manual-review checklist.
 
-## 3.3 Research questions
+## 3.3 RQ3 image-only ablation (does the VLM need the MR findings text?)
+
+This ablation asks: if the VLM only sees the MRI image, with no MR findings text at all, does it still answer as well, and does CoT still help? It is implemented and has already been run — it is **not** a planned/future experiment.
+
+**No separate generation run was needed for this.** `config.py`'s `CONDITIONS` list always includes all four prompt keys — `DA`, `CoT`, `DA_findings`, `CoT_findings` — so every time `evaluate.py` runs, it produces all four conditions' raw outputs in the same pass, not just the `_findings` pair used for the main LLM-vs-VLM comparison. The image-only files (`qwen2.5vl_DA_yn.json`, `qwen2.5vl_DA_inference.json`, `qwen2.5vl_CoT_yn.json`, `qwen2.5vl_CoT_inference.json`) were already sitting in `data/vlm_results/` as a byproduct of the main 2×2 run.
+
+The image-only prompts are the plain `DA`/`CoT` templates shown in §2.2 above ("Image-only VLM — Direct Answer (DA)" / "Image-only VLM — Structured 4-Step CoT"). These are not a separate, older version of the prompts: when the `【答案】`-format fixes were made (forcing a bare `Yes`/`No` line, and forcing inference answers to give a ≥20-character conclusion with supporting evidence instead of a single word), they were applied to **both** the `_findings` templates and these plain image-only templates in the same edit to `prompts.py`. So the ablation results already reflect the same prompt-format fix as the main comparison — no extra prompt work was needed before running it.
+
+What was actually left to do was combine, judge, and compare, reusing the existing shared scoring code:
+
+```bash
+# 1. combine the 4 image-only result files into one
+python -c "
+import json
+files = ['data/vlm_results/qwen2.5vl_DA_yn.json', 'data/vlm_results/qwen2.5vl_DA_inference.json',
+         'data/vlm_results/qwen2.5vl_CoT_yn.json', 'data/vlm_results/qwen2.5vl_CoT_inference.json']
+combined = []
+for fp in files:
+    combined.extend(json.load(open(fp, encoding='utf-8')))
+json.dump(combined, open('data/vlm_results/combined_ablation_results.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+print('combined:', len(combined), 'records')
+"
+
+# 2. judge the image-only inference outputs (separate judged file -- does not
+#    touch/overwrite judged_inference_vlm.json from the main _findings run)
+python code/analysis/judge.py \
+  --input data/vlm_results/qwen2.5vl_DA_inference.json data/vlm_results/qwen2.5vl_CoT_inference.json \
+  --rubric code/analysis/inference_rubric_for_LLM_judge.json \
+  --model qwen2.5:32b \
+  --output judged_inference_vlm_ablation.jsonl \
+  --json-output judged_inference_vlm_ablation.json \
+  --review-output manual_review_vlm_ablation.jsonl
+
+# 3a. compare.py, pointed at the image-only files via --vlm_prompt_direct/--vlm_prompt_cot
+#     (Running_Guidelines.md documents this exact override) -- this reruns the same
+#     2x2-style accuracy + McNemar table, but with the VLM columns now image-only
+python code/analysis/compare.py \
+  --eval_set data/eval_set.json \
+  --llm_results code/kneecot-h5-pipeline-llm/results/raw_results.json \
+  --vlm_results data/vlm_results/combined_ablation_results.json \
+  --vlm_prompt_direct DA --vlm_prompt_cot CoT \
+  --judged_llm judged_inference_llm.json \
+  --judged_vlm judged_inference_vlm_ablation.json \
+  --out_dir results/compare_out_vlm_ablation
+
+# 3b. vlm_findings_ablation.py -- a more direct, VLM-only version of the same question:
+#     does adding MR findings text help, within each prompt style? (DA vs DA_findings,
+#     CoT vs CoT_findings). Reuses compare.py's scoring/McNemar code, so the yes/no
+#     parsing and inference judging are identical to the main analysis.
+python code/analysis/vlm_findings_ablation.py \
+  --eval_set data/eval_set.json \
+  --findings_results data/vlm_results/combined_findings_results.json \
+  --ablation_results data/vlm_results/combined_ablation_results.json \
+  --judged_findings judged_inference_vlm.json \
+  --judged_ablation judged_inference_vlm_ablation.json \
+  --out_dir results/compare_out
+```
+
+Step 3a and 3b answer slightly different questions and both are kept: 3a re-runs the full LLM-vs-VLM comparison with the VLM swapped to image-only, so it can still be read against the LLM line; 3b is the narrower, VLM-internal comparison (image-only vs. image+text, holding the prompt style fixed) and is what actually produced `results/compare_out/summary_vlm_ablation.json`. Neither step touches or overwrites `summary_2x2_comparison.json` from the main `_findings` comparison — they write to separate output paths, so the matched-condition result and the ablation result are two independent analyses that coexist in `results/`.
+
+## 3.4 Research questions
 
 This repository supports the following H5 research questions:
 
@@ -492,7 +552,7 @@ This repository supports the following H5 research questions:
 |---|---|
 | Does CoT improve knee MRI VQA performance? | DA vs. CoT within LLM and VLM (RQ1, RQ2 in `summary_2x2_comparison.json`) |
 | Does CoT yield a larger gain for VLM than LLM? | Matched LLM–VLM comparison on the same `eval_set.json`, `_findings` condition |
-| When is visual input necessary? | VLM vs. LLM per-item breakdown (`rq3_yesno.csv` / `rq3_inference.csv`, labelled `vision_necessary` / `text_better` / `both_correct_text_sufficient` / `both_wrong`), plus the image-only vs. image+findings ablation (`vlm_findings_ablation.py`) |
+| When is visual input necessary? | VLM vs. LLM per-item breakdown (`rq3_yesno.csv` / `rq3_inference.csv`, labelled `vision_necessary` / `text_better` / `both_correct_text_sufficient` / `both_wrong`), plus the image-only ablation in §3.3 (`results/compare_out/summary_vlm_ablation.json`, `vlm_findings_ablation.py`) |
 
 ---
 
