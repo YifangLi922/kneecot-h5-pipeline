@@ -67,7 +67,15 @@ PROMPT_VALUES = ("DA", "CoT")
 # ---------- 解析模型输出（全组唯一一份 yes/no 解析器） ----------
 
 def parse_yes_no(raw):
-    """从模型输出里抽 yes/no，三级兜底，抽不到返回 None。"""
+    """从模型输出里抽 yes/no，抽不到返回 None。
+
+    之前有第三级兜底：在全文里找最后一个"是"/"否"字，哪个位置靠后就当答案。
+    这条规则在长 CoT 推理文本上是噪声源——"是"在中文里是极常见的语法虚词
+    （"这是……""不一定是……"），跟模型真正给出的结论毫无关系，会把"完全没
+    按格式回答"的记录伪装成一个看似有效但随机的 Yes/No，而不是老实报告"解析
+    失败"。删掉这条规则：解析不出英文 Yes/No 就返回 None，让 missing_policy
+    按"未回答"处理（默认计为答错），不要猜。
+    """
     text = raw or ""
     if not text.strip():
         return None
@@ -81,11 +89,7 @@ def parse_yes_no(raw):
     m = re.search(r"\b(Yes|No)\b", text, re.IGNORECASE)
     if m:
         return m.group(1).capitalize()
-    # 3) 最后出现的 是 / 否
-    last_shi, last_fou = text.rfind("是"), text.rfind("否")
-    if last_shi == -1 and last_fou == -1:
-        return None
-    return "Yes" if last_shi > last_fou else "No"
+    return None
 
 
 # ---------- 加载 ----------

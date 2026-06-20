@@ -1,15 +1,22 @@
 """
-prompts.py  –  Chinese VLM prompts (DA, CoT, DA_findings, CoT_findings)
-               and the shared Yes/No answer parser.
+prompts.py  –  Chinese VLM prompts (DA, CoT, DA_findings, CoT_findings).
+
+Yes/No answer parsing lives only in code_new/analysis/compare.py (the
+shared scoring code) — see that module's docstring. Do not add a parser
+copy here; a stale duplicate caused real confusion before.
 """
-import re
 
 ANSWER_MARKER = "【答案】"
+
+YESNO_INSTRUCTION = (
+    "- 若为是非类问题：请在【答案】后单独另起一行，只写英文单词 Yes 或 No，"
+    "不要写中文“是”/“否”，不要附加任何其他文字、标点或解释。"
+)
 
 VLM_PROMPTS = {
     "DA": """你是一位资深骨骼肌肉放射科医生。下面给出一组膝关节 MR 图像和一个相关问题。
 请根据图像直接回答问题，不要写出推理过程。
-- 若为是非类问题：请在【答案】后只回答 Yes 或 No。
+""" + YESNO_INSTRUCTION + """
 - 若为推理类问题：请在【答案】后给出明确结论及简要依据。
 【问题】{question}
 【答案】""",
@@ -28,13 +35,15 @@ VLM_PROMPTS = {
 步骤四 诊断推理与核对（Diagnostic Reasoning and Verification）
 综合分析推导结论；自检结论是否由证据支持。
 
-最后在【答案】后给出明确回答：是非类答 Yes/No；推理类给结论及依据。
+完成以上推理步骤后，最后必须单独另起一行给出【答案】：
+""" + YESNO_INSTRUCTION + """
+- 若为推理类问题：在【答案】后给出明确结论及依据。
 【问题】{question}
 请依次完成步骤一至步骤四，最后给出【答案】""",
 
     "DA_findings": """你是一位资深骨骼肌肉放射科医生。下面给出一组膝关节 MR 图像、对应的 MR 表现文字和一个相关问题。
 请结合图像与 MR 表现直接回答问题，不要写出推理过程。
-- 若为是非类问题：请在【答案】后只回答 Yes 或 No。
+""" + YESNO_INSTRUCTION + """
 - 若为推理类问题：请在【答案】后给出明确结论及简要依据。
 【MR 表现】{findings}
 【问题】{question}
@@ -54,33 +63,10 @@ VLM_PROMPTS = {
 步骤四 诊断推理与核对（Diagnostic Reasoning and Verification）
 综合分析推导结论；如适用简要排除主要鉴别诊断；自检结论是否由证据支持。
 
+完成以上推理步骤后，最后必须单独另起一行给出【答案】：
+""" + YESNO_INSTRUCTION + """
+- 若为推理类问题：在【答案】后给出明确结论及依据。
 【MR 表现】{findings}
 【问题】{question}
 请依次完成步骤一至步骤四，最后给出【答案】。""",
 }
-
-
-def parse_yes_no(raw_output: str):
-    """Returns 'Yes', 'No', or None."""
-    if not raw_output or not raw_output.strip():
-        return None
-    text = raw_output.strip()
-    if ANSWER_MARKER in text:
-        text = text.split(ANSWER_MARKER)[-1].strip()
-    m = re.search(r"\b(yes|no)\b", text, re.IGNORECASE)
-    if m:
-        return m.group(1).capitalize()
-    last_yes = text.rfind("是")
-    last_no  = text.rfind("否")
-    if last_yes == -1 and last_no == -1:
-        return None
-    return "Yes" if last_yes > last_no else "No"
-
-
-def parse_inference_answer(raw_output: str) -> str:
-    """Extracts text answer for inference questions."""
-    if not raw_output:
-        return ""
-    if ANSWER_MARKER in raw_output:
-        return raw_output.split(ANSWER_MARKER)[-1].strip()
-    return raw_output.strip()
