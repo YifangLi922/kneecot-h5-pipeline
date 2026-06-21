@@ -9,7 +9,7 @@ GJB0000010T_860aa47190,GJB0000010T,根据国际通用的 Stoller 半月板损伤
 GJB0000010T_94b6471653,GJB0000010T,根据 MR 影像学表现，该患者的膝关节病变主要属于创伤性改变还是退行性改变？请说明对应的影像学依据。,False,True,vision_necessary
 GJB0000011_c8a43cc734,GJB0000011,该患者是否存在骨挫伤或骨髓水肿？请说明推理依据。,True,True,both_correct_text_sufficient
 GJB0000012_6ee134df56,GJB0000012,根据 MR 影像学表现，该患者半月板损伤的可能性质是什么？请说明推理依据。,True,False,text_better
-GJB0000018T_693ab0cb73,GJB0000018T,综合所有影像学征象，该患者膝关节整体病理状态如何？请说明推理依据。,True,True,both_correct_text_sufficient
+GJB0000018T_693ab0cb73,GJB0000018T,综合所有影像学征象，该患者膝关节整体病理状态如何？请说明推理依据。,True,False,text_better
 GJB0000018_916f7409c7,GJB0000018,该患者髌下脂肪垫的长 T2 信号提示何种病理改变？请说明依据。,False,False,both_wrong
 GJB0000022T_d553e3c880,GJB0000022T,根据骨结构表现，该患者是否存在明显的膝关节退行性骨关节病？请说明依据。,True,False,text_better
 GJB0000023_9512a770f6,GJB0000023,该患者前交叉韧带的状态提示既往可能接受过什么治疗？请说明依据。,True,False,text_better
@@ -76,8 +76,8 @@ GJB0000098T_a76e439b90,GJB0000098T,该患者是否存在急性骨挫伤或骨折
 GJB0000098T_da38594ae0,GJB0000098T,针对该患者髌韧带远端异常信号，临床诊疗建议是什么？请说明影像依据。,True,True,both_correct_text_sufficient
 GJB0000100_750aa56922,GJB0000100,根据 MR 影像学表现，该患者的前交叉韧带是否发生完全断裂？请说明推理依据。,False,True,vision_necessary
 GJB0000100_d58e482475,GJB0000100,根据胫骨髁间隆突关节面下小斑片状高信号影，推测该处骨结构发生了什么改变？,True,True,both_correct_text_sufficient
-GJB0000100_ec372246bc,GJB0000100,根据 MR 影像学表现，该患者的关节积液属于什么程度？请说明推理依据。,False,True,vision_necessary
-GJB0000101T_6b3e7c7aad,GJB0000101T,该患者关节积液的病理机制可能是什么？请说明推理依据。,True,False,text_better
+GJB0000100_ec372246bc,GJB0000100,根据 MR 影像学表现，该患者的关节积液属于什么程度？请说明推理依据。,False,False,both_wrong
+GJB0000101T_6b3e7c7aad,GJB0000101T,该患者关节积液的病理机制可能是什么？请说明推理依据。,False,False,both_wrong
 GJB0000106T_e0c69fb09e,GJB0000106T,根据 MR 影像学表现，该患者左侧胫骨近端病变的性质倾向于良性还是恶性？请说明推理依据。,True,True,both_correct_text_sufficient
 GJB0000107T_7c0b731383,GJB0000107T,该患者双侧膝关节半月板病变是否达到撕裂标准？,True,False,text_better
 GJB0000108T_55eb2307e0,GJB0000108T,根据 MR 影像学表现，该患者的左侧前交叉韧带病变主要属于急性创伤性改变还是退行性改变？请说明推理依据。,True,True,both_correct_text_sufficient
@@ -178,7 +178,7 @@ GJB0000250T_0bba5ec3d6,GJB0000250T,该患者的膝关节病变主要倾向于退
 GJB0000258T_b7a7ddf554,GJB0000258T,该患者左膝半月板高信号未达关节面边缘，提示半月板表面是否完整？,False,True,vision_necessary
 GJB0000263T_4535ee18dd,GJB0000263T,根据 MR 影像学表现，该患者的膝关节韧带稳定性如何？请说明推理依据。,True,False,text_better
 GJB0000270T_1f24686af2,GJB0000270T,根据国际通用的 Stoller 半月板损伤分级标准，该患者的半月板损伤属于几级？请说明推理依据。,False,False,both_wrong
-GJB0000273T_53acf1f8a2,GJB0000273T,该患者韧带未见明显异常说明了什么临床意义？,True,True,both_correct_text_sufficient
+GJB0000273T_53acf1f8a2,GJB0000273T,该患者韧带未见明显异常说明了什么临床意义？,True,False,text_better
 GJB0000275T_f335bfb6b4,GJB0000275T,根据诊断意见，该患者双侧膝关节的主要病理结论是什么？,False,False,both_wrong
 GJB0000277T_0d3b5b8b76,GJB0000277T,根据 MR 影像学表现，该患者目前处于何种术后状态？请说明依据。,False,True,vision_necessary
 GJB0000281T_842d6d8a94,GJB0000281T,根据 MR 影像学表现，该患者的膝关节韧带稳定性如何？请说明推理依据。,False,True,vision_necessary
