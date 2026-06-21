@@ -256,7 +256,7 @@ LLM and VLM lines were run together on a single GPU pod rented on
 `setup_runpod.sh`. See `Running_Guidelines.md` for the full step-by-step
 runbook on that setup.
 
-LLM outputs are written to `results/raw_results.json`, one record per `(case_id, question, prompt_key)` with fields `case_id`, `question_id`/`question`, `qtype`, `ground_truth`/`full_answer`, `prompt_key` (`DA`/`CoT`), and `raw_output`.
+LLM outputs are written to `llm_results/raw_results.json`, one record per `(case_id, question, prompt_key)` with fields `case_id`, `question_id`/`question`, `qtype`, `ground_truth`/`full_answer`, `prompt_key` (`DA`/`CoT`), and `raw_output`.
 
 ---
 
