@@ -24,7 +24,7 @@ This repository contains two parallel pipelines for the H5 experiment — a text
 | Prompting conditions | Direct Answer and CoT | DA / CoT (image-only) and DA_findings / CoT_findings (image + text) |
 | Purpose | Measures text-only reasoning performance | Measures whether visual input improves reasoning, and whether MR findings text adds on top of the image |
 
-Both generation pipelines only produce **raw, unscored** per-question records (`case_id`, `question_id`, `qtype`, `prompt_key`, `raw_output`, ...). Scoring happens afterward in one shared place: `code/analysis/compare.py` (yes/no accuracy + McNemar) and `code/analysis/judge.py` (LLM-as-judge for inference questions). This split exists because the two lines used to each implement their own scoring with different field names and different yes/no parsers, which made the "comparison" not actually apples-to-apples — see `notes/coding problems and solutions.md` for the background on that decision.
+Both generation pipelines only produce **raw, unscored** per-question records (`case_id`, `question_id`, `qtype`, `prompt_key`, `raw_output`, ...). Scoring happens afterward in one shared place: `code/analysis/compare.py` (yes/no accuracy + McNemar) and `code/analysis/judge.py` (LLM-as-judge for inference questions). 
 
 ## Repository Structure
 
