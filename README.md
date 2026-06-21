@@ -79,7 +79,8 @@ results/
 │   ├── rq3_yesno.csv               # per-item LLM-vs-VLM comparison under CoT (visual-necessity labels)
 │   └── rq3_inference.csv
 ├── judged_inference_llm.json / judged_inference_vlm.json   # judge.py output, after manual correction
-└── manual_review_llm.jsonl / manual_review_vlm.jsonl       # risk-based manual review samples
+├── manual_review_llm.jsonl / manual_review_vlm.jsonl       # risk-based manual review candidates (judge-flagged unclear/incorrect + correct spot-check)
+└── full_human_review_LLM.csv / full_human_review_VLM.csv   # two annotators' independent correct/incorrect verdicts on the manual_review_* samples, with per-row agreement vs. the judge; source of the corrections folded into judged_inference_llm.json / judged_inference_vlm.json
 ```
 
 The LLM pipeline and the VLM pipeline are not identical in structure because they process different inputs (text-only JSON vs. `.nii` MRI volumes + text) and the VLM line talks to a local Ollama server instead of loading weights directly in Python. Both contain the same kind of pieces though: source code, dependency specification, and a generation-only `run.py` entry point. Everything under `notes/` is internal team reference and is not part of the final project submission.
