@@ -20,11 +20,11 @@ This repository contains two parallel pipelines for the H5 experiment — a text
 | Folder | `code/kneecot-h5-pipeline-llm/` | `code/kneecot-h5-pipeline-vlm/` |
 | Main entry point | `run.py` | `run.py` (`VLM.ipynb` was the original Colab prototype) |
 | Input modality | MR findings text only (`MR表现`) | MRI slices, alone or combined with MR findings text |
-| Main output folder | `data/llm_results/` | `data/vlm_results/` |
+| Main output folder (raw, unscored) | `data/llm_results/` | `data/vlm_results/` |
 | Prompting conditions | Direct Answer and CoT | DA / CoT (image-only) and DA_findings / CoT_findings (image + text) |
 | Purpose | Measures text-only reasoning performance | Measures whether visual input improves reasoning, and whether MR findings text adds on top of the image |
 
-Both generation pipelines only produce **raw, unscored** per-question records (`case_id`, `question_id`, `qtype`, `prompt_key`, `raw_output`, ...). Scoring happens afterward in one shared place: `code/analysis/compare.py` (yes/no accuracy + McNemar) and `code/analysis/judge.py` (LLM-as-judge for inference questions). 
+Both generation pipelines only produce **raw, unscored** per-question records (`case_id`, `question_id`, `qtype`, `prompt_key`, `raw_output`, ...). Scoring happens afterward in one shared place: `code/analysis/compare.py` (yes/no accuracy + McNemar) and `code/analysis/judge.py` (LLM-as-judge for inference questions). The scored/final results — accuracy tables, McNemar output, judged inference verdicts, manual-review samples — live separately under `results/` (see the Repository Structure below), not in `data/llm_results/` or `data/vlm_results/`.
 
 ## Repository Structure
 
@@ -481,6 +481,8 @@ Inference questions are evaluated separately from yes/no questions because they 
 2. The judge returns a structured verdict per item: `correct` / `incorrect` / `unclear`, plus the matched rubric rule, the extracted ground-truth core and model conclusion, and a `needs_manual_review` flag.
 3. All `unclear` and `incorrect` verdicts, plus a random ~15–20% sample of judge-marked `correct` cases, are written to a manual-review file. Two reviewers independently re-label a shared subset to measure human-human and human-judge agreement, and any judge errors found are corrected directly in `judged_inference_llm.json` / `judged_inference_vlm.json` before `compare.py` is run.
 4. `compare.py` then reads those corrected judged files and scores inference questions exactly like yes/no questions (accuracy + McNemar), keeping both question types under one comparison script.
+
+**Where the rubric came from.** `inference_rubric_for_LLM_judge.json` was not written from scratch — it was developed iteratively from a sample batch of model outputs (50 cases, 369 inference questions) that the team manually reviewed. An earlier version (v1) accepted any synonym/keyword match as `correct`; manual review showed this over-credited vague or partially-relevant answers, so the rubric was rewritten (v2, the version currently used) into question-aware rules: for each question, first identify what is actually being asked, extract the ground-truth's core conclusion, and only then check whether the model's answer matches that core conclusion, rather than matching on keywords. Several rules (e.g. meniscus MRI grading) are additionally grounded in external clinical reference notes embedded in the rubric file, so the judge model is checking against a stated clinical threshold instead of inventing its own.
 
 See `Running_Guidelines.md` §4.3 for the exact commands and the manual-review checklist.
 
