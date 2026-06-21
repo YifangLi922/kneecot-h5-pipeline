@@ -20,7 +20,7 @@ This repository contains two parallel pipelines for the H5 experiment — a text
 | Folder | `code/kneecot-h5-pipeline-llm/` | `code/kneecot-h5-pipeline-vlm/` |
 | Main entry point | `run.py` | `run.py` (`VLM.ipynb` was the original Colab prototype) |
 | Input modality | MR findings text only (`MR表现`) | MRI slices, alone or combined with MR findings text |
-| Main output folder | `data/llm_results/` (LLM line) | `data/vlm_results/` |
+| Main output folder | `data/llm_results/` | `data/vlm_results/` |
 | Prompting conditions | Direct Answer and CoT | DA / CoT (image-only) and DA_findings / CoT_findings (image + text) |
 | Purpose | Measures text-only reasoning performance | Measures whether visual input improves reasoning, and whether MR findings text adds on top of the image |
 
