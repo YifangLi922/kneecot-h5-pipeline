@@ -34,7 +34,7 @@ Running_Guidelines.md             # step-by-step runbook (data -> generation -> 
 setup_runpod.sh                   # one-shot setup + run script for a rented GPU pod
 JOURNAL.md                        # weekly project journal
 notes/
-└── coding problems and solutions.md   # internal dev notes / architecture decisions (not for final submission)
+└── coding problems and solutions.md   # internal dev notes / architecture decisions (only for reference, not for final submission)
 
 data/
 ├── prepare_data.py                 # downloads KneeCoT from HuggingFace
