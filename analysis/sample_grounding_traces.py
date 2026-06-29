@@ -108,22 +108,34 @@ assert len(yn_df) >= N_PER_TYPE, (
 yn_sample = yn_df.sample(n=N_PER_TYPE, random_state=SEED).sort_values("case_id")
 
 # ── INFERENCE pool ────────────────────────────────────────────────────────────
-# Source: LLM-judge–scored results (judged_inference_vlm.json).
-# Filter: condition=CoT_findings, correct=True → 118 Qwen2.5-VL items.
-# Fields:
-#   candidate_model_answer  = full raw CoT trace (same as raw_response in source file)
-#   extracted_model_conclusion = extracted final answer (clean, no trace text)
-#   expected_answer         = full reference answer used by the judge
-#   mr_findings             = MR report text available to the model
+# Correctness filter : judged_inference_vlm.json (condition=CoT_findings,
+#                      correct=True → 118 Qwen2.5-VL items).
+# Full CoT trace     : combined_findings_results.json["raw_output"] via
+#                      _source_index.  candidate_model_answer in the judge file
+#                      is sometimes only the extracted conclusion (14–16 chars),
+#                      NOT the full four-step reasoning chain, so it cannot be
+#                      used for A/B/C labeling.
 
-JUDGED_PATH = REPO_ROOT / "results" / "judged_inference_vlm.json"
+JUDGED_PATH  = REPO_ROOT / "results" / "judged_inference_vlm.json"
+COMBINED_PATH = REPO_ROOT / "data" / "vlm_results" / "combined_findings_results.json"
+
 judged_all  = json.loads(JUDGED_PATH.read_text(encoding="utf-8"))
+combined    = json.loads(COMBINED_PATH.read_text(encoding="utf-8"))
 
 inf_rows = []
+missing_trace = 0
 for j in judged_all:
     if j.get("condition") != "CoT_findings":
         continue
     if not j.get("correct", False):
+        continue
+    idx = j.get("_source_index")
+    if idx is None or idx >= len(combined):
+        missing_trace += 1
+        continue
+    raw_trace = combined[idx]["raw_output"]
+    if len(raw_trace) < 50:          # sanity-check: real traces are always long
+        missing_trace += 1
         continue
     inf_rows.append({
         "case_id":             j["case_id"],
@@ -131,13 +143,16 @@ for j in judged_all:
         "condition":           "CoT_findings_image+text",
         "model":               "qwen2.5vl",
         "question":            j["question"],
-        "ground_truth":        j["expected_answer"],       # full reference answer
-        "model_prediction":    j["extracted_model_conclusion"],  # extracted conclusion only
+        "ground_truth":        j["expected_answer"],
+        "model_prediction":    j["extracted_model_conclusion"],
         "mr_findings_text":    j["mr_findings"],
-        "cot_reasoning_trace": j["candidate_model_answer"],      # full CoT trace
+        "cot_reasoning_trace": raw_trace,   # full trace from VLM result file
         "label_A_B_C":         "",
         "annotation_notes":    "",
     })
+
+if missing_trace:
+    print(f"WARNING: {missing_trace} correct inference items skipped (no valid trace found)")
 
 inf_df = (pd.DataFrame(inf_rows)
           .drop_duplicates(subset=["case_id", "question"])
