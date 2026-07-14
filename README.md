@@ -106,8 +106,11 @@ notes/
 data/
 ├── prepare_data.py                 # downloads KneeCoT from HuggingFace
 ├── eval_set.json                   # frozen, shared evaluation set (seed=42)
-├── llm_results/                    # combined LLM raw outputs
-└── vlm_results/                    # combined VLM raw outputs
+├── llm_results/
+│   └── raw_results.json            # combined LLM raw outputs (DA + CoT, yn + inference)
+└── vlm_results/
+    ├── combined_findings_results.json    # combined VLM raw outputs, image + findings conditions (DA_findings / CoT_findings)
+    └── combined_ablation_results.json    # combined VLM raw outputs, image-only ablation conditions (DA / CoT)
 
 code/
 ├── analysis/                       # shared scoring/comparison code
